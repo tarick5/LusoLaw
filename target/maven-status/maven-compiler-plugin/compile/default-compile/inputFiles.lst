@@ -1,1 +1,13 @@
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/model/Booking.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/model/User.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/repository/BookingRepository.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/config/SecurityConfig.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/model/Service.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/repository/UserRepository.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/controller/BookingController.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/controller/AuthController.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/model/Message.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/repository/ServiceRepository.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/service/BookingService.java
 /Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/MainApplication.java
+/Users/taricktomas/Documents/LusoLaw/src/main/java/com/lusolaw/controller/PaymentController.java

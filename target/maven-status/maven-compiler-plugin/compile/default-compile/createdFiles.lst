@@ -1,0 +1,16 @@
+com/lusolaw/controller/PaymentController.class
+com/lusolaw/model/User$Role.class
+com/lusolaw/config/SecurityConfig.class
+com/lusolaw/model/Message.class
+com/lusolaw/controller/AuthController.class
+com/lusolaw/model/Booking.class
+com/lusolaw/controller/BookingController$BookingRequest.class
+com/lusolaw/controller/BookingController.class
+com/lusolaw/MainApplication.class
+com/lusolaw/model/Service.class
+com/lusolaw/model/User.class
+com/lusolaw/service/BookingService.class
+com/lusolaw/repository/BookingRepository.class
+com/lusolaw/repository/ServiceRepository.class
+com/lusolaw/controller/AuthController$LoginRequest.class
+com/lusolaw/repository/UserRepository.class

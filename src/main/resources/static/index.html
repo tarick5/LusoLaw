@@ -8,235 +8,231 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --primary:#1e293b;--primary-light:#334155;--accent:#f59e0b;--accent-light:#fbbf24;
-  --background:#ffffff;--surface:#f8fafc;--text:#0f172a;--text-muted:#64748b;
-  --success:#059669;--success-light:#ecfdf5;--border:#e2e8f0;--shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06);
+  --navy:#0f1f3d;--navy2:#1a2f5a;--gold:#c9972a;--gold-l:#f0c96a;
+  --cream:#faf8f4;--white:#ffffff;--text:#1a1a2e;--muted:#6b7280;
+  --green:#1a6b4a;--green-l:#e8f5ef;--border:#e5e7eb;--red:#c0392b;
+  --surface:#f4f2ee;--shadow:0 2px 16px rgba(15,31,61,.08);
 }
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--surface);color:var(--text);overflow-x:hidden;line-height:1.6}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 32px;gap:24px;box-shadow:var(--shadow)}
-.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;flex:1}
-.nav-logo span{color:var(--accent)}
-.nav-hamburger{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:all .2s}
-.nav-hamburger:hover{background:var(--surface)}
-.nav-hamburger span{display:block;width:18px;height:2px;background:var(--primary);border-radius:1px}
-.nav-cta{padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s}
-.nav-cta:hover{background:var(--primary-light);transform:translateY(-1px);box-shadow:0 4px 12px rgba(30,41,59,.3)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 20px;gap:16px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:-.3px;flex:1}
+.nav-logo span{color:var(--gold)}
+.nav-hamburger{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.nav-hamburger span{display:block;width:16px;height:1.5px;background:var(--navy);border-radius:2px}
+.nav-cta{padding:8px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
 
 /* ── DRAWER ── */
-.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;opacity:0;pointer-events:none;transition:opacity .4s ease}
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
 .drawer-overlay.open{opacity:1;pointer-events:all}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:320px;background:var(--background);z-index:201;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);padding:32px 24px;display:flex;flex-direction:column;gap:0;box-shadow:-4px 0 20px rgba(0,0,0,.1)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;z-index:201;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);padding:24px 20px;display:flex;flex-direction:column;gap:0}
 .drawer.open{transform:translateX(0)}
-.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
-.drawer-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--primary)}
-.drawer-close{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.drawer-close:hover{background:var(--surface)}
-.drawer-section{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase;padding:0 0 12px;margin-bottom:8px;border-bottom:1px solid var(--border);margin-top:24px}
-.drawer-item{display:flex;align-items:center;gap:16px;padding:12px 12px;border-radius:12px;cursor:pointer;font-size:14px;color:var(--text);font-weight:400;transition:all .2s}
-.drawer-item:hover{background:var(--surface);transform:translateX(4px)}
-.drawer-item .di-icon{width:36px;height:36px;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.drawer-item.active{background:#fef3c7;color:var(--primary);font-weight:500}
-.drawer-item.active .di-icon{background:#fde68a}
-.drawer-status{margin-top:auto;background:var(--success-light);border-radius:16px;padding:20px;border:1px solid #a7f3d0}
-.ds-title{font-size:12px;font-weight:600;color:var(--success);margin-bottom:8px}
-.ds-row{display:flex;justify-content:space-between;font-size:12px;color:var(--success);margin-bottom:6px}
-.ds-bar-bg{height:8px;background:#d1fae5;border-radius:4px;margin-top:12px;overflow:hidden}
-.ds-bar{height:8px;background:var(--success);border-radius:4px;transition:width .8s ease}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.drawer-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy)}
+.drawer-close{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.drawer-section{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;padding:0 0 8px;margin-bottom:4px;border-bottom:1px solid var(--border);margin-top:20px}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:8px;cursor:pointer;font-size:14px;color:var(--text);font-weight:400;transition:background .2s}
+.drawer-item:hover{background:var(--surface)}
+.drawer-item .di-icon{width:32px;height:32px;border-radius:8px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.drawer-item.active{background:#f0f4ff;color:var(--navy);font-weight:500}
+.drawer-item.active .di-icon{background:#dbe4ff}
+.drawer-status{margin-top:auto;background:var(--green-l);border-radius:10px;padding:14px;border:1px solid #b7dfc9}
+.ds-title{font-size:12px;font-weight:600;color:var(--green);margin-bottom:6px}
+.ds-row{display:flex;justify-content:space-between;font-size:12px;color:var(--green);margin-bottom:4px}
+.ds-bar-bg{height:6px;background:#c4e8d4;border-radius:3px;margin-top:8px}
+.ds-bar{height:6px;background:var(--green);border-radius:3px;transition:width .6s}
 
 /* ── HERO ── */
-.hero{margin-top:64px;min-height:calc(100vh - 64px);background:linear-gradient(135deg,var(--primary) 0%,#1e40af 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 32px 48px}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 80% 20%,rgba(30,58,138,.3) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 10% 80%,rgba(15,23,42,.2) 0%,transparent 70%)}
-.hero-pattern{position:absolute;inset:0;opacity:.03;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,.5) 40px,rgba(255,255,255,.5) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,.5) 40px,rgba(255,255,255,.5) 41px)}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:24px;padding:6px 16px;font-size:11px;font-weight:500;color:var(--accent-light);letter-spacing:.05em;margin-bottom:24px;position:relative;z-index:1}
-.hero-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 3s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(.9)}}
-.hero-title{font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,44px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:20px;position:relative;z-index:1}
-.hero-title em{color:var(--accent-light);font-style:italic}
-.hero-sub{font-size:15px;color:rgba(255,255,255,.8);line-height:1.7;margin-bottom:32px;position:relative;z-index:1;max-width:480px}
-.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;position:relative;z-index:1;max-width:400px}
-.stat-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:20px 12px;text-align:center;backdrop-filter:blur(10px)}
+.hero{margin-top:56px;min-height:calc(100vh - 56px);background:var(--navy);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:40px 20px 32px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 80% 20%,#1e3a6a 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 10% 80%,#0a1628 0%,transparent 70%)}
+.hero-pattern{position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,1) 40px,rgba(255,255,255,1) 41px),repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,1) 40px,rgba(255,255,255,1) 41px)}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(201,151,42,.15);border:1px solid rgba(201,151,42,.3);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:500;color:var(--gold-l);letter-spacing:.05em;margin-bottom:20px;position:relative;z-index:1}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.8)}}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(28px,7vw,44px);font-weight:700;color:#fff;line-height:1.15;margin-bottom:16px;position:relative;z-index:1}
+.hero-title em{color:var(--gold-l);font-style:italic}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:28px;position:relative;z-index:1;max-width:340px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;position:relative;z-index:1}
+.stat-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 10px;text-align:center}
 .stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff}
-.stat-label{font-size:10px;color:rgba(255,255,255,.6);margin-top:4px;line-height:1.4}
-.hero-btns{display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;max-width:300px}
-.btn-gold{padding:16px 24px;background:var(--accent);color:var(--primary);border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;box-shadow:0 4px 12px rgba(245,158,11,.3)}
-.btn-gold:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(245,158,11,.4)}
-.btn-outline{padding:15px 24px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.3);border-radius:12px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s}
-.btn-outline:hover{border-color:rgba(255,255,255,.8);background:rgba(255,255,255,.1)}
-.hero-scroll{position:relative;z-index:1;display:flex;align-items:center;gap:8px;margin-top:32px;color:rgba(255,255,255,.5);font-size:11px}
-.scroll-line{flex:1;height:1px;background:rgba(255,255,255,.2)}
+.stat-label{font-size:10px;color:rgba(255,255,255,.5);margin-top:3px;line-height:1.3}
+.hero-btns{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.btn-gold{padding:14px 20px;background:var(--gold);color:var(--navy);border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-gold:hover{background:var(--gold-l);transform:translateY(-1px)}
+.btn-outline{padding:13px 20px;background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-outline:hover{border-color:rgba(255,255,255,.7)}
+.hero-scroll{position:relative;z-index:1;display:flex;align-items:center;gap:8px;margin-top:24px;color:rgba(255,255,255,.35);font-size:11px}
+.scroll-line{flex:1;height:1px;background:rgba(255,255,255,.1)}
 
 /* ── FEATURES STRIP ── */
-.features{background:var(--background);padding:64px 32px;display:flex;flex-direction:column;gap:24px}
-.feat-item{display:flex;align-items:flex-start;gap:20px;max-width:600px;margin:0 auto}
-.feat-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;color:#fff;box-shadow:0 4px 12px rgba(30,41,59,.2)}
-.feat-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
-.feat-desc{font-size:12px;color:var(--text-muted);line-height:1.6}
+.features{background:#fff;padding:28px 20px;display:flex;flex-direction:column;gap:16px}
+.feat-item{display:flex;align-items:flex-start;gap:14px}
+.feat-icon{width:40px;height:40px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.feat-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.feat-desc{font-size:12px;color:var(--muted);line-height:1.5}
 
 /* ── HOW IT WORKS ── */
-.how{background:var(--surface);padding:80px 32px}
-.section-label{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:12px;text-align:center}
-.section-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--primary);line-height:1.25;margin-bottom:48px;text-align:center}
-.steps-list{display:flex;flex-direction:column;gap:0;max-width:800px;margin:0 auto}
-.how-step{display:flex;gap:24px;align-items:flex-start}
+.how{background:var(--surface);padding:36px 20px}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.section-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:24px}
+.steps-list{display:flex;flex-direction:column;gap:0}
+.how-step{display:flex;gap:16px}
 .how-left{display:flex;flex-direction:column;align-items:center}
-.how-num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(30,41,59,.2)}
-.how-line{width:3px;flex:1;background:linear-gradient(to bottom,var(--border),var(--success));margin:12px 0;min-height:32px;border-radius:2px}
+.how-num{width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.how-line{width:2px;flex:1;background:var(--border);margin:6px 0;min-height:24px}
 .how-step:last-child .how-line{display:none}
-.how-content{padding-bottom:32px}
-.how-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
-.how-desc{font-size:12px;color:var(--text-muted);line-height:1.6}
+.how-content{padding-bottom:24px}
+.how-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.how-desc{font-size:12px;color:var(--muted);line-height:1.5}
 
 /* ── TESTIMONIALS ── */
-.testimonials{background:var(--background);padding:80px 32px}
-.testimonial-list{display:flex;flex-direction:column;gap:20px;max-width:800px;margin:0 auto}
-.testi{background:var(--surface);border-radius:16px;padding:24px;border:1px solid var(--border);box-shadow:var(--shadow);transition:all .3s}
-.testi:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-.testi-stars{color:var(--accent);font-size:14px;margin-bottom:12px}
-.testi-text{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:16px;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:12px}
-.testi-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.testimonials{background:#fff;padding:36px 20px}
+.testimonial-list{display:flex;flex-direction:column;gap:14px}
+.testi{background:var(--surface);border-radius:12px;padding:16px}
+.testi-stars{color:var(--gold);font-size:13px;margin-bottom:8px}
+.testi-text{font-size:13px;color:var(--text);line-height:1.6;margin-bottom:10px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center}
 .testi-name{font-size:13px;font-weight:500;color:var(--text)}
-.testi-origin{font-size:11px;color:var(--text-muted)}
+.testi-origin{font-size:11px;color:var(--muted)}
 
 /* ── FOOTER ── */
-footer{background:linear-gradient(135deg,var(--primary) 0%,#1e40af 100%);padding:64px 32px 32px;color:rgba(255,255,255,.8)}
-.footer-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:12px}
-.footer-logo span{color:var(--accent)}
-.footer-tagline{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:32px;line-height:1.6;max-width:400px}
-.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:40px}
-.footer-col-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:16px}
-.footer-link{display:block;font-size:13px;color:rgba(255,255,255,.7);margin-bottom:10px;cursor:pointer;transition:color .3s}
-.footer-link:hover{color:#fff;transform:translateX(4px)}
-.footer-divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin-bottom:24px}
-.footer-bottom{display:flex;flex-direction:column;gap:12px}
-.footer-legal{font-size:11px;color:rgba(255,255,255,.4);line-height:1.6}
-.footer-badges{display:flex;gap:12px;flex-wrap:wrap}
-.footer-badge{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 12px;font-size:11px;color:rgba(255,255,255,.6);backdrop-filter:blur(10px)}
+footer{background:var(--navy);padding:36px 20px 24px;color:rgba(255,255,255,.7)}
+.footer-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
+.footer-logo span{color:var(--gold)}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:24px;line-height:1.5}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+.footer-col-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px}
+.footer-link{display:block;font-size:13px;color:rgba(255,255,255,.6);margin-bottom:7px;cursor:pointer;transition:color .2s}
+.footer-link:hover{color:#fff}
+.footer-divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin-bottom:20px}
+.footer-bottom{display:flex;flex-direction:column;gap:8px}
+.footer-legal{font-size:11px;color:rgba(255,255,255,.35);line-height:1.5}
+.footer-badges{display:flex;gap:8px;flex-wrap:wrap}
+.footer-badge{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 10px;font-size:11px;color:rgba(255,255,255,.5)}
 
 /* ── MODAL OVERLAY ── */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:none;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:var(--background);width:100%;max-width:500px;border-radius:24px 24px 0 0;max-height:90vh;overflow-y:auto;padding:32px 24px 40px;box-shadow:0 20px 40px rgba(0,0,0,.2);border:1px solid var(--border)}
-.modal-handle{width:40px;height:5px;background:var(--border);border-radius:3px;margin:0 auto 24px}
-.modal-close-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--primary)}
-.modal-x{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .2s}
-.modal-x:hover{background:var(--surface)}
+.modal{background:#fff;width:100%;max-width:480px;border-radius:20px 20px 0 0;max-height:92vh;overflow-y:auto;padding:24px 20px 32px}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px}
+.modal-close-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy)}
+.modal-x{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
 
 /* ── FORMS ── */
-.form-section{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase;margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.field{margin-bottom:16px}
-.field label{display:block;font-size:12px;font-weight:500;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
-.field input,.field select{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;outline:none;transition:all .3s}
-.field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,41,59,.1)}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-section{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:20px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.field input,.field select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus{border-color:var(--navy)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
 /* upload box */
-.upload-box{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:all .3s;background:var(--surface);position:relative}
-.upload-box:hover{border-color:var(--primary);background:#f1f5f9;transform:translateY(-1px)}
+.upload-box{border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:#fafafa;position:relative}
+.upload-box:hover{border-color:var(--navy);background:#f0f4ff}
 .upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-icon{font-size:32px;margin-bottom:12px;color:var(--text-muted)}
+.upload-icon{font-size:28px;margin-bottom:8px}
 .upload-title{font-size:13px;font-weight:500;color:var(--text)}
-.upload-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
-.upload-done{display:none;align-items:center;gap:12px;background:var(--success-light);border-radius:10px;padding:12px 16px;margin-top:12px;border:1px solid #a7f3d0}
+.upload-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.upload-done{display:none;align-items:center;gap:10px;background:var(--green-l);border-radius:8px;padding:10px 14px;margin-top:10px}
 .upload-done.show{display:flex}
-.upload-done-text{font-size:13px;color:var(--success);font-weight:500}
+.upload-done-text{font-size:13px;color:var(--green);font-weight:500}
 
 /* OCR / face verify */
-.verify-box{border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;background:var(--surface);box-shadow:var(--shadow)}
-.verify-row{display:flex;align-items:center;gap:16px}
-.verify-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;color:#fff}
+.verify-box{border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.verify-row{display:flex;align-items:center;gap:12px}
+.verify-icon{width:40px;height:40px;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .verify-info .vt{font-size:13px;font-weight:500;color:var(--text)}
-.verify-info .vs{font-size:11px;color:var(--text-muted);margin-top:3px}
-.verify-btn{margin-left:auto;padding:8px 16px;border-radius:8px;border:1px solid var(--primary);background:#fff;font-size:12px;font-weight:500;color:var(--primary);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .3s}
-.verify-btn:hover{background:var(--primary);color:#fff}
-.verify-btn.done{background:var(--success-light);border-color:var(--success);color:var(--success)}
-.verify-progress{margin-top:12px;display:none}
+.verify-info .vs{font-size:11px;color:var(--muted);margin-top:2px}
+.verify-btn{margin-left:auto;padding:7px 14px;border-radius:7px;border:1.5px solid var(--navy);background:#fff;font-size:12px;font-weight:500;color:var(--navy);cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s}
+.verify-btn:hover{background:var(--navy);color:#fff}
+.verify-btn.done{background:var(--green-l);border-color:var(--green);color:var(--green)}
+.verify-progress{margin-top:10px;display:none}
 .verify-progress.show{display:block}
-.vp-bar-bg{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.vp-bar{height:6px;background:var(--success);border-radius:3px;width:0;transition:width 2s ease}
-.vp-label{font-size:11px;color:var(--text-muted);margin-top:6px}
+.vp-bar-bg{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.vp-bar{height:4px;background:var(--green);border-radius:2px;width:0;transition:width 1.5s ease}
+.vp-label{font-size:11px;color:var(--muted);margin-top:5px}
 
 /* cedula preview */
-.cedula-badge{display:inline-flex;align-items:center;gap:8px;background:var(--success-light);border:1px solid #a7f3d0;border-radius:10px;padding:10px 16px;font-size:13px;color:var(--success);font-weight:500}
+.cedula-badge{display:inline-flex;align-items:center;gap:8px;background:var(--green-l);border:1px solid #b7dfc9;border-radius:8px;padding:8px 14px;font-size:13px;color:var(--green);font-weight:500}
 .cedula-num{font-family:monospace;font-size:14px;letter-spacing:.05em}
 
 /* progress steps */
-.prog-steps{display:flex;align-items:center;gap:0;margin-bottom:24px}
+.prog-steps{display:flex;align-items:center;gap:0;margin-bottom:20px}
 .ps-item{display:flex;flex-direction:column;align-items:center;flex:1;position:relative}
-.ps-item:not(:last-child)::after{content:'';position:absolute;top:15px;left:50%;width:100%;height:3px;background:var(--border);z-index:0;transition:background .5s ease;border-radius:2px}
-.ps-item.done:not(:last-child)::after{background:linear-gradient(90deg,var(--success),var(--success-light))}
-.ps-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;position:relative;z-index:1;transition:all .4s;background:var(--border);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.ps-item.active .ps-dot{background:var(--primary);transform:scale(1.2);box-shadow:0 0 0 6px rgba(30,41,59,.15)}
-.ps-item.done .ps-dot{background:var(--success);box-shadow:0 0 0 6px rgba(5,150,105,.15)}
-.ps-label{font-size:9px;color:var(--text-muted);margin-top:6px;text-align:center;white-space:nowrap}
-.ps-item.active .ps-label{color:var(--primary);font-weight:500}
+.ps-item:not(:last-child)::after{content:'';position:absolute;top:13px;left:50%;width:100%;height:2px;background:var(--border);z-index:0;transition:background .4s}
+.ps-item.done:not(:last-child)::after{background:var(--green)}
+.ps-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;position:relative;z-index:1;transition:all .3s;background:var(--border);color:#fff}
+.ps-item.active .ps-dot{background:var(--navy);transform:scale(1.15);box-shadow:0 0 0 4px rgba(15,31,61,.12)}
+.ps-item.done .ps-dot{background:var(--green)}
+.ps-label{font-size:9px;color:var(--muted);margin-top:4px;text-align:center;white-space:nowrap}
+.ps-item.active .ps-label{color:var(--navy);font-weight:500}
 
 /* buttons */
-.btn-primary{width:100%;padding:16px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;font-size:15px;font-weight:500;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;box-shadow:0 4px 12px rgba(30,41,59,.3)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(30,41,59,.4)}
-.btn-primary:disabled{opacity:.5;cursor:default;transform:none}
-.btn-sec{width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:#fff;color:var(--text-muted);font-size:14px;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;margin-top:10px}
-.btn-sec:hover{border-color:var(--primary);color:var(--primary);background:var(--surface)}
-.btn-row{display:flex;gap:12px;margin-top:12px}
+.btn-primary{width:100%;padding:14px;border-radius:10px;border:none;background:var(--navy);color:#fff;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.4;cursor:default;transform:none}
+.btn-sec{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:14px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-top:8px}
+.btn-sec:hover{border-color:var(--navy);color:var(--navy)}
+.btn-row{display:flex;gap:8px;margin-top:8px}
 .btn-row .btn-sec{flex:1;margin-top:0;width:auto}
 .btn-row .btn-primary{flex:2}
 
 /* sit/svc/lawyer cards */
-.sit-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-.sit-card{border:1px solid var(--border);border-radius:12px;padding:16px 14px;cursor:pointer;transition:all .3s;background:#fff;box-shadow:var(--shadow)}
-.sit-card:hover,.sit-card.sel{border-color:var(--primary);background:#f8fafc;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-.sit-icon{font-size:24px;margin-bottom:8px}
+.sit-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.sit-card{border:1.5px solid var(--border);border-radius:10px;padding:14px 12px;cursor:pointer;transition:all .2s}
+.sit-card:hover,.sit-card.sel{border-color:var(--navy);background:#f0f4ff}
+.sit-icon{font-size:22px;margin-bottom:6px}
 .sit-t{font-size:13px;font-weight:500;color:var(--text)}
-.sit-d{font-size:11px;color:var(--text-muted);margin-top:3px}
-.svc-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.svc{border:1px solid var(--border);border-radius:12px;padding:16px 18px;cursor:pointer;transition:all .3s;display:flex;justify-content:space-between;align-items:center;background:#fff;box-shadow:var(--shadow)}
-.svc:hover,.svc.sel{border-color:var(--primary);background:#f8fafc;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.sit-d{font-size:11px;color:var(--muted);margin-top:2px}
+.svc-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.svc{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center}
+.svc:hover,.svc.sel{border-color:var(--navy);background:#f0f4ff}
 .svc-n{font-size:14px;font-weight:500;color:var(--text)}
-.svc-s{font-size:12px;color:var(--text-muted);margin-top:3px}
-.svc-p{font-size:16px;font-weight:600;color:var(--primary);white-space:nowrap}
-.badge-new{font-size:10px;background:var(--accent-light);color:#92400e;padding:3px 8px;border-radius:20px;margin-left:8px}
-.lwyr-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.lwyr{border:1px solid var(--border);border-radius:14px;padding:16px 18px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:16px;background:#fff;box-shadow:var(--shadow)}
-.lwyr:hover,.lwyr.sel{border-color:var(--primary);background:#f8fafc;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
-.lwyr-av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:600;flex-shrink:0}
+.svc-s{font-size:12px;color:var(--muted);margin-top:2px}
+.svc-p{font-size:16px;font-weight:600;color:var(--navy);white-space:nowrap}
+.badge-new{font-size:10px;background:var(--gold-l);color:#7a5a00;padding:2px 7px;border-radius:20px;margin-left:6px}
+.lwyr-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.lwyr{border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px}
+.lwyr:hover,.lwyr.sel{border-color:var(--navy);background:#f0f4ff}
+.lwyr-av{width:44px;height:44px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0}
 .lwyr-n{font-size:14px;font-weight:500;color:var(--text)}
-.lwyr-m{font-size:12px;color:var(--text-muted);margin-top:3px}
-.lwyr-stars{color:var(--accent);font-size:13px}
-.lwyr-badge{font-size:10px;background:var(--success-light);color:var(--success);padding:3px 10px;border-radius:20px;font-weight:500}
-.oa-tag{font-size:11px;color:var(--success);margin-left:6px}
+.lwyr-m{font-size:12px;color:var(--muted);margin-top:2px}
+.lwyr-stars{color:var(--gold);font-size:12px}
+.lwyr-badge{font-size:10px;background:var(--green-l);color:var(--green);padding:2px 8px;border-radius:20px;font-weight:500}
+.oa-tag{font-size:11px;color:var(--green);margin-left:4px}
 
 /* summary */
-.sum-box{background:var(--surface);border-radius:12px;padding:20px;margin-bottom:20px;border:1px solid var(--border);box-shadow:var(--shadow)}
-.sum-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:10px}
-.sum-row.tot{font-weight:600;font-size:15px;color:var(--text);border-top:1px solid var(--border);padding-top:12px;margin-top:6px}
-.guarantee{display:flex;align-items:flex-start;gap:12px;background:var(--success-light);border-radius:10px;padding:16px;margin-bottom:20px;border:1px solid #a7f3d0}
-.guarantee p{font-size:12px;color:var(--success);line-height:1.6}
+.sum-box{background:var(--surface);border-radius:10px;padding:16px;margin-bottom:16px}
+.sum-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:8px}
+.sum-row.tot{font-weight:600;font-size:15px;color:var(--text);border-top:1px solid var(--border);padding-top:10px;margin-top:4px}
+.guarantee{display:flex;align-items:flex-start;gap:10px;background:var(--green-l);border-radius:8px;padding:12px;margin-bottom:16px}
+.guarantee p{font-size:12px;color:var(--green);line-height:1.5}
 
 /* timeline confirm */
-.tl{display:flex;flex-direction:column;gap:0;margin:20px 0}
-.tl-item{display:flex;gap:16px}
+.tl{display:flex;flex-direction:column;gap:0;margin:16px 0}
+.tl-item{display:flex;gap:14px}
 .tl-l{display:flex;flex-direction:column;align-items:center}
-.tl-dot{width:12px;height:12px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0;box-shadow:0 2px 8px rgba(30,41,59,.3)}
-.tl-line{width:3px;flex:1;background:linear-gradient(to bottom,var(--border),var(--success));margin:6px 0;min-height:28px;border-radius:2px}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--navy);margin-top:4px;flex-shrink:0}
+.tl-line{width:2px;flex:1;background:var(--border);margin:4px 0;min-height:24px}
 .tl-item:last-child .tl-line{display:none}
-.tl-c{padding-bottom:20px}
+.tl-c{padding-bottom:18px}
 .tl-t{font-size:13px;font-weight:500;color:var(--text)}
-.tl-s{font-size:12px;color:var(--text-muted);margin-top:3px}
-.confirm-icon{width:72px;height:72px;background:linear-gradient(135deg,var(--success),#10b981);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px;color:#fff;box-shadow:0 8px 24px rgba(5,150,105,.3)}
+.tl-s{font-size:12px;color:var(--muted);margin-top:2px}
+.confirm-icon{width:64px;height:64px;background:var(--green-l);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px}
 
 /* tabs */
-.tab-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:24px;background:var(--surface);border-radius:12px 12px 0 0;padding:4px}
-.tab{flex:1;padding:12px;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;text-align:center;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .3s;border-radius:8px}
-.tab.active{color:var(--primary);border-bottom-color:var(--primary);background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.tab-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px}
+.tab{flex:1;padding:10px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;text-align:center;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+.tab.active{color:var(--navy);border-bottom-color:var(--navy)}
 
 /* lang row */
-.lang-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
-.lang-btn{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;font-size:13px;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;color:var(--text);box-shadow:var(--shadow)}
-.lang-btn:hover,.lang-btn.sel{border-color:var(--primary);background:var(--surface);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.lang-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.lang-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-size:13px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;color:var(--text)}
+.lang-btn:hover,.lang-btn.sel{border-color:var(--navy);background:#f0f4ff}
 </style>
 </head>
 <body>
@@ -444,279 +440,5 @@ footer{background:linear-gradient(135deg,var(--primary) 0%,#1e40af 100%);padding
     <div class="footer-legal">© 2026 LusoLaw · Plataforma tecnológica de intermediação · NIF PT 000 000 000<br>Não presta serviços jurídicos. Advogados são profissionais independentes certificados pela OA.</div>
   </div>
 </footer>
-
-
-<!-- ═══════════════════════════════════════════
-     MODAL — CLIENT + LAWYER
-═══════════════════════════════════════════ -->
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-<div class="modal" id="modal">
-  <div class="modal-handle"></div>
-  <div id="modalBody"></div>
-</div>
-</div>
-
-
-<script>
-/* ── DRAWER ── */
-function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('drawerOverlay').classList.add('open')}
-function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('drawerOverlay').classList.remove('open')}
-
-/* ── MODAL ── */
-let modalMode='client';
-function openModal(mode){modalMode=mode;document.getElementById('modalOverlay').classList.add('open');if(mode==='client')renderClientFlow();else renderLawyerFlow();}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open')}
-function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal()}
-
-/* ══════════════════════ CLIENT FLOW ══════════════════════ */
-const clientSteps=[{id:'lang',l:'Língua'},{id:'sit',l:'Situação'},{id:'svc',l:'Serviço'},{id:'adv',l:'Advogado'},{id:'pay',l:'Pagamento'},{id:'ok',l:'Confirmado'}];
-let cStep=0,cSel={lang:'pt',sit:null,svc:null,svcName:'',svcPrice:'',lawyer:null};
-
-const sits=[
-  {id:'new',icon:'✈️',t:'Acabei de chegar',d:'Precisas de título de residência'},
-  {id:'ren',icon:'🔄',t:'Renovar documento',d:'O teu AR está a expirar'},
-  {id:'fam',icon:'👨‍👩‍👧',t:'Trazer família',d:'Reagrupamento familiar'},
-  {id:'out',icon:'📋',t:'Outra situação',d:'Vou explicar ao advogado'},
-];
-const svcs={
-  new:[{id:'tr',n:'Título de residência',s:'Pedido inicial + acompanhamento',p:'299€',new:true},{id:'at',n:'Autorização de trabalho',s:'Licença por conta própria',p:'249€'}],
-  ren:[{id:'rn',n:'Renovação de AR',s:'Renovação antes do prazo',p:'199€'},{id:'ue',n:'Estatuto residente UE',s:'Após 5 anos de residência',p:'349€'}],
-  fam:[{id:'rg',n:'Reagrupamento familiar',s:'Cônjuge e filhos menores',p:'399€',new:true},{id:'vm',n:'Visto para menor',s:'Filho menor não nascido em PT',p:'279€'}],
-  out:[{id:'co',n:'Consulta de orientação',s:'30 min com advogado',p:'49€'},{id:'na',n:'Naturalização',s:'Pedido de nacionalidade',p:'499€'}],
-};
-const lawyers=[
-  {init:'AM',n:'Ana Monteiro',m:'Lisboa · 8 anos',r:'4.9',rv:'127',l:'PT, EN, FR',b:'Responde em 2h'},
-  {init:'RC',n:'Rui Carvalho',m:'Porto · 12 anos',r:'4.8',rv:'89',l:'PT, EN',b:'Top advogado'},
-  {init:'SP',n:'Sara Pires',m:'Lisboa · 5 anos',r:'4.7',rv:'54',l:'PT, EN, ES, AR',b:'Responde em 1h'},
-];
-
-function renderClientFlow(){
-  const b=document.getElementById('modalBody');
-  let html=`<div class="modal-close-row"><div class="modal-title">${cStep===5?'Processo iniciado':'LusoLaw'}</div><button class="modal-x" onclick="closeModal()">✕</button></div>`;
-  // progress
-  html+=`<div class="prog-steps">${clientSteps.map((s,i)=>{let cls=i<cStep?'done':i===cStep?'active':'';return`<div class="ps-item ${cls}"><div class="ps-dot">${i<cStep?'✓':i+1}</div><div class="ps-label">${s.l}</div></div>`}).join('')}</div>`;
-
-  if(cStep===0){
-    html+=`<p style="font-size:13px;color:var(--muted);margin-bottom:14px">Em que língua preferes continuar?</p>
-    <div class="lang-row">${[['pt','🇵🇹','Português'],['en','🇬🇧','English'],['br','🇧🇷','PT Brasil'],['fr','🇫🇷','Français'],['ar','🇲🇦','العربية'],['zh','🇨🇳','中文']].map(([id,f,n])=>`<button class="lang-btn ${cSel.lang===id?'sel':''}" onclick="cSel.lang='${id}';renderClientFlow()">${f} ${n}</button>`).join('')}</div>
-    <button class="btn-primary" onclick="cStep++;renderClientFlow()">Continuar →</button>`;
-  }
-  else if(cStep===1){
-    html+=`<p style="font-size:13px;color:var(--muted);margin-bottom:14px">Qual é a tua situação atual?</p>
-    <div class="sit-grid">${sits.map(s=>`<div class="sit-card ${cSel.sit===s.id?'sel':''}" onclick="cSel.sit='${s.id}';cSel.svc=null;renderClientFlow()"><div class="sit-icon">${s.icon}</div><div class="sit-t">${s.t}</div><div class="sit-d">${s.d}</div></div>`).join('')}</div>
-    <div class="btn-row"><button class="btn-sec" onclick="cStep--;renderClientFlow()">← Voltar</button><button class="btn-primary" onclick="cStep++;renderClientFlow()" ${!cSel.sit?'disabled':''}>Continuar →</button></div>`;
-  }
-  else if(cStep===2){
-    const list=svcs[cSel.sit]||svcs.out;
-    html+=`<p style="font-size:13px;color:var(--muted);margin-bottom:14px">Que serviço precisas?</p>
-    <div class="svc-list">${list.map(s=>`<div class="svc ${cSel.svc===s.id?'sel':''}" onclick="cSel.svc='${s.id}';cSel.svcName='${s.n}';cSel.svcPrice='${s.p}';renderClientFlow()"><div><div class="svc-n">${s.n}${s.new?'<span class="badge-new">Novo</span>':''}</div><div class="svc-s">${s.s}</div></div><div class="svc-p">${s.p}</div></div>`).join('')}</div>
-    <div class="btn-row"><button class="btn-sec" onclick="cStep--;renderClientFlow()">← Voltar</button><button class="btn-primary" onclick="cStep++;renderClientFlow()" ${!cSel.svc?'disabled':''}>Continuar →</button></div>`;
-  }
-  else if(cStep===3){
-    html+=`<p style="font-size:13px;color:var(--muted);margin-bottom:14px">Escolhe o teu advogado — todos certificados ✓ OA</p>
-    <div class="lwyr-list">${lawyers.map((l,i)=>`<div class="lwyr ${cSel.lawyer===i?'sel':''}" onclick="cSel.lawyer=${i};renderClientFlow()"><div class="lwyr-av">${l.init}</div><div style="flex:1"><div class="lwyr-n">${l.n}<span class="oa-tag">✓ OA</span></div><div class="lwyr-m">${l.m}</div><div style="display:flex;align-items:center;gap:8px;margin-top:4px"><span class="lwyr-stars">★ ${l.r}</span><span style="font-size:11px;color:var(--muted)">(${l.rv})</span><span class="lwyr-badge">${l.b}</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px">🗣 ${l.l}</div></div></div>`).join('')}</div>
-    <div class="btn-row"><button class="btn-sec" onclick="cStep--;renderClientFlow()">← Voltar</button><button class="btn-primary" onclick="cStep++;renderClientFlow()" ${cSel.lawyer===null?'disabled':''}>Continuar →</button></div>`;
-  }
-  else if(cStep===4){
-    const lw=lawyers[cSel.lawyer]||lawyers[0];
-    html+=`<p style="font-size:13px;color:var(--muted);margin-bottom:14px">Verifica e confirma o teu pedido</p>
-    <div class="sum-box">
-      <div class="sum-row"><span>Serviço</span><span>${cSel.svcName}</span></div>
-      <div class="sum-row"><span>Advogado</span><span>${lw.n}</span></div>
-      <div class="sum-row"><span>Fatura emitida por</span><span>${lw.n}</span></div>
-      <div class="sum-row tot"><span>Total</span><span>${cSel.svcPrice}</span></div>
-    </div>
-    <div class="guarantee"><span style="font-size:18px;flex-shrink:0">🛡️</span><p><strong>Garantia:</strong> Se o advogado não iniciar em 48h, reembolso total automático.</p></div>
-    <div class="field"><label>Email</label><input type="email" placeholder="o.teu@email.com"/></div>
-    <div class="field"><label>Telefone</label><input type="tel" placeholder="+351 900 000 000"/></div>
-    <div class="btn-row"><button class="btn-sec" onclick="cStep--;renderClientFlow()">← Voltar</button><button class="btn-primary" onclick="cStep++;renderClientFlow()">Pagar com Stripe →</button></div>`;
-  }
-  else if(cStep===5){
-    const lw=lawyers[cSel.lawyer]||lawyers[0];
-    html+=`<div style="text-align:center"><div class="confirm-icon">✓</div><h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px">Pedido confirmado!</h3><p style="font-size:13px;color:var(--muted);margin-bottom:20px">${lw.n} irá contactar-te em breve.</p></div>
-    <div class="tl">
-      ${[['Agora','Pagamento processado com sucesso'],['Até 2h',lw.n+' confirma por email'],['24–48h','Primeira chamada de orientação'],['Em curso','Submissão e acompanhamento'],['Concluído','Notificação quando aprovado']].map(([t,d])=>`<div class="tl-item"><div class="tl-l"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-c"><div class="tl-t">${t}</div><div class="tl-s">${d}</div></div></div>`).join('')}
-    </div>
-    <button class="btn-primary" onclick="closeModal()">Ver o meu processo</button>`;
-  }
-  b.innerHTML=html;
-}
-
-/* ══════════════════════ LAWYER ONBOARDING ══════════════════════ */
-const lwSteps=[{l:'Conta'},{l:'Identidade'},{l:'Cédula OA'},{l:'Serviços'},{l:'Concluído'}];
-let lwStep=0,lwData={docDone:false,cedulaDone:false,faceDone:false};
-
-function renderLawyerFlow(){
-  const b=document.getElementById('modalBody');
-  let html=`<div class="modal-close-row"><div class="modal-title">Registo de advogado</div><button class="modal-x" onclick="closeModal()">✕</button></div>`;
-  html+=`<div class="prog-steps">${lwSteps.map((s,i)=>{let cls=i<lwStep?'done':i===lwStep?'active':'';return`<div class="ps-item ${cls}"><div class="ps-dot">${i<lwStep?'✓':i+1}</div><div class="ps-label">${s.l}</div></div>`}).join('')}</div>`;
-
-  if(lwStep===0){
-    html+=`
-    <div class="form-section">Dados pessoais</div>
-    <div class="field-row">
-      <div class="field"><label>Nome próprio</label><input placeholder="Ana"/></div>
-      <div class="field"><label>Apelido</label><input placeholder="Monteiro"/></div>
-    </div>
-    <div class="field"><label>Data de nascimento</label><input type="date"/></div>
-    <div class="form-section">Contacto</div>
-    <div class="field"><label>Email profissional</label><input type="email" placeholder="ana@escritorio.pt"/></div>
-    <div class="field"><label>Telefone</label><input type="tel" placeholder="+351 900 000 000"/></div>
-    <div class="field"><label>Senha</label><input type="password" placeholder="Mínimo 8 caracteres"/></div>
-    <button class="btn-primary" onclick="lwStep++;renderLawyerFlow()">Continuar →</button>`;
-  }
-
-  else if(lwStep===1){
-    html+=`
-    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Precisamos de verificar a tua identidade. Aceita BI, Passaporte ou Cartão de Cidadão.</p>
-    <div class="verify-box">
-      <div class="verify-row">
-        <div class="verify-icon">🪪</div>
-        <div class="verify-info"><div class="vt">Documento de identificação</div><div class="vs">BI · Passaporte · Cartão de Cidadão</div></div>
-        <button class="verify-btn ${lwData.docDone?'done':''}" onclick="simulateOCR('doc')">${lwData.docDone?'✓ Verificado':'Fazer upload'}</button>
-      </div>
-      <div class="upload-box" style="margin-top:10px">
-        <input type="file" accept="image/*,.pdf" onchange="simulateOCR('doc')"/>
-        <div class="upload-icon">📄</div>
-        <div class="upload-title">Arrasta ou clica para fazer upload</div>
-        <div class="upload-sub">JPG, PNG ou PDF · máx 10MB</div>
-      </div>
-      <div class="verify-progress ${lwData.docDone?'':'show'}" id="ocrDocProgress" style="${lwData.docDone?'display:none':''}">
-        <div class="vp-bar-bg"><div class="vp-bar" id="ocrDocBar" style="width:${lwData.docDone?'100%':'0'}"></div></div>
-        <div class="vp-label" id="ocrDocLabel">${lwData.docDone?'✓ OCR concluído — dados extraídos':'A aguardar documento…'}</div>
-      </div>
-    </div>
-
-    <div class="verify-box">
-      <div class="verify-row">
-        <div class="verify-icon">🤳</div>
-        <div class="verify-info"><div class="vt">Verificação facial</div><div class="vs">Selfie em tempo real para confirmar identidade</div></div>
-        <button class="verify-btn ${lwData.faceDone?'done':''}" onclick="simulateFace()">${lwData.faceDone?'✓ Verificado':'Iniciar'}</button>
-      </div>
-      <div id="faceProgress" style="display:${lwData.faceDone?'none':'none'}">
-        <div class="vp-bar-bg" style="margin-top:10px"><div class="vp-bar" id="faceBar" style="width:0"></div></div>
-        <div class="vp-label" id="faceLabel">A aguardar…</div>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-sec" onclick="lwStep--;renderLawyerFlow()">← Voltar</button>
-      <button class="btn-primary" onclick="lwStep++;renderLawyerFlow()" ${!(lwData.docDone&&lwData.faceDone)?'disabled':''}>Continuar →</button>
-    </div>`;
-  }
-
-  else if(lwStep===2){
-    html+=`
-    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Insere o teu número de cédula e faz upload do documento. Verificamos na base da OA.</p>
-    <div class="field"><label>Número de cédula OA</label><input id="cedulaInput" placeholder="ex: 12345P" oninput="updateCedulaPreview(this.value)" value="${lwData.cedulaNum||''}"/></div>
-    <div id="cedulaPreview" style="margin-bottom:14px;${lwData.cedulaNum?'':'display:none'}">
-      <div class="cedula-badge">⚖️ OA · <span class="cedula-num" id="cedulaNumDisplay">${lwData.cedulaNum||''}</span> · <span style="font-size:12px">A verificar…</span></div>
-    </div>
-    <div class="field"><label>Upload da cédula profissional</label></div>
-    <div class="upload-box">
-      <input type="file" accept="image/*,.pdf" onchange="simulateCedulaUpload()"/>
-      <div class="upload-icon">📜</div>
-      <div class="upload-title">Cédula profissional OA</div>
-      <div class="upload-sub">Frente e verso · JPG, PNG ou PDF</div>
-    </div>
-    <div class="upload-done ${lwData.cedulaDone?'show':''}" id="cedulaUploadDone">
-      <span style="font-size:18px">✓</span><div class="upload-done-text">Cédula carregada — verificação OA em curso</div>
-    </div>
-
-    <div style="background:#fff8e6;border:1px solid #f0c96a;border-radius:8px;padding:12px;margin:14px 0;font-size:12px;color:#7a5a00;line-height:1.5">
-      ⚡ <strong>Verificação automática:</strong> O número da cédula é cruzado com o registo público da Ordem dos Advogados de Portugal. Processo leva até 24h.
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-sec" onclick="lwStep--;renderLawyerFlow()">← Voltar</button>
-      <button class="btn-primary" onclick="lwStep++;renderLawyerFlow()" ${!lwData.cedulaDone?'disabled':''}>Continuar →</button>
-    </div>`;
-  }
-
-  else if(lwStep===3){
-    html+=`
-    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Define as tuas áreas de atuação e os serviços que pretendes oferecer.</p>
-    <div class="form-section">Áreas de atuação</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
-      ${['Título de residência','Reagrupamento familiar','Renovação de AR','Naturalização','Autorização de trabalho','Visto de nómada'].map(a=>`<label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--navy)"/>${a}</label>`).join('')}
-    </div>
-    <div class="form-section">Disponibilidade e línguas</div>
-    <div class="field"><label>Línguas faladas</label><input placeholder="ex: Português, Inglês, Árabe" value="Português, Inglês"/></div>
-    <div class="field-row">
-      <div class="field"><label>Cidade principal</label>
-        <select><option>Lisboa</option><option>Porto</option><option>Braga</option><option>Faro</option><option>Coimbra</option></select>
-      </div>
-      <div class="field"><label>Anos de experiência</label><input type="number" placeholder="ex: 8" value="8"/></div>
-    </div>
-    <div class="form-section">Conta bancária (Stripe)</div>
-    <div style="background:#f0f4ff;border:1px solid #b3c6ff;border-radius:8px;padding:12px;font-size:12px;color:#2a3a7a;line-height:1.5;margin-bottom:16px">
-      💳 O pagamento dos clientes é processado pelo <strong>Stripe Connect</strong>. Os honorários são transferidos diretamente para a tua conta em 2–3 dias úteis após a conclusão do serviço.
-    </div>
-    <button class="btn-primary" style="background:var(--green)" onclick="lwStep++;renderLawyerFlow()">Conectar conta Stripe →</button>
-    <div class="btn-row" style="margin-top:8px">
-      <button class="btn-sec" onclick="lwStep--;renderLawyerFlow()">← Voltar</button>
-    </div>`;
-  }
-
-  else if(lwStep===4){
-    html+=`
-    <div style="text-align:center">
-      <div style="width:64px;height:64px;background:var(--green-l);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px">⚖️</div>
-      <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px">Registo submetido!</h3>
-      <p style="font-size:13px;color:var(--muted);margin-bottom:24px">A tua cédula está a ser verificada junto à OA. Receberás um email em até 24h.</p>
-    </div>
-    <div class="tl">
-      ${[['Agora','Registo e documentos recebidos'],['Até 24h','Verificação da cédula na OA'],['Aprovado','Perfil ativo na plataforma'],['Primeiros pedidos','Começas a receber clientes']].map(([t,d])=>`<div class="tl-item"><div class="tl-l"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-c"><div class="tl-t">${t}</div><div class="tl-s">${d}</div></div></div>`).join('')}
-    </div>
-    <div class="cedula-badge" style="margin-bottom:16px;display:flex">⚖️ Cédula OA · <span class="cedula-num">${lwData.cedulaNum||'12345P'}</span> · Em verificação</div>
-    <button class="btn-primary" onclick="closeModal()">Fechar</button>`;
-  }
-
-  b.innerHTML=html;
-}
-
-/* ── OCR / face simulators ── */
-function simulateOCR(type){
-  lwData.docDone=false;
-  const bar=document.getElementById('ocrDocBar');
-  const label=document.getElementById('ocrDocLabel');
-  const prog=document.getElementById('ocrDocProgress');
-  if(!bar)return;
-  prog.style.display='block';
-  bar.style.width='0';
-  label.textContent='A ler documento com OCR…';
-  setTimeout(()=>{bar.style.width='40%';label.textContent='A extrair dados…';},300);
-  setTimeout(()=>{bar.style.width='75%';label.textContent='A verificar autenticidade…';},1200);
-  setTimeout(()=>{bar.style.width='100%';label.textContent='✓ Documento verificado — dados extraídos';lwData.docDone=true;renderLawyerFlow();},2400);
-}
-
-function simulateFace(){
-  const prog=document.getElementById('faceProgress');
-  const bar=document.getElementById('faceBar');
-  const label=document.getElementById('faceLabel');
-  if(!prog)return;
-  prog.style.display='block';
-  bar.style.width='0';
-  label.textContent='A iniciar câmara…';
-  setTimeout(()=>{bar.style.width='30%';label.textContent='A detetar rosto…';},400);
-  setTimeout(()=>{bar.style.width='65%';label.textContent='A comparar com documento…';},1400);
-  setTimeout(()=>{bar.style.width='100%';label.textContent='✓ Rosto verificado';lwData.faceDone=true;renderLawyerFlow();},2600);
-}
-
-function simulateCedulaUpload(){
-  lwData.cedulaDone=false;
-  setTimeout(()=>{lwData.cedulaDone=true;renderLawyerFlow();},1200);
-}
-
-function updateCedulaPreview(v){
-  lwData.cedulaNum=v;
-  const preview=document.getElementById('cedulaPreview');
-  const display=document.getElementById('cedulaNumDisplay');
-  if(preview&&display){
-    preview.style.display=v?'block':'none';
-    display.textContent=v.toUpperCase();
-  }
-}
-</script>
 </body>
 </html>
