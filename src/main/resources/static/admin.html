@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LusoLaw Admin | Controlo de Plataforma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #eef3ff;
+      --bg-2: #dce8ff;
+      --surface: #ffffff;
+      --line: #d5e0f8;
+      --text: #0f1c3b;
+      --muted: #5d6f97;
+      --primary: #1452ff;
+      --primary-strong: #0a3bc9;
+      --ok: #0e9f6e;
+      --danger: #c53a5c;
+      --shadow: 0 18px 45px rgba(19, 54, 143, 0.16);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 0%, var(--bg-2) 0%, var(--bg) 36%),
+        linear-gradient(180deg, #f8fbff, #edf2ff);
+      padding: 20px 0 32px;
+    }
+
+    .container { width: min(1200px, 92vw); margin: 0 auto; }
+
+    .topbar {
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 22px rgba(17, 49, 130, 0.1);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+    }
+
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; font-size: 0.95rem; }
+    .mark {
+      width: 35px;
+      height: 35px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--primary), #00b8a2);
+      position: relative;
+      box-shadow: 0 7px 18px rgba(20, 82, 255, 0.34);
+    }
+    .mark::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.9);
+    }
+
+    .actions { display: flex; gap: 8px; align-items: center; }
+
+    .btn {
+      border: none;
+      border-radius: 11px;
+      padding: 9px 13px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+      box-shadow: 0 9px 18px rgba(20, 82, 255, 0.3);
+    }
+    .btn-secondary {
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    .hero {
+      margin-top: 14px;
+      border: 1px solid #d8e4ff;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(140deg, #fff, #edf4ff);
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 44px);
+    }
+    .tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      background: #eaf0ff;
+      color: #2348b3;
+      border-radius: 999px;
+      padding: 6px 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+    h1 {
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      margin-bottom: 10px;
+      max-width: 760px;
+    }
+    .hero p { color: var(--muted); max-width: 760px; }
+
+    .notice {
+      margin-top: 12px;
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: none;
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+    .notice.show { display: block; }
+    .notice.ok { background: #ebfff5; border: 1px solid #b5edd5; color: #0f6b4d; }
+    .notice.error { background: #fff0f4; border: 1px solid #f0b8c8; color: #9c3150; }
+
+    .auth-panel, .dashboard {
+      margin-top: 16px;
+      border: 1px solid #d9e4ff;
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 14px 34px rgba(19, 54, 143, 0.12);
+      padding: 18px;
+    }
+
+    .auth-panel h2, .dashboard h2 {
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: -0.02em;
+      font-size: 1.35rem;
+      margin-bottom: 7px;
+    }
+    .muted { color: var(--muted); font-size: 0.88rem; }
+
+    .form { margin-top: 12px; display: grid; gap: 8px; max-width: 470px; }
+    .field { display: grid; gap: 4px; }
+    .field label { color: var(--muted); font-size: 0.78rem; font-weight: 700; }
+    .input, .select {
+      border: 1px solid #d5e1ff;
+      background: #fbfdff;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 11px;
+      width: 100%;
+      font: inherit;
+    }
+
+    .dashboard-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .dashboard-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .chip {
+      border-radius: 999px;
+      border: 1px solid #d5e1ff;
+      background: #f2f6ff;
+      color: #2a4aa8;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 10px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .kpi {
+      border: 1px solid #d6e2ff;
+      border-radius: 14px;
+      background: #fff;
+      padding: 12px;
+    }
+    .kpi .label { color: var(--muted); font-size: 0.78rem; font-weight: 700; }
+    .kpi .value { font-family: "Space Grotesk", sans-serif; font-size: 1.35rem; font-weight: 700; margin-top: 3px; }
+
+    .grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 10px;
+    }
+    .panel {
+      border: 1px solid #d7e3ff;
+      border-radius: 14px;
+      background: #fff;
+      padding: 12px;
+    }
+    .panel h3 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .chart {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0,1fr));
+      gap: 6px;
+      align-items: end;
+      height: 190px;
+      margin-top: 10px;
+      padding-top: 8px;
+    }
+    .bar-wrap {
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+    }
+    .bar {
+      width: 100%;
+      border-radius: 8px 8px 6px 6px;
+      background: linear-gradient(180deg, #59b8ff, var(--primary));
+      min-height: 8px;
+      box-shadow: inset 0 -2px 5px rgba(0,0,0,0.07);
+    }
+    .bar-label { font-size: 0.63rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+
+    .table-wrap { overflow: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 520px;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 6px;
+      border-bottom: 1px solid #e6edff;
+      font-size: 0.82rem;
+    }
+    th { color: var(--muted); font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 1080px) {
+      .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .kpis { grid-template-columns: 1fr; }
+      .dashboard-head { align-items: stretch; }
+      .dashboard-meta { width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <a class="brand" href="/"><span class="mark"></span><span>LusoLaw Admin Control Center</span></a>
+      <div class="actions">
+        <a class="btn btn-secondary" href="/">Marketplace</a>
+        <button class="btn btn-secondary hidden" id="logoutBtn" type="button">Terminar Sessao</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <span class="tag">Area exclusiva ADMIN</span>
+      <h1>Vista completa da operacao: receita, escala, pagamentos e performance.</h1>
+      <p>Este painel mostra metricas de negocio em tempo real, com leitura unica para gestao da plataforma.</p>
+      <div id="notice" class="notice"></div>
+    </section>
+
+    <section id="authPanel" class="auth-panel">
+      <h2>Login de Administrador</h2>
+      <p class="muted">Apenas contas com role ADMIN conseguem aceder aos dados da plataforma.</p>
+      <form id="loginForm" class="form">
+        <div class="field">
+          <label for="email">Email Admin</label>
+          <input id="email" class="input" type="email" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" class="input" type="password" minlength="8" required />
+        </div>
+        <button class="btn btn-primary" type="submit">Entrar no Painel</button>
+      </form>
+    </section>
+
+    <section id="dashboard" class="dashboard hidden">
+      <div class="dashboard-head">
+        <div>
+          <h2>Dashboard Executivo</h2>
+          <p id="adminIdentity" class="muted">-</p>
+        </div>
+        <div class="dashboard-meta">
+          <span class="chip" id="updatedAtChip">Atualizacao: -</span>
+          <select id="windowDays" class="select">
+            <option value="7">7 dias</option>
+            <option value="30" selected>30 dias</option>
+            <option value="90">90 dias</option>
+            <option value="180">180 dias</option>
+          </select>
+          <button class="btn btn-primary" id="refreshBtn" type="button">Atualizar</button>
+        </div>
+      </div>
+
+      <div id="kpis" class="kpis"></div>
+
+      <div class="grid">
+        <article class="panel">
+          <h3>Faturacao Mensal (12 meses)</h3>
+          <p class="muted">Receita consolidada apenas de bookings efetivamente pagos.</p>
+          <div id="revenueChart" class="chart"></div>
+        </article>
+
+        <article class="panel">
+          <h3>Top Advogados por Receita</h3>
+          <p class="muted">Ranking por receita acumulada em bookings pagos.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Advogado</th>
+                  <th>Receita</th>
+                  <th>Pagos</th>
+                </tr>
+              </thead>
+              <tbody id="topLawyersBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid" style="grid-template-columns: 1fr;">
+        <article class="panel">
+          <h3>Pagamentos Recentes</h3>
+          <p class="muted">Ultimos pagamentos confirmados na plataforma.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID Booking</th>
+                  <th>Servico</th>
+                  <th>Cliente</th>
+                  <th>Advogado</th>
+                  <th>Valor</th>
+                  <th>Pago Em</th>
+                </tr>
+              </thead>
+              <tbody id="recentPaymentsBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+
+      <div class="grid">
+        <article class="panel">
+          <h3>Aprovacao de Advogados</h3>
+          <p class="muted">Novas contas LAWYER ficam pendentes ate aprovacao manual do admin.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>N. Advogado</th>
+                  <th>N. Documento</th>
+                  <th>Documentos</th>
+                  <th>Acoes</th>
+                </tr>
+              </thead>
+              <tbody id="pendingLawyersBody"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel">
+          <h3>Identificacao de Utilizadores</h3>
+          <p class="muted">Registos recentes de documento de identificacao (clientes e advogados).</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Role</th>
+                  <th>N. Documento</th>
+                  <th>Status</th>
+                  <th>Doc ID</th>
+                </tr>
+              </thead>
+              <tbody id="identificationBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const state = {
+      token: null,
+      user: null
+    };
+
+    const els = {
+      authPanel: document.getElementById("authPanel"),
+      dashboard: document.getElementById("dashboard"),
+      loginForm: document.getElementById("loginForm"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      notice: document.getElementById("notice"),
+      windowDays: document.getElementById("windowDays"),
+      refreshBtn: document.getElementById("refreshBtn"),
+      adminIdentity: document.getElementById("adminIdentity"),
+      updatedAtChip: document.getElementById("updatedAtChip"),
+      kpis: document.getElementById("kpis"),
+      revenueChart: document.getElementById("revenueChart"),
+      topLawyersBody: document.getElementById("topLawyersBody"),
+      recentPaymentsBody: document.getElementById("recentPaymentsBody"),
+      pendingLawyersBody: document.getElementById("pendingLawyersBody"),
+      identificationBody: document.getElementById("identificationBody")
+    };
+
+    function escapeHtml(value) {
+      if (value === null || value === undefined) {
+        return "";
+      }
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function showNotice(message, type = "ok") {
+      els.notice.textContent = message;
+      els.notice.className = `notice show ${type === "error" ? "error" : "ok"}`;
+      setTimeout(() => {
+        els.notice.className = "notice";
+      }, 4200);
+    }
+
+    function formatMoney(value) {
+      return new Intl.NumberFormat("pt-PT", {
+        style: "currency",
+        currency: "EUR"
+      }).format(Number(value || 0));
+    }
+
+    function formatDateTime(value) {
+      if (!value) {
+        return "-";
+      }
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) {
+        return value;
+      }
+      return new Intl.DateTimeFormat("pt-PT", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function setSession(auth) {
+      state.token = auth.token;
+      state.user = auth.user;
+      sessionStorage.setItem("lusolaw_token", auth.token);
+      sessionStorage.setItem("lusolaw_user", JSON.stringify(auth.user));
+    }
+
+    function clearSession() {
+      state.token = null;
+      state.user = null;
+      sessionStorage.removeItem("lusolaw_token");
+      sessionStorage.removeItem("lusolaw_user");
+    }
+
+    function syncViewByRole() {
+      const isAdmin = state.user && state.user.role === "ADMIN";
+      els.authPanel.classList.toggle("hidden", isAdmin);
+      els.dashboard.classList.toggle("hidden", !isAdmin);
+      els.logoutBtn.classList.toggle("hidden", !isAdmin);
+      els.adminIdentity.textContent = isAdmin
+        ? `Sessao ADMIN: ${state.user.name} (${state.user.email})`
+        : "-";
+    }
+
+    async function api(path, options = {}, requiresAuth = false) {
+      const headers = { ...(options.headers || {}) };
+
+      if (options.body && !headers["Content-Type"]) {
+        headers["Content-Type"] = "application/json";
+      }
+
+      if (requiresAuth) {
+        if (!state.token) {
+          throw new Error("Autenticacao obrigatoria");
+        }
+        headers["Authorization"] = `Bearer ${state.token}`;
+      }
+
+      const response = await fetch(path, { ...options, headers });
+      const text = await response.text();
+      let data = null;
+
+      if (text) {
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = text;
+        }
+      }
+
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          clearSession();
+          syncViewByRole();
+        }
+        const message = typeof data === "object" && data !== null
+          ? data.error || data.message || "Operacao falhou"
+          : (data || "Operacao falhou");
+        throw new Error(message);
+      }
+
+      return data;
+    }
+
+    async function submitLogin(event) {
+      event.preventDefault();
+      const payload = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+      };
+
+      try {
+        const auth = await api("/api/auth/login", {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+
+        if (!auth.user || auth.user.role !== "ADMIN") {
+          clearSession();
+          syncViewByRole();
+          showNotice("Esta conta nao tem permissao de administrador.", "error");
+          return;
+        }
+
+        setSession(auth);
+        syncViewByRole();
+        showNotice("Login admin efetuado com sucesso.");
+        await loadDashboard();
+      } catch (error) {
+        showNotice(error.message || "Falha no login", "error");
+      }
+    }
+
+    function renderKpis(kpis) {
+      const cards = [
+        { label: "Faturacao Total", value: formatMoney(kpis.totalRevenue) },
+        { label: "Faturacao Janela", value: formatMoney(kpis.revenueInWindow) },
+        { label: "Ticket Medio", value: formatMoney(kpis.averageTicket) },
+        { label: "Servicos Pagos", value: Number(kpis.totalPaidBookings || 0).toLocaleString("pt-PT") },
+        { label: "Pagos na Janela", value: Number(kpis.paidBookingsInWindow || 0).toLocaleString("pt-PT") },
+        { label: "Advogados", value: Number(kpis.totalLawyers || 0).toLocaleString("pt-PT") },
+        { label: "Clientes", value: Number(kpis.totalClients || 0).toLocaleString("pt-PT") },
+        { label: "Admins", value: Number(kpis.totalAdmins || 0).toLocaleString("pt-PT") },
+        { label: "Total Utilizadores", value: Number(kpis.totalUsers || 0).toLocaleString("pt-PT") },
+        { label: "Servicos Publicados", value: Number(kpis.totalServices || 0).toLocaleString("pt-PT") },
+        { label: "Bookings Totais", value: Number(kpis.totalBookings || 0).toLocaleString("pt-PT") },
+        { label: "Pendentes / Aceites", value: `${kpis.pendingBookings || 0} / ${kpis.acceptedBookings || 0}` },
+        { label: "Rejeitados / Reemb.", value: `${kpis.rejectedBookings || 0} / ${kpis.refundedBookings || 0}` }
+      ];
+
+      els.kpis.innerHTML = cards.map((item) => `
+        <article class="kpi">
+          <span class="label">${escapeHtml(item.label)}</span>
+          <div class="value">${escapeHtml(item.value)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderRevenueChart(points) {
+      if (!points || !points.length) {
+        els.revenueChart.innerHTML = "<p class='muted'>Sem dados de receita para exibir.</p>";
+        return;
+      }
+
+      const maxRevenue = points.reduce((acc, point) => Math.max(acc, Number(point.revenue || 0)), 0);
+      const denominator = maxRevenue > 0 ? maxRevenue : 1;
+
+      els.revenueChart.innerHTML = points.map((point) => {
+        const pct = Math.max(4, Math.round((Number(point.revenue || 0) / denominator) * 100));
+        const label = String(point.month || "-").split(" ")[0];
+        const title = `${point.month}: ${formatMoney(point.revenue)} | ${point.paidBookings || 0} pagos`;
+        return `
+          <div class="bar-wrap" title="${escapeHtml(title)}">
+            <div class="bar" style="height:${pct}%;"></div>
+            <span class="bar-label">${escapeHtml(label)}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderTopLawyers(rows) {
+      if (!rows || !rows.length) {
+        els.topLawyersBody.innerHTML = "<tr><td colspan='3' class='muted'>Sem pagamentos registados.</td></tr>";
+        return;
+      }
+
+      els.topLawyersBody.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.lawyerName || "-")}</td>
+          <td>${escapeHtml(formatMoney(row.revenue))}</td>
+          <td>${escapeHtml(Number(row.paidBookings || 0).toLocaleString("pt-PT"))}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderRecentPayments(rows) {
+      if (!rows || !rows.length) {
+        els.recentPaymentsBody.innerHTML = "<tr><td colspan='6' class='muted'>Sem pagamentos recentes.</td></tr>";
+        return;
+      }
+
+      els.recentPaymentsBody.innerHTML = rows.map((row) => `
+        <tr>
+          <td>#${escapeHtml(row.bookingId)}</td>
+          <td>${escapeHtml(row.serviceName || "-")}</td>
+          <td>${escapeHtml(row.clientName || "-")}</td>
+          <td>${escapeHtml(row.lawyerName || "-")}</td>
+          <td>${escapeHtml(formatMoney(row.amount))}</td>
+          <td>${escapeHtml(formatDateTime(row.paidAt))}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderPendingLawyers(rows) {
+      if (!rows || !rows.length) {
+        els.pendingLawyersBody.innerHTML = "<tr><td colspan='6' class='muted'>Sem advogados pendentes.</td></tr>";
+        return;
+      }
+
+      els.pendingLawyersBody.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.name || "-")}</td>
+          <td>${escapeHtml(row.email || "-")}</td>
+          <td>${escapeHtml(row.lawyerRegistrationNumber || "-")}</td>
+          <td>${escapeHtml(row.identificationNumber || "-")}</td>
+          <td>
+            <button class="btn btn-secondary open-doc-btn" data-kind="id" data-user="${row.userId}" type="button">Ver ID</button>
+            ${row.hasLawyerCredentialDocument ? `<button class="btn btn-secondary open-doc-btn" data-kind="lawyer" data-user="${row.userId}" type="button">Ver OA</button>` : ""}
+          </td>
+          <td>
+            <button class="btn btn-primary approve-lawyer-btn" data-user="${row.userId}" type="button">Aprovar</button>
+            <button class="btn btn-secondary reject-lawyer-btn" data-user="${row.userId}" type="button">Rejeitar</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderIdentificationRecords(rows) {
+      if (!rows || !rows.length) {
+        els.identificationBody.innerHTML = "<tr><td colspan='5' class='muted'>Sem registos de identificacao.</td></tr>";
+        return;
+      }
+
+      els.identificationBody.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.name || "-")}</td>
+          <td>${escapeHtml(row.role || "-")}</td>
+          <td>${escapeHtml(row.identificationNumber || "-")}</td>
+          <td>${escapeHtml(row.accountStatus || "-")}</td>
+          <td>
+            <button class="btn btn-secondary open-doc-btn" data-kind="id" data-user="${row.userId}" type="button">Ver Documento</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    async function openDocument(userId, kind) {
+      const endpoint = kind === "lawyer"
+        ? `/api/admin/users/${userId}/documents/lawyer-credential`
+        : `/api/admin/users/${userId}/documents/id`;
+
+      try {
+        const response = await fetch(endpoint, {
+          headers: { Authorization: `Bearer ${state.token}` }
+        });
+        if (!response.ok) {
+          throw new Error("Falha ao abrir documento");
+        }
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, "_blank", "noopener,noreferrer");
+      } catch (error) {
+        showNotice(error.message || "Nao foi possivel abrir o documento", "error");
+      }
+    }
+
+    async function moderateLawyer(userId, action) {
+      try {
+        await api(`/api/admin/lawyers/${userId}/${action}`, { method: "POST" }, true);
+        showNotice(action === "approve" ? "Advogado aprovado com sucesso." : "Advogado rejeitado com sucesso.");
+        await loadDashboard();
+      } catch (error) {
+        showNotice(error.message || "Falha na moderacao", "error");
+      }
+    }
+
+    async function loadDashboard() {
+      if (!state.user || state.user.role !== "ADMIN") {
+        return;
+      }
+
+      try {
+        const days = Number(els.windowDays.value || 30);
+        const [dashboard, pendingLawyers, identificationRecords] = await Promise.all([
+          api(`/api/admin/dashboard?days=${days}`, {}, true),
+          api("/api/admin/lawyers/pending", {}, true),
+          api("/api/admin/compliance/identifications?limit=40", {}, true)
+        ]);
+        renderKpis(dashboard.kpis || {});
+        renderRevenueChart(dashboard.revenueByMonth || []);
+        renderTopLawyers(dashboard.topLawyersByRevenue || []);
+        renderRecentPayments(dashboard.recentPayments || []);
+        renderPendingLawyers(pendingLawyers || []);
+        renderIdentificationRecords(identificationRecords || []);
+        els.updatedAtChip.textContent = `Atualizacao: ${formatDateTime(dashboard.generatedAt)}`;
+      } catch (error) {
+        showNotice(error.message || "Falha ao carregar dashboard", "error");
+      }
+    }
+
+    async function hydrateSession() {
+      const token = sessionStorage.getItem("lusolaw_token");
+      const userRaw = sessionStorage.getItem("lusolaw_user");
+      if (!token || !userRaw) {
+        syncViewByRole();
+        return;
+      }
+
+      try {
+        state.token = token;
+        state.user = JSON.parse(userRaw);
+
+        const me = await api("/api/auth/me", {}, true);
+        if (!me || me.role !== "ADMIN") {
+          clearSession();
+          syncViewByRole();
+          showNotice("Sessao atual nao possui role ADMIN.", "error");
+          return;
+        }
+
+        state.user = me;
+        sessionStorage.setItem("lusolaw_user", JSON.stringify(me));
+        syncViewByRole();
+        await loadDashboard();
+      } catch {
+        clearSession();
+        syncViewByRole();
+      }
+    }
+
+    function wireActions() {
+      els.loginForm.addEventListener("submit", submitLogin);
+      els.refreshBtn.addEventListener("click", loadDashboard);
+      els.windowDays.addEventListener("change", loadDashboard);
+      els.logoutBtn.addEventListener("click", () => {
+        clearSession();
+        syncViewByRole();
+        showNotice("Sessao admin terminada.");
+      });
+
+      document.body.addEventListener("click", async (event) => {
+        const docBtn = event.target.closest(".open-doc-btn");
+        if (docBtn) {
+          await openDocument(docBtn.getAttribute("data-user"), docBtn.getAttribute("data-kind"));
+          return;
+        }
+
+        const approveBtn = event.target.closest(".approve-lawyer-btn");
+        if (approveBtn) {
+          await moderateLawyer(approveBtn.getAttribute("data-user"), "approve");
+          return;
+        }
+
+        const rejectBtn = event.target.closest(".reject-lawyer-btn");
+        if (rejectBtn) {
+          await moderateLawyer(rejectBtn.getAttribute("data-user"), "reject");
+        }
+      });
+    }
+
+    async function bootstrap() {
+      wireActions();
+      await hydrateSession();
+    }
+
+    bootstrap();
+  </script>
+</body>
+</html>
