@@ -303,39 +303,62 @@
 
     <section class="hero">
       <span class="tag">Seguranca para clientes e advogados</span>
-      <h1>Plataforma juridica de imigracao com UX premium e API protegida.</h1>
+      <h1>Encontre o advogado ideal para o seu processo de imigração</h1>
       <p>
-        Construida com autenticacao JWT, autorizacao por perfil e fluxo de bookings/pagamentos com regras
-        de ownership para impedir abuso entre contas.
+        Conectamos imigrantes com advogados especializados em Portugal. Agende consultas,
+        compare preços e resolva seu processo de forma segura e transparente.
       </p>
       <div class="actions">
         <button class="btn btn-primary" id="heroRegisterBtn">Comecar Agora</button>
         <button class="btn btn-secondary" id="heroWorkspaceBtn">Abrir Workspace</button>
       </div>
       <div class="kpis">
-        <article class="kpi"><strong>JWT + Roles</strong><span>Acesso controlado em cada endpoint critico.</span></article>
-        <article class="kpi"><strong>Dados Blindados</strong><span>Sem exposicao de password em respostas.</span></article>
-        <article class="kpi"><strong>Design SaaS</strong><span>Layout profissional, claro e responsivo.</span></article>
+        <article class="kpi"><strong>Advogados Verificados</strong><span>Profissionais inscritos na Ordem dos Advogados.</span></article>
+        <article class="kpi"><strong>Processo Seguro</strong><span>Pagamentos protegidos e dados confidenciais.</span></article>
+        <article class="kpi"><strong>Atendimento Personalizado</strong><span>Especialistas em diferentes tipos de visto.</span></article>
       </div>
     </section>
 
     <section class="section">
-      <h2>Beneficios do ecossistema</h2>
-      <p class="lead">Operacao segura para todo o ciclo: descoberta, pedido, resposta e pagamento.</p>
-      <div class="grid-3">
-        <article class="card">
-          <h3>Cliente protegido</h3>
-          <p>Pedido apenas em sessao autenticada e pagamento apenas do proprio booking.</p>
-        </article>
-        <article class="card">
-          <h3>Advogado protegido</h3>
-          <p>Servico criado/editado apenas pelo advogado dono e resposta de pedidos com ownership.</p>
-        </article>
-        <article class="card">
-          <h3>Governanca da API</h3>
-          <p>Validacoes server-side, codigos HTTP coerentes e bloqueio de acoes fora de contexto.</p>
-        </article>
+      <h2>Avalie o Seu Processo de Imigração</h2>
+      <p class="lead">Responda 3 perguntas rápidas e receba uma estimativa de viabilidade</p>
+      
+      <div class="form" style="max-width: 500px; margin: 20px auto;">
+        <div class="field">
+          <label for="serviceType">O que deseja fazer?</label>
+          <select class="select" id="serviceType" required>
+            <option value="">-- Selecione uma opção --</option>
+            <option value="residence">Renovação de Residência</option>
+            <option value="family">Reagrupamento Familiar</option>
+            <option value="manifestacao">Manifestação de Interesse</option>
+            <option value="outra">Outro Processo</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="documentStatus">Tem o seu processo documentado?</label>
+          <select class="select" id="documentStatus" required>
+            <option value="">-- Selecione --</option>
+            <option value="completo">Sim, completo</option>
+            <option value="parcial">Parcialmente</option>
+            <option value="nao">Não</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="timeline">Necessita de urgência?</label>
+          <select class="select" id="timeline" required>
+            <option value="">-- Selecione --</option>
+            <option value="urgente">Sim, até 30 dias</option>
+            <option value="normal">Em 3-6 meses</option>
+            <option value="flexivel">Sem pressa</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" type="button" id="assessBtn" style="width: 100%;">Calcular Viabilidade</button>
       </div>
+
+      <div class="notice" id="viabilityResult" style="margin-top: 20px; max-width: 500px; margin-left: auto; margin-right: auto;"></div>
     </section>
 
     <section class="section" id="workspace">
@@ -407,9 +430,11 @@
     </section>
 
     <footer class="legal-note">
-      A Luso Law é uma plataforma tecnológica de intermediação e não presta serviços jurídicos.
-      A Luso Law não recebe nem gere diretamente o dinheiro do cliente, atuando apenas como ponte
-      entre o imigrante e o advogado.
+      LusoLaw é uma plataforma tecnológica de intermediação. Não prestamos serviços jurídicos nem fornecemos
+      aconselhamento jurídico. Todos os atos próprios de advogado são realizados de forma independente
+      por profissionais inscritos na Ordem dos Advogados. A taxa aplicada pelo serviço corresponde à
+      utilização da plataforma, gestão de backoffice e triagem automatizada, não a uma comissão sobre
+      honorários ou angariação de clientes.
     </footer>
   </div>
 
@@ -976,6 +1001,48 @@
       }
     }
 
+    function calculateViability() {
+      const serviceType = document.getElementById("serviceType").value;
+      const documentStatus = document.getElementById("documentStatus").value;
+      const timeline = document.getElementById("timeline").value;
+
+      if (!serviceType || !documentStatus || !timeline) {
+        showNotice("Preenche todos os campos antes de calcular.", "error");
+        return;
+      }
+
+      let viability = 75;
+
+      if (documentStatus === "completo") viability += 20;
+      else if (documentStatus === "parcial") viability += 10;
+
+      if (timeline === "flexivel") viability += 10;
+      else if (timeline === "normal") viability += 5;
+
+      viability = Math.min(viability, 98);
+
+      const resultDiv = document.getElementById("viabilityResult");
+      resultDiv.classList.add("notice-ok", "show");
+      resultDiv.innerHTML = `
+        <strong>Resultado: ${viability}% de probabilidade de aceitação</strong><br><br>
+        Com base nos seus dados, o seu processo de <strong>${getServiceLabel(serviceType)}</strong> 
+        tem ${viability}% de probabilidade de aceitação. 
+        <button class="btn btn-primary" style="margin-top: 10px; cursor: pointer;" onclick="document.getElementById('openRegisterBtn').click();">
+          Avançar para Criar Conta
+        </button>
+      `;
+    }
+
+    function getServiceLabel(value) {
+      const labels = {
+        residence: "Renovação de Residência",
+        family: "Reagrupamento Familiar",
+        manifestacao: "Manifestação de Interesse",
+        outra: "Outro Processo"
+      };
+      return labels[value] || "Processo de Imigração";
+    }
+
     function wireActions() {
       document.getElementById("openLoginBtn").addEventListener("click", () => openModal("login"));
       document.getElementById("openRegisterBtn").addEventListener("click", () => openModal("register"));
@@ -1001,6 +1068,8 @@
         showNotice("Sessao terminada.");
         await loadBookings();
       });
+
+      document.getElementById("assessBtn").addEventListener("click", calculateViability);
 
       els.modal.addEventListener("click", (event) => {
         if (event.target === els.modal) {

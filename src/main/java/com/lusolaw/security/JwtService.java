@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.parser.JwtParser;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.security.SecureRandom;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
@@ -32,19 +32,19 @@ public class JwtService {
     private String jwtIssuer;
 
     private SecretKey secretKey;
+    private JwtParser jwtParser;
 
     @PostConstruct
     void init() {
-        byte[] keyBytes;
         if (jwtSecret == null || jwtSecret.isBlank()) {
-            keyBytes = new byte[64];
-            new SecureRandom().nextBytes(keyBytes);
-        } else {
-            try {
-                keyBytes = Decoders.BASE64.decode(jwtSecret);
-            } catch (Exception ignored) {
-                keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
-            }
+            throw new IllegalStateException("app.jwt.secret deve ser definido e ter pelo menos 32 bytes");
+        }
+
+        byte[] keyBytes;
+        try {
+            keyBytes = Decoders.BASE64.decode(jwtSecret);
+        } catch (Exception ignored) {
+            keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
         }
 
         if (keyBytes.length < 32) {
@@ -52,6 +52,10 @@ public class JwtService {
         }
 
         secretKey = Keys.hmacShaKeyFor(keyBytes);
+        jwtParser = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .requireIssuer(jwtIssuer)
+                .build();
     }
 
     public String generateToken(UserDetails userDetails, Map<String, Object> extraClaims) {
@@ -59,12 +63,12 @@ public class JwtService {
         Date expiration = Date.from(getExpirationInstant());
 
         return Jwts.builder()
-                .claims(extraClaims)
-                .subject(userDetails.getUsername())
-                .issuer(jwtIssuer)
-                .id(UUID.randomUUID().toString())
-                .issuedAt(now)
-                .expiration(expiration)
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuer(jwtIssuer)
+                .setId(UUID.randomUUID().toString())
+                .setIssuedAt(now)
+                .setExpiration(expiration)
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -88,12 +92,7 @@ public class JwtService {
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
-        Claims claims = Jwts.parser()
-                .verifyWith(secretKey)
-                .requireIssuer(jwtIssuer)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        Claims claims = jwtParser.parseClaimsJws(token).getBody();
         return claimResolver.apply(claims);
     }
 }
