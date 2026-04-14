@@ -1,10 +1,9 @@
 package com.lusolaw.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.parser.JwtParser;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,8 +51,8 @@ public class JwtService {
         }
 
         secretKey = Keys.hmacShaKeyFor(keyBytes);
-        jwtParser = Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+        jwtParser = Jwts.parser()
+                .verifyWith(secretKey)
                 .requireIssuer(jwtIssuer)
                 .build();
     }
@@ -69,7 +68,7 @@ public class JwtService {
                 .setId(UUID.randomUUID().toString())
                 .setIssuedAt(now)
                 .setExpiration(expiration)
-                .signWith(secretKey, SignatureAlgorithm.HS256)
+                .signWith(secretKey)
                 .compact();
     }
 
@@ -92,7 +91,7 @@ public class JwtService {
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
-        Claims claims = jwtParser.parseClaimsJws(token).getBody();
+        Claims claims = jwtParser.parseSignedClaims(token).getPayload();
         return claimResolver.apply(claims);
     }
 }
