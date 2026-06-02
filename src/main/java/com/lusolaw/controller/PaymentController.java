@@ -40,7 +40,7 @@ import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 @RequestMapping("/api/payments")
 public class PaymentController {
 
-    private static final BigDecimal PLATFORM_FEE_RATE = new BigDecimal("0.02");
+    private static final BigDecimal LUSO_LAW_SERVICE_FEE_RATE = new BigDecimal("0.10");
 
     @Value("${stripe.api.key:}")
     private String stripeApiKey;
@@ -81,8 +81,8 @@ public class PaymentController {
         }
 
         BigDecimal serviceAmount = booking.getAmount().setScale(2, RoundingMode.HALF_UP);
-        BigDecimal platformFee = serviceAmount.multiply(PLATFORM_FEE_RATE).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal totalAmount = serviceAmount.add(platformFee).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal lusoLawServiceFee = serviceAmount.multiply(LUSO_LAW_SERVICE_FEE_RATE).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal totalAmount = serviceAmount.add(lusoLawServiceFee).setScale(2, RoundingMode.HALF_UP);
 
         Stripe.apiKey = stripeApiKey;
 
@@ -92,7 +92,7 @@ public class PaymentController {
                 return ResponseEntity.ok(new PaymentIntentResponse(
                         existingIntent.getClientSecret(),
                         serviceAmount,
-                        platformFee,
+                        lusoLawServiceFee,
                         totalAmount
                 ));
             } catch (Exception ex) {
@@ -113,6 +113,7 @@ public class PaymentController {
                 .putMetadata("bookingId", booking.getId().toString())
                 .putMetadata("clientId", client.getId().toString())
                 .putMetadata("lawyerId", booking.getLawyer().getId().toString())
+                .putMetadata("lusoLawServiceFee", lusoLawServiceFee.toPlainString())
                 .build();
 
         try {
@@ -127,7 +128,7 @@ public class PaymentController {
             return ResponseEntity.ok(new PaymentIntentResponse(
                     intent.getClientSecret(),
                     serviceAmount,
-                    platformFee,
+                    lusoLawServiceFee,
                     totalAmount
             ));
         } catch (Exception ex) {

@@ -9,8 +9,11 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
+import java.security.SecureRandom;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
@@ -20,6 +23,8 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
+
+    private static final Logger log = LoggerFactory.getLogger(JwtService.class);
 
     @Value("${app.jwt.secret}")
     private String jwtSecret;
@@ -35,15 +40,18 @@ public class JwtService {
 
     @PostConstruct
     void init() {
-        if (jwtSecret == null || jwtSecret.isBlank()) {
-            throw new IllegalStateException("app.jwt.secret deve ser definido e ter pelo menos 32 bytes");
-        }
-
+        boolean ephemeralKey = false;
         byte[] keyBytes;
-        try {
-            keyBytes = Decoders.BASE64.decode(jwtSecret);
-        } catch (Exception ignored) {
-            keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
+        if (jwtSecret == null || jwtSecret.isBlank()) {
+            keyBytes = new byte[64];
+            new SecureRandom().nextBytes(keyBytes);
+            ephemeralKey = true;
+        } else {
+            try {
+                keyBytes = Decoders.BASE64.decode(jwtSecret);
+            } catch (Exception ignored) {
+                keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
+            }
         }
 
         if (keyBytes.length < 32) {
@@ -55,6 +63,10 @@ public class JwtService {
                 .verifyWith(secretKey)
                 .requireIssuer(jwtIssuer)
                 .build();
+
+        if (ephemeralKey) {
+            log.warn("APP_JWT_SECRET nao definido. A usar chave JWT efemera para desenvolvimento local; tokens expiram apos reinicio.");
+        }
     }
 
     public String generateToken(UserDetails userDetails, Map<String, Object> extraClaims) {

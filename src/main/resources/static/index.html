@@ -1,1092 +1,4079 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>LusoLaw | Plataforma Segura</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Sora:wght@500;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #f2f6ff;
-      --surface: #ffffff;
-      --line: #d6e2ff;
-      --text: #101a36;
-      --muted: #596a8b;
-      --primary: #1b45ff;
-      --primary-strong: #1034d2;
-      --ok: #00a985;
-      --warn: #e06b2f;
-      --danger: #d0445b;
-      --radius-xl: 24px;
-      --radius-lg: 16px;
-      --shadow: 0 20px 50px rgba(17, 49, 130, 0.14);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LusoLaw — Marketplace de Serviços Jurídicos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0f2247;
+    --white: #ffffff;
+    --cream: #eef4ff;
+    --pink: #1e5bd6;
+    --pink-light: #6fa8ff;
+    --pink-pale: #e7f0ff;
+    --pink-deep: #1447b3;
+    --rose: #cfe1ff;
+    --gray-100: #f3f7ff;
+    --gray-200: #d9e5ff;
+    --gray-400: #8ba3cc;
+    --gray-600: #4d638b;
+    --gray-800: #1d2f52;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(248,251,255,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--black);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pink);
+    display: inline-block;
+    margin-bottom: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-600);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--black); }
+
+  .nav-cta {
+    background: var(--pink) !important;
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--pink-deep) !important;
+    transform: translateY(-1px);
+  }
+
+  .hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 60px;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,91,214,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 24px;
+  }
+
+  .hero-tag span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pink);
+    display: inline-block;
+  }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(48px, 5.5vw, 80px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -3px;
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 700;
+    color: var(--pink);
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: var(--gray-600);
+    max-width: 420px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary,
+  .btn-accent,
+  .btn-secondary {
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+
+  .btn-primary {
+    background: var(--black);
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(26,10,15,0.18);
+  }
+
+  .btn-accent {
+    background: var(--pink);
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, background 0.2s;
+    display: inline-block;
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    background: var(--pink-deep);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--gray-800);
+    border: 1px solid var(--gray-200);
+    border-radius: 100px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--pink-light);
+    color: var(--pink-deep);
+  }
+
+  .hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .flower-hero {
+    width: 420px;
+    height: 480px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .flower-bg-circle {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e7f0ff 0%, #cfe1ff 100%);
+  }
+
+  .bouquet-container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    z-index: 2;
+  }
+
+  .stem {
+    position: absolute;
+    bottom: 20px;
+    width: 4px;
+    border-radius: 2px;
+    background: #5a8a3c;
+    transform-origin: bottom center;
+  }
+
+  .rose {
+    position: absolute;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  }
+
+  .leaf {
+    position: absolute;
+    border-radius: 50% 0 50% 0;
+    background: #6aab47;
+    transform-origin: bottom left;
+  }
+
+  .wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 120px;
+    background: linear-gradient(160deg, #fff5f7 0%, #fce0e8 100%);
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+    border: 1px solid rgba(30,91,214,0.16);
+  }
+
+  .wrapper-ribbon {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--pink);
+    border-radius: 2px;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+
+  .hero-badge,
+  .hero-badge-2 {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-800);
+    box-shadow: 0 8px 24px rgba(30,91,214,0.15);
+    animation: float 6s ease-in-out infinite;
+    white-space: nowrap;
+    position: absolute;
+  }
+
+  .hero-badge {
+    top: 40px;
+    right: -10px;
+    animation-delay: 1s;
+  }
+
+  .hero-badge-2 {
+    bottom: 60px;
+    left: -20px;
+    animation-delay: 2s;
+  }
+
+  .hero-badge .dot,
+  .hero-badge-2 .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pink);
+    flex-shrink: 0;
+  }
+
+  .marquee-section {
+    padding: 28px 0;
+    background: var(--black);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 20s linear infinite;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 40px;
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-400);
+  }
+
+  .marquee-item::before {
+    content: '✦';
+    color: var(--pink-light);
+    font-size: 10px;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  section { padding: 120px 40px; }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(36px, 3.5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    color: var(--black);
+    margin-bottom: 64px;
+    max-width: 680px;
+  }
+
+  .features-section {
+    background: var(--white);
+    padding: 120px 80px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray-200);
+    border: 1px solid var(--gray-200);
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .feature-card {
+    background: var(--white);
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background 0.2s;
+  }
+
+  .feature-card:hover { background: var(--cream); }
+
+  .feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--pink-pale);
+    border: 1px solid var(--rose);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .feature-card h3 {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.5px;
+  }
+
+  .feature-card p {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  .feature-stat {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--pink);
+    letter-spacing: -1px;
+    margin-top: auto;
+  }
+
+  .feature-stat span {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-400);
+    letter-spacing: 0;
+  }
+
+  .florist-section {
+    background: var(--black);
+    padding: 120px 80px;
+    color: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .florist-section .section-tag { color: var(--pink-light); }
+
+  .florist-section .section-title {
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .florist-section p {
+    color: rgba(255,255,255,0.55);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .florist-pills {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .pill .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pink-light);
+  }
+
+  .big-stat {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .big-num {
+    font-family: var(--font-head);
+    font-size: 64px;
+    font-weight: 800;
+    color: var(--pink-light);
+    letter-spacing: -3px;
+    line-height: 1;
+  }
+
+  .big-unit {
+    font-size: 20px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+  }
+
+  .store-mockup {
+    background: var(--white);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+  }
+
+  .store-mockup-header {
+    background: var(--cream);
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .dot-row {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot-row .d {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .d-r { background: #ff5f56; }
+  .d-y { background: #ffbd2e; }
+  .d-g { background: #27c93f; }
+
+  .store-url {
+    flex: 1;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--gray-600);
+    font-family: monospace;
+  }
+
+  .store-body { padding: 24px; }
+
+  .store-banner {
+    background: linear-gradient(135deg, var(--pink-pale) 0%, var(--rose) 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .store-banner-text h4 {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+
+  .store-banner-text p {
+    font-size: 12px;
+    color: var(--gray-600);
+    margin: 0;
+  }
+
+  .store-banner-icon { font-size: 32px; }
+
+  .store-products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  .store-product-card {
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+  }
+
+  .store-product-img {
+    height: 70px;
+    background: var(--pink-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+
+  .store-product-info { padding: 8px 10px; }
+
+  .store-product-info .name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 2px;
+  }
+
+  .store-product-info .price {
+    font-size: 11px;
+    color: var(--pink);
+    font-weight: 700;
+  }
+
+  .customers-section {
+    background: var(--cream);
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .customers-content .section-title { margin-bottom: 24px; }
+
+  .customers-content p {
+    color: var(--gray-600);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .check-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--gray-800);
+  }
+
+  .check-list li::before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--pink);
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .delivery-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .delivery-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 24px;
+    padding: 28px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: 0 20px 48px rgba(30,91,214,0.14);
+  }
+
+  .delivery-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .florist-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink-pale), var(--rose));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .florist-info .name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--black);
+  }
+
+  .florist-info .location {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .florist-rating {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pink);
+  }
+
+  .order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .order-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--cream);
+    border-radius: 10px;
+  }
+
+  .order-item-icon { font-size: 20px; }
+
+  .order-item-info .title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  .order-item-info .sub {
+    font-size: 11px;
+    color: var(--gray-400);
+  }
+
+  .order-item-price {
+    margin-left: auto;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pink);
+  }
+
+  .order-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .order-total .label {
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+
+  .order-total .total {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--black);
+    letter-spacing: -0.5px;
+  }
+
+  .delivery-badge {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    background: var(--pink);
+    color: var(--white);
+    border-radius: 14px;
+    padding: 12px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(30,91,214,0.35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .revenue-section {
+    background: var(--white);
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .revenue-chart {
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 32px;
+    border: 1px solid var(--gray-200);
+  }
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+
+  .chart-header .label {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-bottom: 4px;
+  }
+
+  .chart-header .big {
+    font-family: var(--font-head);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--black);
+    letter-spacing: -1px;
+  }
+
+  .chart-badge {
+    background: #e8f8ee;
+    color: #2a7a46;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 100px;
+  }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 120px;
+  }
+
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .bar {
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    transition: opacity 0.2s;
+  }
+
+  .bar-label {
+    font-size: 10px;
+    color: var(--gray-400);
+    font-weight: 500;
+  }
+
+  .revenue-stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .rev-stat {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+
+  .rev-stat .s-label {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-bottom: 4px;
+  }
+
+  .rev-stat .s-val {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--black);
+    letter-spacing: -0.5px;
+  }
+
+  .workspace-section {
+    background: var(--cream);
+    padding: 120px 80px;
+  }
+
+  .lawyer-directory-section {
+    background: #eef4ff;
+  }
+
+  .directory-intro {
+    max-width: 760px;
+    margin: -34px 0 34px;
+    font-size: 15px;
+    color: var(--gray-600);
+  }
+
+  .lawyer-directory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .lawyer-profile-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 20px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 16px 30px rgba(15, 34, 71, 0.07);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .lawyer-profile-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(30, 91, 214, 0.35);
+    box-shadow: 0 20px 38px rgba(15, 34, 71, 0.12);
+  }
+
+  .lawyer-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lawyer-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(140deg, #e7f0ff, #cfe1ff);
+    color: var(--pink-deep);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .lawyer-top h3 {
+    font-size: 18px;
+    line-height: 1.1;
+    margin: 0 0 4px;
+    color: var(--black);
+  }
+
+  .lawyer-meta {
+    font-size: 12px;
+    color: var(--gray-600);
+  }
+
+  .lawyer-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lawyer-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-800);
+    background: var(--pink-pale);
+    border: 1px solid rgba(30, 91, 214, 0.2);
+  }
+
+  .lawyer-tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--pink);
+    display: block;
+  }
+
+  .lawyer-desc {
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  .lawyer-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .lawyer-stat {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+    background: #f8fbff;
+  }
+
+  .lawyer-stat .value {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: -0.3px;
+  }
+
+  .lawyer-stat .label {
+    display: block;
+    font-size: 10px;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: 2px;
+  }
+
+  .lawyer-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    flex-wrap: wrap;
+  }
+
+  .lawyer-disclaimer {
+    margin-top: 24px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--gray-600);
+    line-height: 1.55;
+  }
+
+  .workspace-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .ws-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ws-card.full {
+    grid-column: 1 / -1;
+  }
+
+  .ws-card h3 {
+    font-family: var(--font-head);
+    font-size: 22px;
+    letter-spacing: -0.8px;
+    color: var(--black);
+  }
+
+  .muted {
+    font-size: 14px;
+    color: var(--gray-600);
+  }
+
+  .session-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    width: fit-content;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    color: var(--gray-600);
+  }
+
+  .session-chip.online {
+    background: #ebfff5;
+    border-color: #c8f3dd;
+    color: #1f7d52;
+  }
+
+  .session-chip.offline {
+    background: #fff2f5;
+    border-color: #ffd4df;
+    color: #b63f62;
+  }
+
+  .ws-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+
+  .ws-form {
+    display: grid;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .ws-field {
+    display: grid;
+    gap: 4px;
+  }
+
+  .ws-field label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-600);
+  }
+
+  .ws-input,
+  .ws-select,
+  .ws-textarea {
+    width: 100%;
+    border: 1px solid var(--gray-200);
+    background: #fffafb;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--black);
+  }
+
+  .ws-textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .ws-inline {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .ws-list {
+    display: grid;
+    gap: 10px;
+    max-height: 430px;
+    overflow: auto;
+    padding-right: 2px;
+  }
+
+  .item-card {
+    border: 1px solid var(--gray-200);
+    border-radius: 14px;
+    padding: 14px;
+    background: #fff;
+  }
+
+  .item-card h4 {
+    font-size: 16px;
+    color: var(--black);
+    margin-bottom: 6px;
+  }
+
+  .item-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--gray-600);
+  }
+
+  .pill-status {
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .status-PENDING { background: #fff7dc; color: #7a5a00; }
+  .status-ACCEPTED { background: #e8f1ff; color: #2459a8; }
+  .status-REJECTED { background: #ffe9ef; color: #9f2d4e; }
+  .status-REFUNDED { background: #f2edff; color: #6448ad; }
+  .status-PAID { background: #e8fff5; color: #1a7e58; }
+
+  .notice {
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    display: none;
+    margin-top: 8px;
+  }
+
+  .notice.show { display: block; }
+
+  .notice-ok {
+    background: #ebfff5;
+    border: 1px solid #b7edd6;
+    color: #155f44;
+  }
+
+  .notice-error {
+    background: #fff1f5;
+    border: 1px solid #f3bfd0;
+    color: #9e3556;
+  }
+
+  .pricing-section {
+    background: var(--cream);
+    padding: 120px 80px;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 64px;
+  }
+
+  .pricing-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 24px;
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(30,91,214,0.14);
+  }
+
+  .pricing-card.featured {
+    border: 2px solid var(--pink);
+    background: var(--black);
+    color: var(--white);
+  }
+
+  .pricing-badge {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+    width: fit-content;
+  }
+
+  .plan-name {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+
+  .pricing-card.featured .plan-name { color: var(--white); }
+
+  .plan-desc {
+    font-size: 14px;
+    color: var(--gray-600);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .pricing-card.featured .plan-desc { color: rgba(255,255,255,0.5); }
+
+  .plan-price {
+    font-family: var(--font-head);
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--black);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pricing-card.featured .plan-price { color: var(--white); }
+
+  .plan-period {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-bottom: 28px;
+  }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex: 1;
+  }
+
+  .plan-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--gray-800);
+  }
+
+  .pricing-card.featured .plan-features li { color: rgba(255,255,255,0.75); }
+
+  .plan-features li::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .plan-features li.yes::before {
+    background: var(--pink);
+    background-image: url("data:image/svg+xml,%3Csvg width='9' height='7' viewBox='0 0 9 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3.5L3 5.5L8 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .plan-features li.no::before {
+    background: var(--gray-200);
+    background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.5 1.5L6.5 6.5M6.5 1.5L1.5 6.5' stroke='%23b8909f' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .reviews-section {
+    background: var(--white);
+    padding: 120px 80px;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 64px;
+  }
+
+  .review-card {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink-pale), var(--rose));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .reviewer-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--black);
+  }
+
+  .reviewer-role {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .review-stars {
+    color: var(--pink);
+    font-size: 13px;
+    margin-left: auto;
+  }
+
+  .review-text {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .faq-section {
+    background: var(--cream);
+    padding: 120px 80px;
+  }
+
+  .faq-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 64px;
+    align-items: end;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .faq-item { border-bottom: 1px solid var(--gray-200); }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--black);
+    text-align: left;
+    font-family: var(--font-body);
+    transition: color 0.2s;
+  }
+
+  .faq-question:hover { color: var(--pink); }
+
+  .faq-chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+    color: var(--gray-400);
+  }
+
+  .faq-answer {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding-bottom: 0;
+  }
+
+  .faq-answer.open {
+    max-height: 200px;
+    padding-bottom: 24px;
+  }
+
+  .faq-chevron.open { transform: rotate(180deg); }
+
+  .cta-section {
+    background: var(--black);
+    padding: 120px 80px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,91,214,0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-badge {
+    display: inline-block;
+    background: rgba(30,91,214,0.14);
+    color: var(--pink-light);
+    border: 1px solid rgba(30,91,214,0.28);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .cta-section h2 {
+    font-family: var(--font-head);
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .cta-section p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.45);
+    max-width: 520px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .cta-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 60px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+
+  .footer-logo {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-tagline {
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 12px;
+    max-width: 340px;
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .footer-nav a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover { color: var(--white); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    margin-top: 8px;
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hidden { display: none !important; }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 10, 15, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 220;
+    padding: 16px;
+  }
+
+  .modal.open { display: flex; }
+
+  .modal-card {
+    width: min(760px, 100%);
+    max-height: 92vh;
+    overflow: auto;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 22px;
+    box-shadow: 0 30px 80px rgba(26,10,15,0.22);
+    padding: 22px;
+  }
+
+  .modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .modal-head h3 {
+    font-family: var(--font-head);
+    font-size: 26px;
+    letter-spacing: -1px;
+  }
+
+  .tabs {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 100px;
+    padding: 4px;
+    display: inline-flex;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+
+  .tab {
+    border: none;
+    background: transparent;
+    color: var(--gray-600);
+    border-radius: 100px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .tab.active {
+    background: var(--white);
+    color: var(--pink-deep);
+    box-shadow: 0 2px 10px rgba(194,58,96,0.15);
+  }
+
+  .auth-panel { display: none; }
+  .auth-panel.active { display: block; }
+
+  .modal-form {
+    display: grid;
+    gap: 10px;
+  }
+
+  .modal-inline {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .modal-field {
+    display: grid;
+    gap: 4px;
+  }
+
+  .modal-field label {
+    font-size: 12px;
+    color: var(--gray-600);
+    font-weight: 500;
+  }
+
+  .modal-input,
+  .modal-select,
+  .modal-file {
+    width: 100%;
+    border: 1px solid var(--gray-200);
+    border-radius: 11px;
+    background: #fffafb;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--black);
+  }
+
+  .form-feedback {
+    font-size: 12px;
+    line-height: 1.4;
+    min-height: 16px;
+    margin-top: -2px;
+  }
+
+  .form-feedback.error { color: #b4233c; }
+  .form-feedback.ok { color: #0b7a5a; }
+
+  @media (max-width: 1080px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+    .lawyer-directory-grid { grid-template-columns: 1fr 1fr; }
+    .workspace-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 100px 24px 60px;
+      min-height: auto;
+    }
+    .hero-image { order: -1; }
+    .flower-hero { width: 260px; height: 300px; }
+    .flower-bg-circle { width: 220px; height: 220px; }
+    .hero-badge-2 { display: none; }
+    .features-section,
+    .florist-section,
+    .customers-section,
+    .revenue-section,
+    .workspace-section,
+    .pricing-section,
+    .reviews-section,
+    .faq-section,
+    .cta-section {
+      padding: 80px 24px;
+    }
+    .features-grid { grid-template-columns: 1fr; }
+    .florist-section,
+    .customers-section,
+    .revenue-section {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .faq-header { grid-template-columns: 1fr; gap: 32px; }
+    footer { grid-template-columns: 1fr; padding: 48px 24px; }
+    .footer-links { align-items: flex-start; }
+    .footer-nav { justify-content: flex-start; }
+    .cta-btns { flex-direction: column; align-items: center; }
+    .lawyer-directory-grid { grid-template-columns: 1fr; }
+    .directory-intro { margin: -22px 0 24px; }
+    .ws-inline, .modal-inline { grid-template-columns: 1fr; }
+  }
+</style>
+<style id="elevate-reskin">
+  @font-face {
+    font-family: "Inter Display";
+    src: url("https://framerusercontent.com/assets/bHYNJqzTyl2lqvmMiRRS6Y16Es.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: "Inter Display";
+    src: url("https://framerusercontent.com/assets/PfdOpgzFf7N2Uye9JX7xRKYTgSc.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  @font-face {
+    font-family: "Inter Display";
+    src: url("https://framerusercontent.com/assets/qITWJ2WdG0wrgQPDb8lvnYnTXDg.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("https://framerusercontent.com/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("https://framerusercontent.com/assets/d3tHnaQIAeqiE5hGcRw4mmgWYU.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("https://framerusercontent.com/assets/yDtI2UI8XcEg1W2je9XPN3Noo.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    src: url("https://framerusercontent.com/assets/syRNPWzAMIrcJ3wIlPIP43KjQs.woff2") format("woff2");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  :root {
+    --black: #0f2247;
+    --white: #fff;
+    --cream: #eef4ff;
+    --pink: #1e5bd6;
+    --pink-light: #6fa8ff;
+    --pink-pale: #e7f0ff;
+    --pink-deep: #1447b3;
+    --rose: #cfe1ff;
+    --gray-100: #f3f7ff;
+    --gray-200: #d9e5ff;
+    --gray-400: #8ba3cc;
+    --gray-600: #4d638b;
+    --gray-800: #1d2f52;
+    --font-head: "Inter Display", "Inter", sans-serif;
+    --font-body: "Inter Display", "Inter", sans-serif;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  html,
+  body,
+  input,
+  textarea,
+  select,
+  button {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-body);
+    font-feature-settings: normal;
+  }
+
+  p,
+  .muted,
+  .faq-answer,
+  .review-text,
+  .item-meta,
+  .store-banner-text p,
+  .store-product-info .price,
+  .florist-info .location,
+  .order-item-info .sub,
+  .chart-header .label,
+  .rev-stat .s-label,
+  .footer-tagline,
+  .footer-copy {
+    letter-spacing: -0.2px;
+    font-weight: 400;
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  nav {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 92px;
+    padding: 0 max(24px, calc((100vw - 1240px) / 2 + 20px));
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(30, 91, 214, 0.14);
+    background: rgba(244, 249, 255, 0.98);
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -2px;
+    color: var(--black);
+  }
+
+  .nav-logo-dot {
+    width: 9px;
+    height: 9px;
+    margin-bottom: 8px;
+    background: var(--pink);
+  }
+
+  .nav-links {
+    gap: 10px;
+    align-items: center;
+  }
+
+  .nav-links li { display: flex; }
+
+  .nav-links a {
+    font-family: var(--font-head);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+    letter-spacing: 0;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: var(--pink-pale);
+    border: 1px solid rgba(30, 91, 214, 0.16);
+  }
+
+  .nav-links a:hover {
+    color: var(--black);
+    border-color: rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-search {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .nav-search:hover { background: #f5f5f5; }
+
+  .nav-cta {
+    background: var(--pink) !important;
+    color: var(--white) !important;
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-cta:hover {
+    background: var(--pink-deep) !important;
+    transform: translateY(-1px);
+  }
+
+  .hero {
+    background: linear-gradient(180deg, #0f2247 0%, #1a3363 100%);
+    min-height: auto;
+    padding-top: 154px;
+    padding-bottom: 94px;
+    gap: 64px;
+    padding-left: max(24px, calc((100vw - 1240px) / 2 + 20px));
+    padding-right: max(24px, calc((100vw - 1240px) / 2 + 20px));
+  }
+
+  .hero-content { max-width: 620px; }
+  .hero-image { justify-content: flex-end; }
+
+  .hero::before {
+    top: -220px;
+    right: -140px;
+    width: 720px;
+    height: 720px;
+    background: radial-gradient(circle, rgba(159, 194, 255, 0.25) 0%, transparent 72%);
+  }
+
+  .hero-tag {
+    font-family: var(--font-head);
+    color: #eaf1ff;
+    letter-spacing: 1.9px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    padding: 8px 14px;
+    width: fit-content;
+  }
+
+  .hero-tag span { background: #6fa8ff; }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    color: var(--white);
+    font-size: clamp(52px, 7vw, 108px);
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -4px;
+    margin-bottom: 26px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: #a8c7ff;
+  }
+
+  .hero p {
+    color: rgba(255, 255, 255, 0.76);
+    max-width: 560px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .btn-primary,
+  .btn-accent,
+  .btn-secondary {
+    font-family: var(--font-head);
+    border-radius: 999px;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--white);
+    color: var(--black);
+    border: 1px solid var(--gray-200);
+    padding: 15px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: none;
+  }
+
+  .btn-primary:hover {
+    border-color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(12, 4, 7, 0.1);
+  }
+
+  .btn-accent {
+    background: var(--pink);
+    color: var(--white);
+    border: 1px solid var(--pink);
+    padding: 15px 30px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 14px 30px rgba(30, 91, 214, 0.22);
+  }
+
+  .btn-accent:hover {
+    background: var(--pink-deep);
+    border-color: var(--pink-deep);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    color: var(--black);
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--black);
+    color: var(--black);
+    background: var(--pink-pale);
+  }
+
+  .hero-media-card {
+    width: min(100%, 620px);
+    border-radius: 36px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #f7fbff;
+    overflow: hidden;
+    box-shadow: 0 34px 64px rgba(12, 4, 7, 0.14);
+  }
+
+  .hero-media-top {
+    height: 54px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: #f7fbff;
+  }
+
+  .hero-media-top span {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: block;
+  }
+
+  .hero-media-top span:nth-child(1) { background: #9ec0ff; }
+  .hero-media-top span:nth-child(2) { background: #5f95ff; }
+  .hero-media-top span:nth-child(3) { background: #1e5bd6; }
+
+  .hero-media-video {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: #0f2447;
+    overflow: hidden;
+  }
+
+  .hero-media-video video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .hero-play-btn {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: rgba(30, 91, 214, 0.9);
+    color: #fff;
+    font-size: 30px;
+    line-height: 92px;
+    text-align: center;
+    text-indent: 6px;
+    box-shadow: 0 18px 34px rgba(30, 91, 214, 0.34);
+  }
+
+  .hero-media-caption {
+    padding: 18px 22px 20px;
+    font-family: var(--font-head);
+    font-size: 13px;
+    color: var(--gray-600);
+    letter-spacing: -0.06px;
+  }
+
+  .hero-badge,
+  .hero-badge-2,
+  .flower-hero,
+  .flower-bg-circle,
+  .bouquet-container,
+  .wrapper,
+  .wrapper-ribbon,
+  .stem,
+  .leaf,
+  .rose,
+  .marquee-section {
+    display: none !important;
+  }
+
+  section { background: transparent; }
+
+  .features-section,
+  .florist-section,
+  .customers-section,
+  .revenue-section,
+  .workspace-section,
+  .reviews-section,
+  .faq-section {
+    padding: 116px 80px;
+  }
+
+  .features-section { background: var(--white); }
+  .customers-section { background: var(--cream); }
+  .revenue-section { background: var(--white); }
+  .workspace-section { background: #eef4ff; }
+  .reviews-section { background: var(--white); }
+  .faq-section { background: var(--cream); }
+
+  .section-tag {
+    font-family: var(--font-head);
+    color: var(--pink);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+  }
+
+  .section-title {
+    font-family: var(--font-head);
+    color: var(--black);
+    font-size: clamp(42px, 4.2vw, 72px);
+    line-height: 0.98;
+    letter-spacing: -2.6px;
+    font-weight: 600;
+    max-width: 760px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .plan-name,
+  .ws-card h3,
+  .feature-card h3,
+  .faq-question,
+  .modal-head h3,
+  .footer-logo {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-feature-settings: normal;
+  }
+
+  .features-grid {
+    gap: 18px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .feature-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 32px;
+    box-shadow: 0 16px 32px rgba(12, 4, 7, 0.05);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-3px);
+    background: #fffdfd;
+    border-color: rgba(12, 4, 7, 0.3);
+  }
+
+  .feature-icon {
+    background: var(--pink-pale);
+    border: 1px solid rgba(30, 91, 214, 0.32);
+  }
+
+  .feature-card h3 {
+    color: var(--black);
+    font-family: var(--font-head);
+    letter-spacing: -0.5px;
+  }
+
+  .feature-card p { color: var(--gray-600); }
+  .feature-stat { color: var(--pink); }
+  .feature-stat span { color: var(--gray-600); }
+
+  .florist-section,
+  .customers-section,
+  .revenue-section {
+    background: var(--white);
+    color: var(--black);
+    gap: 70px;
+  }
+
+  .florist-section {
+    background: linear-gradient(180deg, #0f2247 0%, #1a3363 100%);
+    color: var(--white);
+  }
+
+  .florist-section .section-title,
+  .customers-section .section-title,
+  .revenue-section .section-title {
+    color: var(--black);
+  }
+
+  .florist-section .section-title { color: var(--white); }
+
+  .florist-section p,
+  .customers-content p {
+    color: var(--gray-600);
+    font-size: 15px;
+  }
+
+  .florist-section p { color: rgba(255, 255, 255, 0.74); }
+
+  .big-num { color: var(--black); }
+  .big-unit { color: var(--gray-600); }
+
+  .florist-section .big-num { color: #a8c7ff; }
+  .florist-section .big-unit { color: rgba(255, 255, 255, 0.64); }
+
+  .pill {
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-head);
+    font-size: 12px;
+  }
+
+  .pill .dot { background: var(--pink); }
+
+  .florist-section .pill {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .florist-section .pill .dot { background: #9fc2ff; }
+
+  .store-mockup,
+  .delivery-card,
+  .revenue-chart,
+  .ws-card,
+  .review-card,
+  .item-card,
+  .rev-stat,
+  .modal-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 30px;
+    box-shadow: 0 22px 44px rgba(12, 4, 7, 0.07);
+  }
+
+  .store-mockup-header,
+  .store-banner,
+  .order-item,
+  .ws-input,
+  .ws-select,
+  .ws-textarea,
+  .modal-input,
+  .modal-select,
+  .modal-file {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    color: var(--black);
+  }
+
+  .store-banner {
+    background: linear-gradient(140deg, #edf4ff 0%, #dbe9ff 100%);
+  }
+
+  .store-url,
+  .store-product-card,
+  .order-total,
+  .faq-list,
+  .faq-item {
+    border-color: var(--gray-200);
+  }
+
+  .store-product-img { background: var(--pink-pale); }
+  .store-product-info .price,
+  .order-item-price,
+  .florist-rating,
+  .review-stars { color: var(--pink); }
+
+  .store-banner-text h4,
+  .store-product-info .name,
+  .florist-info .name,
+  .order-item-info .title,
+  .chart-header .big,
+  .rev-stat .s-val,
+  .ws-card h3,
+  .item-card h4,
+  .reviewer-name,
+  .order-total .total {
+    color: var(--black);
+    font-family: var(--font-head);
+  }
+
+  .store-banner-text p,
+  .store-product-info .price,
+  .florist-info .location,
+  .order-item-info .sub,
+  .chart-header .label,
+  .bar-label,
+  .rev-stat .s-label,
+  .muted,
+  .item-meta,
+  .reviewer-role,
+  .review-text,
+  .faq-answer,
+  .modal-field label,
+  .ws-field label { color: var(--gray-600); }
+
+  .check-list li { color: var(--black); }
+
+  .check-list li::before {
+    background-color: var(--pink);
+    box-shadow: 0 0 0 6px rgba(30, 91, 214, 0.14);
+  }
+
+  .delivery-badge,
+  .chart-badge,
+  .cta-badge {
+    background: var(--pink-pale);
+    color: var(--pink);
+    border: 1px solid rgba(30, 91, 214, 0.34);
+    box-shadow: none;
+    font-family: var(--font-head);
+    font-weight: 600;
+  }
+
+  .bar {
+    background: linear-gradient(180deg, #6fa8ff 0%, #1e5bd6 100%) !important;
+  }
+
+  .bar-label[style*="color:var(--pink)"] { color: var(--pink) !important; }
+
+  .faq-section { background: var(--cream); }
+
+  .faq-question {
+    font-family: var(--font-head);
+    color: var(--black);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+
+  .faq-question:hover { color: var(--pink); }
+  .faq-chevron { color: var(--gray-600); }
+
+  .cta-section {
+    background: var(--black);
+    margin: 0 80px 80px;
+    border-radius: 44px;
+    padding: 100px 80px;
+  }
+
+  .cta-section::before {
+    top: -140px;
+    width: 560px;
+    height: 560px;
+    background: radial-gradient(circle, rgba(30, 91, 214, 0.24) 0%, transparent 72%);
+  }
+
+  .cta-section h2 {
+    font-family: var(--font-head);
+    color: var(--white);
+    letter-spacing: -2.8px;
+    line-height: 0.96;
+  }
+
+  .cta-section p { color: rgba(255, 255, 255, 0.68); }
+
+  .cta-btns a:not(.btn-accent) {
+    color: rgba(255, 255, 255, 0.72) !important;
+    font-family: var(--font-head);
+  }
+
+  .cta-btns a:not(.btn-accent):hover { color: var(--white) !important; }
+
+  footer {
+    background: #0f2247;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 58px 80px 70px;
+  }
+
+  .footer-logo,
+  .footer-nav a { color: var(--white); }
+
+  .footer-tagline,
+  .footer-copy { color: rgba(255, 255, 255, 0.68); }
+
+  .footer-nav a:hover { color: #a8c7ff; }
+
+  .modal {
+    background: rgba(15, 34, 71, 0.34);
+    backdrop-filter: blur(3px);
+  }
+
+  .modal-card {
+    border-radius: 34px;
+    border: 1px solid var(--gray-200);
+    padding: 24px;
+  }
+
+  .modal-head h3 {
+    font-family: var(--font-head);
+    letter-spacing: -1.2px;
+  }
+
+  .tabs {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 999px;
+  }
+
+  .tab {
+    color: var(--gray-600);
+    font-family: var(--font-head);
+  }
+
+  .tab.active {
+    background: var(--black);
+    color: var(--white);
+    box-shadow: none;
+  }
+
+  .session-chip {
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    color: var(--gray-600);
+  }
+
+  .session-chip.online {
+    background: #eaf2ff;
+    border-color: #bfd3ff;
+    color: #1d4aa6;
+  }
+
+  .session-chip.offline {
+    background: #edf3ff;
+    border-color: #c8dafc;
+    color: #204ba3;
+  }
+
+  .notice-ok {
+    background: #eef4ff;
+    border-color: #c8dafc;
+    color: #204ba3;
+  }
+
+  .notice-error {
+    background: #e4eeff;
+    border-color: #b7d0fb;
+    color: #173e92;
+  }
+
+  @media (max-width: 1239.98px) {
+    .hero {
+      padding-left: 56px;
+      padding-right: 56px;
+      gap: 48px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "DM Sans", sans-serif;
-      color: var(--text);
-      background: radial-gradient(circle at 12% 10%, #dce8ff 0%, var(--bg) 46%);
-      line-height: 1.5;
+    .features-section,
+    .florist-section,
+    .customers-section,
+    .revenue-section,
+    .workspace-section,
+    .reviews-section,
+    .faq-section {
+      padding-left: 56px;
+      padding-right: 56px;
     }
 
-    .container { width: min(1150px, 92vw); margin: 0 auto 64px; }
-
-    .topbar {
-      position: sticky;
-      top: 14px;
-      z-index: 20;
-      margin: 18px 0;
-      padding: 12px 14px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.8);
-      backdrop-filter: blur(10px);
-      background: rgba(255,255,255,0.78);
-      box-shadow: 0 8px 22px rgba(15,35,100,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .cta-section {
+      margin-left: 56px;
+      margin-right: 56px;
+      padding-left: 56px;
+      padding-right: 56px;
     }
 
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--primary), #00baaa);
-      position: relative;
-    }
-    .brand-mark::after {
-      content: "";
-      position: absolute;
-      inset: 7px;
-      border-radius: 7px;
-      border: 2px solid rgba(255,255,255,0.88);
+    footer { padding-left: 56px; padding-right: 56px; }
+  }
+
+  @media (max-width: 809.98px) {
+    nav {
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 72px;
+      border-radius: 0;
+      padding: 0 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
-    .actions { display: flex; gap: 10px; }
-
-    .btn {
-      border: none;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary {
-      color: #fff;
-      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
-      box-shadow: 0 10px 20px rgba(27,69,255,0.28);
-    }
-    .btn-secondary { color: var(--text); background: #fff; border: 1px solid var(--line); }
+    .nav-logo { font-size: 28px; letter-spacing: -1.1px; }
+    .nav-actions { gap: 8px; }
+    .nav-search { display: none; }
+    .nav-cta { padding: 10px 14px; font-size: 12px !important; }
 
     .hero {
-      margin-top: 14px;
-      border-radius: var(--radius-xl);
-      border: 1px solid #d9e4ff;
-      background: linear-gradient(145deg, #ffffff, #edf3ff);
-      box-shadow: var(--shadow);
-      padding: clamp(28px, 5vw, 60px);
+      padding: 104px 24px 70px;
+      gap: 34px;
     }
-    .tag {
-      display: inline-block;
-      padding: 6px 11px;
-      border-radius: 999px;
-      background: #e7eeff;
-      color: #2040af;
-      font-weight: 700;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 14px;
-    }
+
     .hero h1 {
-      font-family: "Sora", sans-serif;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      font-size: clamp(2rem, 5vw, 3.7rem);
-      margin-bottom: 14px;
-      max-width: 760px;
-    }
-    .hero p { color: var(--muted); max-width: 700px; margin-bottom: 20px; }
-
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .kpi {
-      border: 1px solid #dbe6ff;
-      border-radius: 14px;
-      padding: 12px;
-      background: rgba(255,255,255,0.75);
-    }
-    .kpi strong { display: block; margin-bottom: 4px; }
-    .kpi span { color: var(--muted); font-size: 0.85rem; }
-
-    .section {
-      margin-top: 26px;
-      border: 1px solid #dbe6ff;
-      border-radius: var(--radius-xl);
-      background: rgba(255,255,255,0.82);
-      padding: 22px;
-      box-shadow: 0 12px 30px rgba(17,49,130,0.1);
-    }
-    .section h2 {
-      font-family: "Sora", sans-serif;
-      letter-spacing: -0.02em;
-      font-size: clamp(1.35rem, 2.3vw, 1.85rem);
-      margin-bottom: 8px;
-    }
-    .section p.lead { color: var(--muted); margin-bottom: 15px; }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 10px;
-    }
-    .card {
-      border: 1px solid #dbe6ff;
-      border-radius: 14px;
-      background: #fff;
-      padding: 14px;
-    }
-    .card h3 { font-size: 1rem; margin-bottom: 6px; }
-    .card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
-
-    .workspace {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 10px;
+      font-size: clamp(44px, 13vw, 64px);
+      letter-spacing: -2.3px;
     }
 
-    .panel {
-      border: 1px solid #dbe6ff;
-      border-radius: 14px;
-      background: #fff;
-      padding: 14px;
-    }
-    .panel h3 { font-size: 1rem; margin-bottom: 8px; }
-    .muted { color: var(--muted); font-size: 0.9rem; }
-
-    .chip {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
-    .chip-offline { background: #fff2f2; color: #9d3749; }
-    .chip-online { background: #e8fff7; color: #0f735c; }
-
-    .form { display: grid; gap: 8px; margin-top: 10px; }
-    .field { display: grid; gap: 4px; }
-    .field label { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
-
-    .input, .textarea, .select {
-      width: 100%;
-      border: 1px solid #d4e1ff;
-      border-radius: 10px;
-      padding: 10px 11px;
-      font: inherit;
-      background: #fbfdff;
-      color: var(--text);
-    }
-    .textarea { resize: vertical; min-height: 80px; }
-    .inline { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
-
-    .list { display: grid; gap: 8px; margin-top: 10px; max-height: 340px; overflow: auto; }
-
-    .pill {
-      border-radius: 999px;
-      padding: 4px 8px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .pill-PENDING { background: #fff7de; color: #82530d; }
-    .pill-ACCEPTED { background: #e6f1ff; color: #12488f; }
-    .pill-REJECTED { background: #ffecef; color: #932d43; }
-    .pill-REFUNDED { background: #f3efff; color: #58449d; }
-    .pill-PAID { background: #e8fff5; color: #107759; }
-
-    .notice {
-      margin-top: 10px;
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 0.85rem;
-      display: none;
-    }
-    .notice.show { display: block; }
-    .notice-ok { background: #ebfff7; border: 1px solid #afe9d4; color: #136c53; }
-    .notice-error { background: #fff0f3; border: 1px solid #efb9c3; color: #9e3045; }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(8, 16, 35, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
-      padding: 14px;
-    }
-    .modal.open { display: flex; }
-    .modal-card {
-      width: min(560px, 100%);
-      background: #fff;
-      border: 1px solid #dbe6ff;
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow: var(--shadow);
-    }
-    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-
-    .tabs { display: inline-flex; background: #edf2ff; border-radius: 999px; padding: 4px; margin-bottom: 10px; }
-    .tab {
-      border: none;
-      background: transparent;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-weight: 700;
-      color: #4b5f86;
-      cursor: pointer;
-    }
-    .tab.active { background: #fff; color: #1e42ad; }
-
-    .auth-panel { display: none; }
-    .auth-panel.active { display: block; }
-
-    .hidden { display: none !important; }
-
-    .legal-note {
-      margin: 28px 4px 0;
-      color: #6f7d99;
-      font-size: 0.74rem;
-      line-height: 1.45;
-      text-align: center;
+    .flower-hero {
+      width: 300px;
+      height: 340px;
+      border-radius: 28px;
     }
 
-    @media (max-width: 980px) {
-      .kpis,
-      .grid-3,
-      .workspace,
-      .inline {
-        grid-template-columns: 1fr;
-      }
+    .flower-bg-circle { width: 220px; height: 220px; }
+
+    .features-section,
+    .florist-section,
+    .customers-section,
+    .revenue-section,
+    .workspace-section,
+    .reviews-section,
+    .faq-section {
+      padding: 76px 24px;
     }
-  </style>
+
+    .section-title {
+      font-size: clamp(34px, 10.2vw, 48px);
+      letter-spacing: -1.6px;
+    }
+
+    .features-grid { grid-template-columns: 1fr; }
+    .florist-section,
+    .customers-section,
+    .revenue-section { grid-template-columns: 1fr; gap: 40px; }
+    .reviews-grid { grid-template-columns: 1fr; }
+
+    .cta-section {
+      margin: 0 24px 32px;
+      border-radius: 30px;
+      padding: 64px 24px;
+    }
+
+    footer {
+      grid-template-columns: 1fr;
+      padding: 42px 24px 54px;
+      gap: 30px;
+    }
+
+    .footer-links { align-items: flex-start; }
+    .footer-nav { justify-content: flex-start; }
+    .ws-inline,
+    .modal-inline { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <header class="topbar">
-      <a class="brand" href="#">
-        <span class="brand-mark"></span>
-        <span>LusoLaw Secure Marketplace</span>
-      </a>
-      <div class="actions">
-        <a class="btn btn-secondary hidden" id="adminPortalBtn" href="/admin">Painel Admin</a>
-        <button class="btn btn-secondary" id="openLoginBtn">Entrar</button>
-        <button class="btn btn-primary" id="openRegisterBtn">Criar Conta</button>
-      </div>
-    </header>
-
-    <section class="hero">
-      <span class="tag">Seguranca para clientes e advogados</span>
-      <h1>Encontre o advogado ideal para o seu processo de imigração</h1>
-      <p>
-        Conectamos imigrantes com advogados especializados em Portugal. Agende consultas,
-        compare preços e resolva seu processo de forma segura e transparente.
-      </p>
-      <div class="actions">
-        <button class="btn btn-primary" id="heroRegisterBtn">Comecar Agora</button>
-        <button class="btn btn-secondary" id="heroWorkspaceBtn">Abrir Workspace</button>
-      </div>
-      <div class="kpis">
-        <article class="kpi"><strong>Advogados Verificados</strong><span>Profissionais inscritos na Ordem dos Advogados.</span></article>
-        <article class="kpi"><strong>Processo Seguro</strong><span>Pagamentos protegidos e dados confidenciais.</span></article>
-        <article class="kpi"><strong>Atendimento Personalizado</strong><span>Especialistas em diferentes tipos de visto.</span></article>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>Avalie o Seu Processo de Imigração</h2>
-      <p class="lead">Responda 3 perguntas rápidas e receba uma estimativa de viabilidade</p>
-      
-      <div class="form" style="max-width: 500px; margin: 20px auto;">
-        <div class="field">
-          <label for="serviceType">O que deseja fazer?</label>
-          <select class="select" id="serviceType" required>
-            <option value="">-- Selecione uma opção --</option>
-            <option value="residence">Renovação de Residência</option>
-            <option value="family">Reagrupamento Familiar</option>
-            <option value="manifestacao">Manifestação de Interesse</option>
-            <option value="outra">Outro Processo</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="documentStatus">Tem o seu processo documentado?</label>
-          <select class="select" id="documentStatus" required>
-            <option value="">-- Selecione --</option>
-            <option value="completo">Sim, completo</option>
-            <option value="parcial">Parcialmente</option>
-            <option value="nao">Não</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="timeline">Necessita de urgência?</label>
-          <select class="select" id="timeline" required>
-            <option value="">-- Selecione --</option>
-            <option value="urgente">Sim, até 30 dias</option>
-            <option value="normal">Em 3-6 meses</option>
-            <option value="flexivel">Sem pressa</option>
-          </select>
-        </div>
-
-        <button class="btn btn-primary" type="button" id="assessBtn" style="width: 100%;">Calcular Viabilidade</button>
-      </div>
-
-      <div class="notice" id="viabilityResult" style="margin-top: 20px; max-width: 500px; margin-left: auto; margin-right: auto;"></div>
-    </section>
-
-    <section class="section" id="workspace">
-      <h2>Workspace Operacional</h2>
-      <p class="lead">Gere autenticacao, servicos, pedidos e pagamentos numa unica interface.</p>
-
-      <div class="workspace">
-        <article class="panel">
-          <h3>Estado da Sessao</h3>
-          <p class="muted" id="authSummary">Sem sessao ativa. Faz login para desbloquear operacoes privadas.</p>
-          <span class="chip chip-offline" id="authChip">Offline</span>
-          <div class="actions" style="margin-top: 10px;">
-            <button class="btn btn-secondary" id="panelLoginBtn">Entrar</button>
-            <button class="btn btn-primary" id="panelRegisterBtn">Registar</button>
-            <button class="btn btn-secondary hidden" id="logoutBtn">Sair</button>
-          </div>
-          <div class="notice" id="globalNotice"></div>
-        </article>
-
-        <article class="panel">
-          <h3>Publicar Servico (Advogado)</h3>
-          <p class="muted">Disponivel apenas para LAWYER autenticado.</p>
-          <form class="form" id="serviceForm">
-            <div class="field">
-              <label for="serviceName">Nome do servico</label>
-              <input class="input" id="serviceName" required maxlength="120" />
-            </div>
-            <div class="field">
-              <label for="serviceDescription">Descricao</label>
-              <textarea class="textarea" id="serviceDescription" required maxlength="500"></textarea>
-            </div>
-            <div class="field">
-              <label for="servicePrice">Preco (EUR)</label>
-              <input class="input" id="servicePrice" type="number" min="1" step="0.01" required />
-            </div>
-            <button class="btn btn-primary" type="submit">Publicar</button>
-          </form>
-        </article>
-
-        <article class="panel">
-          <h3>Marketplace de Servicos</h3>
-          <p class="muted">Escolhe um servico para iniciar pedido.</p>
-          <div class="list" id="servicesList"></div>
-        </article>
-
-        <article class="panel">
-          <h3>Solicitar Servico (Cliente)</h3>
-          <p class="muted" id="bookingServiceHint">Seleciona um servico no marketplace.</p>
-          <form class="form" id="bookingForm">
-            <input type="hidden" id="selectedServiceId" />
-            <div class="field">
-              <label for="bookingSituation">Situacao</label>
-              <input class="input" id="bookingSituation" required maxlength="180" />
-            </div>
-            <div class="field">
-              <label for="bookingDetails">Detalhes</label>
-              <textarea class="textarea" id="bookingDetails" required maxlength="2000"></textarea>
-            </div>
-            <button class="btn btn-primary" type="submit">Enviar Pedido</button>
-          </form>
-        </article>
-
-        <article class="panel" style="grid-column: 1 / -1;">
-          <h3>Os Meus Bookings</h3>
-          <p class="muted">Historico por sessao autenticada.</p>
-          <div class="list" id="bookingsList"></div>
-        </article>
-      </div>
-    </section>
-
-    <footer class="legal-note">
-      LusoLaw é uma plataforma tecnológica de intermediação. Não prestamos serviços jurídicos nem fornecemos
-      aconselhamento jurídico. Todos os atos próprios de advogado são realizados de forma independente
-      por profissionais inscritos na Ordem dos Advogados. A taxa aplicada pelo serviço corresponde à
-      utilização da plataforma, gestão de backoffice e triagem automatizada, não a uma comissão sobre
-      honorários ou angariação de clientes.
-    </footer>
+<nav>
+  <a href="#" class="nav-logo">LusoLaw<span class="nav-logo-dot"></span></a>
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Como Funciona</a></li>
+    <li><a href="#clientes">Para Clientes</a></li>
+    <li><a href="#workspace">Advogados</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#" class="btn-secondary" data-open-auth="login">Entrar</a>
+    <a href="#" class="nav-cta" data-open-auth="register">Criar Conta</a>
   </div>
+</nav>
 
-  <div class="modal" id="authModal" aria-hidden="true">
-    <div class="modal-card">
-      <div class="modal-head">
-        <h3 style="font-family: 'Sora', sans-serif;">Acesso Seguro</h3>
-        <button class="btn btn-secondary" id="closeModalBtn">Fechar</button>
-      </div>
-
-      <div class="tabs">
-        <button class="tab active" id="loginTabBtn" type="button">Login</button>
-        <button class="tab" id="registerTabBtn" type="button">Registo</button>
-      </div>
-
-      <section class="auth-panel active" id="loginPanel">
-        <form class="form" id="loginForm">
-          <div class="field">
-            <label for="loginEmail">Email</label>
-            <input class="input" id="loginEmail" type="email" required />
-          </div>
-          <div class="field">
-            <label for="loginPassword">Senha</label>
-            <input class="input" id="loginPassword" type="password" minlength="8" required />
-          </div>
-          <button class="btn btn-primary" type="submit">Entrar</button>
-        </form>
-      </section>
-
-      <section class="auth-panel" id="registerPanel">
-        <form class="form" id="registerForm">
-          <div class="inline">
-            <div class="field">
-              <label for="registerName">Nome</label>
-              <input class="input" id="registerName" required maxlength="100" />
-            </div>
-            <div class="field">
-              <label for="registerRole">Perfil</label>
-              <select class="select" id="registerRole" required>
-                <option value="CLIENT">Cliente</option>
-                <option value="LAWYER">Advogado</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="registerEmail">Email</label>
-            <input class="input" id="registerEmail" type="email" required maxlength="180" />
-          </div>
-
-          <div class="field">
-            <label for="registerPassword">Senha</label>
-            <input class="input" id="registerPassword" type="password" minlength="8" maxlength="72" required />
-          </div>
-
-          <div class="inline">
-            <div class="field">
-              <label for="registerPhone">Telefone</label>
-              <input class="input" id="registerPhone" maxlength="30" />
-            </div>
-            <div class="field">
-              <label for="registerAddress">Morada</label>
-              <input class="input" id="registerAddress" maxlength="180" />
-            </div>
-          </div>
-
-          <div class="inline">
-            <div class="field">
-              <label for="registerIdentificationNumber">N. documento identificacao</label>
-              <input class="input" id="registerIdentificationNumber" maxlength="80" required />
-            </div>
-            <div class="field">
-              <label for="registerIdentificationDocument">Upload documento (PDF/JPG/PNG/WEBP)</label>
-              <input class="input" id="registerIdentificationDocument" type="file" accept=".pdf,image/png,image/jpeg,image/webp" required />
-            </div>
-          </div>
-
-          <div class="inline" id="lawyerFields">
-            <div class="field">
-              <label for="registerSpecialization">Especializacao</label>
-              <input class="input" id="registerSpecialization" maxlength="120" />
-            </div>
-            <div class="field">
-              <label for="registerPricePerHour">Preco/hora (EUR)</label>
-              <input class="input" id="registerPricePerHour" type="number" min="1" step="0.01" />
-            </div>
-            <div class="field">
-              <label for="registerLawyerNumber">Numero de advogado</label>
-              <input class="input" id="registerLawyerNumber" maxlength="80" />
-            </div>
-            <div class="field">
-              <label for="registerLawyerCredentialDocument">Comprovativo OA (PDF/JPG/PNG/WEBP)</label>
-              <input class="input" id="registerLawyerCredentialDocument" type="file" accept=".pdf,image/png,image/jpeg,image/webp" />
-            </div>
-          </div>
-
-          <button class="btn btn-primary" type="submit">Criar Conta</button>
-        </form>
-      </section>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><span></span>Marketplace de Serviços Jurídicos</div>
+    <h1>A tua ligação<br>a advogados<br><em>de imigração.</em></h1>
+    <p>Encontra advogados de imigração verificados, envia o teu pedido com segurança e acompanha todo o processo num só lugar.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-accent" data-open-auth="register">Criar a Minha Conta</a>
+      <a href="#workspace" class="btn-primary">Ver advogados</a>
     </div>
   </div>
 
-  <script>
-    const state = {
-      token: null,
-      user: null,
-      services: [],
-      bookings: []
-    };
-
-    const els = {
-      modal: document.getElementById("authModal"),
-      loginPanel: document.getElementById("loginPanel"),
-      registerPanel: document.getElementById("registerPanel"),
-      loginTabBtn: document.getElementById("loginTabBtn"),
-      registerTabBtn: document.getElementById("registerTabBtn"),
-      loginForm: document.getElementById("loginForm"),
-      registerForm: document.getElementById("registerForm"),
-      registerRole: document.getElementById("registerRole"),
-      lawyerFields: document.getElementById("lawyerFields"),
-
-      servicesList: document.getElementById("servicesList"),
-      bookingForm: document.getElementById("bookingForm"),
-      bookingsList: document.getElementById("bookingsList"),
-      serviceForm: document.getElementById("serviceForm"),
-
-      selectedServiceId: document.getElementById("selectedServiceId"),
-      bookingServiceHint: document.getElementById("bookingServiceHint"),
-
-      authSummary: document.getElementById("authSummary"),
-      authChip: document.getElementById("authChip"),
-      globalNotice: document.getElementById("globalNotice"),
-      adminPortalBtn: document.getElementById("adminPortalBtn"),
-
-      logoutBtn: document.getElementById("logoutBtn")
-    };
-
-    function escapeHtml(value) {
-      if (value === null || value === undefined) {
-        return "";
-      }
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
-    function showNotice(message, type = "ok") {
-      els.globalNotice.textContent = message;
-      els.globalNotice.className = `notice show ${type === "error" ? "notice-error" : "notice-ok"}`;
-      setTimeout(() => {
-        els.globalNotice.className = "notice";
-      }, 3800);
-    }
-
-    function setAuthTab(mode) {
-      const login = mode === "login";
-      els.loginPanel.classList.toggle("active", login);
-      els.registerPanel.classList.toggle("active", !login);
-      els.loginTabBtn.classList.toggle("active", login);
-      els.registerTabBtn.classList.toggle("active", !login);
-    }
-
-    function openModal(mode = "login") {
-      els.modal.classList.add("open");
-      els.modal.setAttribute("aria-hidden", "false");
-      setAuthTab(mode);
-    }
-
-    function closeModal() {
-      els.modal.classList.remove("open");
-      els.modal.setAttribute("aria-hidden", "true");
-    }
-
-    function toggleLawyerFields() {
-      const isLawyer = els.registerRole.value === "LAWYER";
-      els.lawyerFields.classList.toggle("hidden", !isLawyer);
-      document.getElementById("registerSpecialization").required = isLawyer;
-      document.getElementById("registerPricePerHour").required = isLawyer;
-      document.getElementById("registerLawyerNumber").required = isLawyer;
-      document.getElementById("registerLawyerCredentialDocument").required = isLawyer;
-    }
-
-    function setSession(auth) {
-      state.token = auth.token;
-      state.user = auth.user;
-      sessionStorage.setItem("lusolaw_token", state.token);
-      sessionStorage.setItem("lusolaw_user", JSON.stringify(state.user));
-      refreshAuthUI();
-    }
-
-    function clearSession() {
-      state.token = null;
-      state.user = null;
-      sessionStorage.removeItem("lusolaw_token");
-      sessionStorage.removeItem("lusolaw_user");
-      refreshAuthUI();
-    }
-
-    function refreshAuthUI() {
-      if (!state.user) {
-        els.authSummary.textContent = "Sem sessao ativa. Faz login para desbloquear operacoes privadas.";
-        els.authChip.textContent = "Offline";
-        els.authChip.className = "chip chip-offline";
-        els.logoutBtn.classList.add("hidden");
-        els.adminPortalBtn.classList.add("hidden");
-        return;
-      }
-
-      els.authSummary.textContent = `Sessao ativa como ${state.user.name} (${state.user.role}).`;
-      els.authChip.textContent = "Online";
-      els.authChip.className = "chip chip-online";
-      els.logoutBtn.classList.remove("hidden");
-      els.adminPortalBtn.classList.toggle("hidden", state.user.role !== "ADMIN");
-    }
-
-    async function api(path, options = {}, requiresAuth = false) {
-      const headers = { ...(options.headers || {}) };
-
-      if (options.body && !(options.body instanceof FormData) && !headers["Content-Type"]) {
-        headers["Content-Type"] = "application/json";
-      }
-
-      if (requiresAuth) {
-        if (!state.token) {
-          throw new Error("Autenticacao obrigatoria");
-        }
-        headers["Authorization"] = `Bearer ${state.token}`;
-      }
-
-      const response = await fetch(path, { ...options, headers });
-      const text = await response.text();
-
-      let data = null;
-      if (text) {
-        try {
-          data = JSON.parse(text);
-        } catch {
-          data = text;
-        }
-      }
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          clearSession();
-        }
-        const message = typeof data === "object" && data !== null
-          ? data.error || data.message || "Pedido falhou"
-          : (data || "Pedido falhou");
-        throw new Error(message);
-      }
-
-      return data;
-    }
-
-    function canBook() {
-      return state.user && state.user.role === "CLIENT";
-    }
-
-    function canPublish() {
-      return state.user && state.user.role === "LAWYER";
-    }
-
-    async function loadServices() {
-      state.services = await api("/api/services");
-      renderServices();
-    }
-
-    function renderServices() {
-      if (!state.services.length) {
-        els.servicesList.innerHTML = "<p class='muted'>Ainda nao existem servicos publicados.</p>";
-        return;
-      }
-
-      els.servicesList.innerHTML = state.services.map((service) => {
-        const price = Number(service.price || 0).toFixed(2);
-        const lawyer = service.lawyer
-          ? `${escapeHtml(service.lawyer.name)} | ${escapeHtml(service.lawyer.specialization || "Generalista")}`
-          : "Sem advogado";
-
-        const selectBtn = canBook()
-          ? `<button class='btn btn-primary select-service' data-id='${service.id}'>Selecionar</button>`
-          : "";
-
-        return `
-          <article class="card">
-            <h3>${escapeHtml(service.name)}</h3>
-            <p>${escapeHtml(service.description)}</p>
-            <div style="display:flex; justify-content:space-between; gap:8px; align-items:center; font-size:0.86rem; margin-top:8px;">
-              <span>${lawyer}</span>
-              <strong>${price} EUR</strong>
-            </div>
-            <div style="display:flex; justify-content:space-between; gap:8px; align-items:center; margin-top:8px;">
-              <span class="muted">ID #${service.id}</span>
-              ${selectBtn}
-            </div>
-          </article>
-        `;
-      }).join("");
-
-      document.querySelectorAll(".select-service").forEach((button) => {
-        button.addEventListener("click", () => {
-          const id = button.getAttribute("data-id");
-          els.selectedServiceId.value = id;
-          const found = state.services.find((item) => String(item.id) === String(id));
-          els.bookingServiceHint.textContent = found
-            ? `Servico selecionado: ${found.name} (${Number(found.price).toFixed(2)} EUR)`
-            : "Servico selecionado";
-          showNotice("Servico selecionado com sucesso.");
-        });
-      });
-    }
-
-    async function loadBookings() {
-      if (!state.user) {
-        state.bookings = [];
-        renderBookings();
-        return;
-      }
-
-      state.bookings = await api("/api/bookings/me", {}, true);
-      renderBookings();
-    }
-
-    function renderBookings() {
-      if (!state.bookings.length) {
-        els.bookingsList.innerHTML = "<p class='muted'>Sem bookings para mostrar.</p>";
-        return;
-      }
-
-      els.bookingsList.innerHTML = state.bookings.map((booking) => {
-        const status = escapeHtml(booking.status);
-        const serviceName = escapeHtml(booking.service?.name || "Servico");
-        const lawyerName = escapeHtml(booking.lawyer?.name || "Advogado");
-        const clientName = escapeHtml(booking.client?.name || "Cliente");
-        const amount = Number(booking.amount || 0).toFixed(2);
-
-        let actionHtml = "";
-        if (state.user.role === "LAWYER" && booking.status === "PENDING") {
-          actionHtml = `
-            <div style="display:flex; gap:8px; margin-top:8px;">
-              <button class="btn btn-secondary decision-btn" data-id="${booking.id}" data-decision="ACCEPT">Aceitar</button>
-              <button class="btn btn-secondary decision-btn" data-id="${booking.id}" data-decision="REJECT">Rejeitar</button>
-            </div>
-          `;
-        }
-
-        if (state.user.role === "CLIENT" && booking.status === "ACCEPTED") {
-          actionHtml = `
-            <div style="display:flex; gap:8px; margin-top:8px;">
-              <button class="btn btn-primary pay-btn" data-id="${booking.id}">Criar Pagamento</button>
-            </div>
-          `;
-        }
-
-        return `
-          <article class="card">
-            <div style="display:flex; justify-content:space-between; gap:8px; align-items:center;">
-              <h3>${serviceName}</h3>
-              <span class="pill pill-${status}">${status}</span>
-            </div>
-            <p>${escapeHtml(booking.situation || "")}</p>
-            <div style="display:flex; justify-content:space-between; gap:8px; align-items:center; font-size:0.86rem;">
-              <span>Cliente: ${clientName}</span>
-              <span>Advogado: ${lawyerName}</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; gap:8px; align-items:center; margin-top:6px; font-size:0.86rem;">
-              <strong>${amount} EUR</strong>
-              <span class="muted">Deadline: ${escapeHtml(booking.deadline || "-")}</span>
-            </div>
-            ${actionHtml}
-          </article>
-        `;
-      }).join("");
-
-      document.querySelectorAll(".decision-btn").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const id = button.getAttribute("data-id");
-          const decision = button.getAttribute("data-decision");
-          try {
-            await api(`/api/bookings/${id}/respond`, {
-              method: "POST",
-              body: JSON.stringify({ decision })
-            }, true);
-            showNotice("Resposta enviada com sucesso.");
-            await loadBookings();
-          } catch (error) {
-            showNotice(error.message, "error");
-          }
-        });
-      });
-
-      document.querySelectorAll(".pay-btn").forEach((button) => {
-        button.addEventListener("click", async () => {
-          const id = button.getAttribute("data-id");
-          try {
-            const data = await api(`/api/payments/create-intent/${id}`, { method: "POST" }, true);
-            const preview = (data.clientSecret || "").slice(0, 18);
-            showNotice(`Intent criado. Client secret: ${preview}...`);
-            await loadBookings();
-          } catch (error) {
-            showNotice(error.message, "error");
-          }
-        });
-      });
-    }
-
-    async function submitLogin(event) {
-      event.preventDefault();
-      const payload = {
-        email: document.getElementById("loginEmail").value,
-        password: document.getElementById("loginPassword").value
-      };
-
-      try {
-        const auth = await api("/api/auth/login", {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
-        setSession(auth);
-        closeModal();
-        showNotice("Login efetuado com sucesso.");
-        await Promise.all([loadServices(), loadBookings()]);
-      } catch (error) {
-        showNotice(error.message, "error");
-      }
-    }
-
-    async function submitRegister(event) {
-      event.preventDefault();
-      const role = document.getElementById("registerRole").value;
-
-      const idDocument = document.getElementById("registerIdentificationDocument").files[0];
-      if (!idDocument) {
-        showNotice("Documento de identificacao e obrigatorio.", "error");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("name", document.getElementById("registerName").value);
-      formData.append("email", document.getElementById("registerEmail").value);
-      formData.append("password", document.getElementById("registerPassword").value);
-      formData.append("role", role);
-      formData.append("phone", document.getElementById("registerPhone").value || "");
-      formData.append("address", document.getElementById("registerAddress").value || "");
-      formData.append("identificationNumber", document.getElementById("registerIdentificationNumber").value || "");
-      formData.append("identificationDocument", idDocument);
-
-      if (role === "LAWYER") {
-        formData.append("specialization", document.getElementById("registerSpecialization").value || "");
-        formData.append("pricePerHour", document.getElementById("registerPricePerHour").value || "");
-        formData.append("lawyerRegistrationNumber", document.getElementById("registerLawyerNumber").value || "");
-
-        const credential = document.getElementById("registerLawyerCredentialDocument").files[0];
-        if (!credential) {
-          showNotice("Comprovativo de advogado e obrigatorio.", "error");
-          return;
-        }
-        formData.append("lawyerCredentialDocument", credential);
-      }
-
-      try {
-        const auth = await api("/api/auth/register", {
-          method: "POST",
-          body: formData
-        });
-
-        if (auth && auth.token) {
-          setSession(auth);
-          closeModal();
-          showNotice("Conta criada e sessao iniciada com sucesso.");
-          await Promise.all([loadServices(), loadBookings()]);
-          return;
-        }
-
-        closeModal();
-        event.target.reset();
-        toggleLawyerFields();
-        showNotice(auth && auth.message ? auth.message : "Registo recebido. Aguarde validacao do administrador.");
-      } catch (error) {
-        showNotice(error.message, "error");
-      }
-    }
-
-    async function submitService(event) {
-      event.preventDefault();
-      if (!canPublish()) {
-        showNotice("Apenas advogados autenticados podem publicar servicos.", "error");
-        return;
-      }
-
-      const payload = {
-        name: document.getElementById("serviceName").value,
-        description: document.getElementById("serviceDescription").value,
-        price: Number(document.getElementById("servicePrice").value)
-      };
-
-      try {
-        await api("/api/services", {
-          method: "POST",
-          body: JSON.stringify(payload)
-        }, true);
-        showNotice("Servico publicado com sucesso.");
-        event.target.reset();
-        await loadServices();
-      } catch (error) {
-        showNotice(error.message, "error");
-      }
-    }
-
-    async function submitBooking(event) {
-      event.preventDefault();
-      if (!canBook()) {
-        showNotice("Apenas clientes autenticados podem criar pedidos.", "error");
-        return;
-      }
-
-      const serviceId = Number(els.selectedServiceId.value);
-      if (!serviceId) {
-        showNotice("Seleciona um servico antes de enviar pedido.", "error");
-        return;
-      }
-
-      const payload = {
-        serviceId,
-        situation: document.getElementById("bookingSituation").value,
-        details: document.getElementById("bookingDetails").value
-      };
-
-      try {
-        await api("/api/bookings", {
-          method: "POST",
-          body: JSON.stringify(payload)
-        }, true);
-        showNotice("Pedido enviado com sucesso.");
-        event.target.reset();
-        els.selectedServiceId.value = "";
-        els.bookingServiceHint.textContent = "Seleciona um servico no marketplace.";
-        await loadBookings();
-      } catch (error) {
-        showNotice(error.message, "error");
-      }
-    }
-
-    async function hydrateSession() {
-      const token = sessionStorage.getItem("lusolaw_token");
-      const userRaw = sessionStorage.getItem("lusolaw_user");
-      if (!token || !userRaw) {
-        refreshAuthUI();
-        return;
-      }
-
-      try {
-        state.token = token;
-        state.user = JSON.parse(userRaw);
-        const me = await api("/api/auth/me", {}, true);
-        state.user = me;
-        sessionStorage.setItem("lusolaw_user", JSON.stringify(me));
-        refreshAuthUI();
-      } catch {
-        clearSession();
-      }
-    }
-
-    function calculateViability() {
-      const serviceType = document.getElementById("serviceType").value;
-      const documentStatus = document.getElementById("documentStatus").value;
-      const timeline = document.getElementById("timeline").value;
-
-      if (!serviceType || !documentStatus || !timeline) {
-        showNotice("Preenche todos os campos antes de calcular.", "error");
-        return;
-      }
-
-      let viability = 75;
-
-      if (documentStatus === "completo") viability += 20;
-      else if (documentStatus === "parcial") viability += 10;
-
-      if (timeline === "flexivel") viability += 10;
-      else if (timeline === "normal") viability += 5;
-
-      viability = Math.min(viability, 98);
-
-      const resultDiv = document.getElementById("viabilityResult");
-      resultDiv.classList.add("notice-ok", "show");
-      resultDiv.innerHTML = `
-        <strong>Resultado: ${viability}% de probabilidade de aceitação</strong><br><br>
-        Com base nos seus dados, o seu processo de <strong>${getServiceLabel(serviceType)}</strong> 
-        tem ${viability}% de probabilidade de aceitação. 
-        <button class="btn btn-primary" style="margin-top: 10px; cursor: pointer;" onclick="document.getElementById('openRegisterBtn').click();">
-          Avançar para Criar Conta
+  <div class="hero-image">
+    <div class="hero-media-card">
+      <div class="hero-media-top">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="hero-media-video">
+        <video autoplay loop muted playsinline preload="metadata" aria-label="Video principal da plataforma LusoLaw">
+          <source src="/assets/videos/hero-main.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-media-caption">Plataforma de intermediação entre cliente e advogado com fluxo seguro e rastreável.</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Advogados Verificados</span>
+    <span class="marquee-item">Pedidos com Estado em Tempo Real</span>
+    <span class="marquee-item">Intermediação Transparente</span>
+    <span class="marquee-item">Acompanhamento Transparente</span>
+    <span class="marquee-item">Suporte ao Cliente</span>
+    <span class="marquee-item">Advogados Verificados</span>
+    <span class="marquee-item">Pedidos com Estado em Tempo Real</span>
+    <span class="marquee-item">Intermediação Transparente</span>
+    <span class="marquee-item">Acompanhamento Transparente</span>
+    <span class="marquee-item">Suporte ao Cliente</span>
+  </div>
+</div>
+
+<section class="workspace-section lawyer-directory-section" id="workspace">
+  <div class="container">
+    <span class="section-tag">Advogados em Destaque</span>
+    <h2 class="section-title fade-in">Encontra perfis jurídicos verificados<br>para o teu processo</h2>
+    <p class="directory-intro fade-in">Seleciona o perfil mais alinhado com a tua necessidade de imigração. A LusoLaw atua como plataforma de intermediação entre cliente e advogado, sem prestação de serviços jurídicos.</p>
+    <div class="notice" id="globalNotice"></div>
+
+    <div class="lawyer-directory-grid fade-in">
+      <article class="lawyer-profile-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar">AS</div>
+          <div>
+            <h3>Ana Silva</h3>
+            <p class="lawyer-meta">Lisboa · Direito de Imigração</p>
+          </div>
+        </div>
+        <div class="lawyer-tags">
+          <span class="lawyer-tag">Autorização de residência</span>
+          <span class="lawyer-tag">Renovação AR</span>
+        </div>
+        <p class="lawyer-desc">Atuação focada em regularização documental, acompanhamento completo e preparação de processos para AIMA.</p>
+        <div class="lawyer-stats">
+          <div class="lawyer-stat"><span class="value">4.9</span><span class="label">Avaliação</span></div>
+          <div class="lawyer-stat"><span class="value">220+</span><span class="label">Casos</span></div>
+          <div class="lawyer-stat"><span class="value">24h</span><span class="label">Resposta</span></div>
+        </div>
+        <div class="lawyer-actions">
+          <a href="#" class="btn-accent" data-open-auth="register">Pedir contacto</a>
+          <a href="#" class="btn-secondary" data-open-auth="login">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="lawyer-profile-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar">MC</div>
+          <div>
+            <h3>Margarida Costa</h3>
+            <p class="lawyer-meta">Porto · Nacionalidade e Vistos</p>
+          </div>
+        </div>
+        <div class="lawyer-tags">
+          <span class="lawyer-tag">Visto D7</span>
+          <span class="lawyer-tag">Nacionalidade</span>
+        </div>
+        <p class="lawyer-desc">Especializada em processos de residência para empreendedores, aposentados e pedidos de nacionalidade portuguesa.</p>
+        <div class="lawyer-stats">
+          <div class="lawyer-stat"><span class="value">4.8</span><span class="label">Avaliação</span></div>
+          <div class="lawyer-stat"><span class="value">180+</span><span class="label">Casos</span></div>
+          <div class="lawyer-stat"><span class="value">36h</span><span class="label">Resposta</span></div>
+        </div>
+        <div class="lawyer-actions">
+          <a href="#" class="btn-accent" data-open-auth="register">Pedir contacto</a>
+          <a href="#" class="btn-secondary" data-open-auth="login">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="lawyer-profile-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar">JP</div>
+          <div>
+            <h3>João Pereira</h3>
+            <p class="lawyer-meta">Braga · Reagrupamento Familiar</p>
+          </div>
+        </div>
+        <div class="lawyer-tags">
+          <span class="lawyer-tag">Reagrupamento</span>
+          <span class="lawyer-tag">Menores</span>
+        </div>
+        <p class="lawyer-desc">Experiência em processos familiares com foco em documentação internacional e resposta a pedidos complementares.</p>
+        <div class="lawyer-stats">
+          <div class="lawyer-stat"><span class="value">4.9</span><span class="label">Avaliação</span></div>
+          <div class="lawyer-stat"><span class="value">150+</span><span class="label">Casos</span></div>
+          <div class="lawyer-stat"><span class="value">24h</span><span class="label">Resposta</span></div>
+        </div>
+        <div class="lawyer-actions">
+          <a href="#" class="btn-accent" data-open-auth="register">Pedir contacto</a>
+          <a href="#" class="btn-secondary" data-open-auth="login">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="lawyer-profile-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar">BF</div>
+          <div>
+            <h3>Beatriz Ferreira</h3>
+            <p class="lawyer-meta">Coimbra · CPLP e Mobilidade</p>
+          </div>
+        </div>
+        <div class="lawyer-tags">
+          <span class="lawyer-tag">Visto CPLP</span>
+          <span class="lawyer-tag">Regularização</span>
+        </div>
+        <p class="lawyer-desc">Acompanhamento objetivo para cidadãos CPLP, com orientação prática sobre prazos, exigências e documentação.</p>
+        <div class="lawyer-stats">
+          <div class="lawyer-stat"><span class="value">4.7</span><span class="label">Avaliação</span></div>
+          <div class="lawyer-stat"><span class="value">130+</span><span class="label">Casos</span></div>
+          <div class="lawyer-stat"><span class="value">48h</span><span class="label">Resposta</span></div>
+        </div>
+        <div class="lawyer-actions">
+          <a href="#" class="btn-accent" data-open-auth="register">Pedir contacto</a>
+          <a href="#" class="btn-secondary" data-open-auth="login">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="lawyer-profile-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar">RS</div>
+          <div>
+            <h3>Rita Sousa</h3>
+            <p class="lawyer-meta">Setúbal · Trabalhadores Estrangeiros</p>
+          </div>
+        </div>
+        <div class="lawyer-tags">
+          <span class="lawyer-tag">Contrato de trabalho</span>
+          <span class="lawyer-tag">Manifestação</span>
+        </div>
+        <p class="lawyer-desc">Suporte para processos ligados a atividade profissional em Portugal, com foco em consistência documental.</p>
+        <div class="lawyer-stats">
+          <div class="lawyer-stat"><span class="value">4.8</span><span class="label">Avaliação</span></div>
+          <div class="lawyer-stat"><span class="value">165+</span><span class="label">Casos</span></div>
+          <div class="lawyer-stat"><span class="value">24h</span><span class="label">Resposta</span></div>
+        </div>
+        <div class="lawyer-actions">
+          <a href="#" class="btn-accent" data-open-auth="register">Pedir contacto</a>
+          <a href="#" class="btn-secondary" data-open-auth="login">Ver detalhes</a>
+        </div>
+      </article>
+
+      <article class="lawyer-profile-card">
+        <div class="lawyer-top">
+          <div class="lawyer-avatar">DL</div>
+          <div>
+            <h3>Diogo Lopes</h3>
+            <p class="lawyer-meta">Faro · Recursos e Contencioso</p>
+          </div>
+        </div>
+        <div class="lawyer-tags">
+          <span class="lawyer-tag">Recursos administrativos</span>
+          <span class="lawyer-tag">Impugnação</span>
+        </div>
+        <p class="lawyer-desc">Atuação em casos complexos com necessidade de recurso e acompanhamento processual mais técnico.</p>
+        <div class="lawyer-stats">
+          <div class="lawyer-stat"><span class="value">4.9</span><span class="label">Avaliação</span></div>
+          <div class="lawyer-stat"><span class="value">110+</span><span class="label">Casos</span></div>
+          <div class="lawyer-stat"><span class="value">48h</span><span class="label">Resposta</span></div>
+        </div>
+        <div class="lawyer-actions">
+          <a href="#" class="btn-accent" data-open-auth="register">Pedir contacto</a>
+          <a href="#" class="btn-secondary" data-open-auth="login">Ver detalhes</a>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<section class="workspace-section hidden" id="workspace-operacional" aria-hidden="true">
+  <div class="container">
+    <div class="workspace-grid">
+      <article class="ws-card">
+        <h3>Estado da Sessão</h3>
+        <p class="muted" id="authSummary">Sem sessão ativa. Faz login para desbloquear operações privadas.</p>
+        <span class="session-chip offline" id="authChip">Offline</span>
+        <div class="ws-actions">
+          <button class="btn-secondary" id="panelLoginBtn" type="button">Entrar</button>
+          <button class="btn-accent" id="panelRegisterBtn" type="button">Criar Conta</button>
+          <button class="btn-secondary hidden" id="logoutBtn" type="button">Terminar Sessão</button>
+          <a class="btn-secondary hidden" id="adminPortalBtn" href="/admin">Painel Admin</a>
+        </div>
+      </article>
+
+      <article class="ws-card">
+        <h3>Publicar Serviço (Advogado)</h3>
+        <p class="muted">Disponível apenas para contas profissionais autenticadas.</p>
+        <form class="ws-form" id="serviceForm">
+          <div class="ws-field">
+            <label for="serviceName">Nome do serviço</label>
+            <input class="ws-input" id="serviceName" required maxlength="120" />
+          </div>
+          <div class="ws-field">
+            <label for="serviceDescription">Descrição</label>
+            <textarea class="ws-textarea" id="serviceDescription" required maxlength="500"></textarea>
+          </div>
+          <div class="ws-field">
+            <label for="servicePrice">Preço (EUR)</label>
+            <input class="ws-input" id="servicePrice" type="number" min="1" step="0.01" required />
+          </div>
+          <button class="btn-accent" type="submit">Publicar Serviço</button>
+        </form>
+      </article>
+
+      <article class="ws-card">
+        <h3>Marketplace de Serviços</h3>
+        <p class="muted">Seleciona um serviço para iniciar um pedido.</p>
+        <div class="ws-list" id="servicesList"></div>
+      </article>
+
+      <article class="ws-card">
+        <h3>Solicitar Serviço (Cliente)</h3>
+        <p class="muted" id="bookingServiceHint">Seleciona um serviço no marketplace.</p>
+        <form class="ws-form" id="bookingForm">
+          <input type="hidden" id="selectedServiceId" />
+          <div class="ws-field">
+            <label for="bookingSituation">Situação</label>
+            <input class="ws-input" id="bookingSituation" required maxlength="180" />
+          </div>
+          <div class="ws-field">
+            <label for="bookingDetails">Detalhes</label>
+            <textarea class="ws-textarea" id="bookingDetails" required maxlength="2000"></textarea>
+          </div>
+          <button class="btn-accent" type="submit">Enviar Pedido</button>
+        </form>
+      </article>
+
+      <article class="ws-card full">
+        <h3>Meus Bookings</h3>
+        <p class="muted">Acompanha estados, decisões e próximos passos.</p>
+        <div class="ws-list" id="bookingsList"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="florist-section" id="clientes">
+  <div class="florist-content fade-in">
+    <span class="section-tag">Para Clientes</span>
+    <h2 class="section-title">Escolhe com<br>confiança</h2>
+    <p>Consulta perfis, especializações e serviços jurídicos de imigração antes de avançar com o teu pedido.</p>
+    <div class="big-stat"><span class="big-num">3×</span><span class="big-unit">mais clareza na decisão</span></div>
+    <div class="florist-pills">
+      <div class="pill"><div class="dot"></div>Perfis verificados</div>
+      <div class="pill"><div class="dot"></div>Serviços detalhados</div>
+      <div class="pill"><div class="dot"></div>Estados em tempo real</div>
+      <div class="pill"><div class="dot"></div>Checkout seguro via Stripe</div>
+    </div>
+    <a href="#" class="btn-accent" data-open-auth="register">Começar Grátis</a>
+  </div>
+
+  <div class="fade-in">
+    <div class="store-mockup">
+      <div class="store-mockup-header">
+        <div class="dot-row"><div class="d d-r"></div><div class="d d-y"></div><div class="d d-g"></div></div>
+        <div class="store-url">lusolaw.pt/advogada-ana</div>
+      </div>
+      <div class="store-body">
+        <div class="store-banner">
+          <div class="store-banner-text">
+            <h4>Advogada Ana Silva</h4>
+            <p>Lisboa · Direito de Imigração</p>
+          </div>
+          <div class="store-banner-icon">⚖️</div>
+        </div>
+        <div class="store-products">
+          <div class="store-product-card"><div class="store-product-img">📄</div><div class="store-product-info"><div class="name">Autorização de Residência</div><div class="price">Consulta detalhada</div></div></div>
+          <div class="store-product-card"><div class="store-product-img">👨‍👩‍👧</div><div class="store-product-info"><div class="name">Reagrupamento Familiar</div><div class="price">Análise jurídica</div></div></div>
+          <div class="store-product-card"><div class="store-product-img">🔄</div><div class="store-product-info"><div class="name">Renovação de AR</div><div class="price">Acompanhamento completo</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="customers-section">
+  <div class="delivery-visual fade-in">
+    <div class="delivery-card">
+      <div class="delivery-badge">⏱️ Resposta — 24h</div>
+      <div class="delivery-card-header">
+        <div class="florist-avatar">⚖️</div>
+        <div class="florist-info">
+          <div class="name">Advogada Ana Silva</div>
+          <div class="location">Lisboa · Direito de Imigracao</div>
+        </div>
+        <div class="florist-rating">★ 4.9</div>
+      </div>
+      <div class="order-items">
+        <div class="order-item"><div class="order-item-icon">📄</div><div class="order-item-info"><div class="title">Pedido de Título de Residência</div><div class="sub">Análise documental completa</div></div><div class="order-item-price">Aceite</div></div>
+        <div class="order-item"><div class="order-item-icon">✅</div><div class="order-item-info"><div class="title">Estado do Booking</div><div class="sub">Próximo passo confirmado</div></div><div class="order-item-price">Concluído</div></div>
+      </div>
+      <div class="order-total"><div class="label">Estado final</div><div class="total">Seguro</div></div>
+    </div>
+  </div>
+  <div class="customers-content fade-in">
+    <span class="section-tag">Para Clientes</span>
+    <h2 class="section-title">Escolha jurídica,<br>com transparência</h2>
+    <p>Escolhe advogados especializados e envia pedidos com contexto detalhado. A plataforma organiza o fluxo, e a relação profissional acontece diretamente com o advogado.</p>
+    <ul class="check-list">
+      <li>Perfis de advogados com validação documental</li>
+      <li>Serviços públicos com preço transparente</li>
+      <li>Pedidos com estado em tempo real</li>
+      <li>Honorários acordados diretamente com o advogado</li>
+      <li>Histórico completo de bookings</li>
+    </ul>
+    <a href="#workspace" class="btn-accent">Ver advogados</a>
+  </div>
+</section>
+
+<section class="revenue-section">
+  <div class="fade-in">
+    <div class="revenue-chart">
+      <div class="chart-header">
+        <div>
+          <div class="label">Fluxo do pedido (exemplo)</div>
+          <div class="big">Pedido concluído</div>
+        </div>
+        <div class="chart-badge">Atualização em tempo real</div>
+      </div>
+      <div class="chart-bars">
+        <div class="bar-group"><div class="bar" style="height:34%;background:var(--rose);"></div><div class="bar-label">Pedido</div></div>
+        <div class="bar-group"><div class="bar" style="height:52%;background:var(--rose);"></div><div class="bar-label">Análise</div></div>
+        <div class="bar-group"><div class="bar" style="height:68%;background:var(--rose);"></div><div class="bar-label">Resposta</div></div>
+        <div class="bar-group"><div class="bar" style="height:84%;background:var(--pink);"></div><div class="bar-label" style="color:var(--pink);font-weight:700;">Acordo</div></div>
+        <div class="bar-group"><div class="bar" style="height:95%;background:var(--pink);"></div><div class="bar-label" style="color:var(--pink);font-weight:700;">Concluído</div></div>
+      </div>
+      <div class="revenue-stat-row">
+        <div class="rev-stat"><div class="s-label">Tempo médio de resposta</div><div class="s-val">Até 48h</div></div>
+        <div class="rev-stat"><div class="s-label">Estado do pedido</div><div class="s-val">Rastreável</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="fade-in">
+    <span class="section-tag">Acompanhamento do Cliente</span>
+    <h2 class="section-title" style="margin-bottom:24px;">Sem dúvidas,<br>sem ruído</h2>
+    <p style="color:var(--gray-600);font-size:16px;line-height:1.7;margin-bottom:32px;">No teu painel, consegues acompanhar o progresso do pedido em cada etapa, do envio à confirmação final.</p>
+    <ul class="check-list">
+      <li>Histórico completo dos teus pedidos</li>
+      <li>Estado atualizado em tempo real</li>
+      <li>Notificações de decisão e próximos passos</li>
+      <li>Mais clareza no contacto com o advogado</li>
+    </ul>
+  </div>
+</section>
+
+<section class="features-section" id="como-funciona">
+  <div class="container">
+    <span class="section-tag">Como Funciona</span>
+    <h2 class="section-title fade-in">Tudo o que precisas<br>para encontrar o advogado certo</h2>
+    <div class="features-grid fade-in">
+      <div class="feature-card">
+        <div class="feature-icon">🌸</div>
+        <h3>Cria a Tua Conta</h3>
+        <p>Regista-te em minutos e acede ao marketplace com perfil seguro para gerir os teus pedidos.</p>
+        <div class="feature-stat">5 min <span>para começar</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛍️</div>
+        <h3>Escolhe um Serviço</h3>
+        <p>Compara áreas de atuação, perfis e descrições de serviço para escolher o apoio certo.</p>
+        <div class="feature-stat">100% <span>perfis verificados</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>Envia o Pedido</h3>
+        <p>Descreve o teu caso com contexto e documentos essenciais para acelerar a análise inicial.</p>
+        <div class="feature-stat">48h <span>de resposta máxima</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <h3>Acompanha o Estado</h3>
+        <p>Vê quando o pedido é aceite, rejeitado ou concluído, sempre com atualização em tempo real.</p>
+        <div class="feature-stat">Tempo real <span>no workspace</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💳</div>
+        <h3>Contratação Transparente</h3>
+        <p>Depois da aceitação, o pagamento é processado com checkout seguro via Stripe e com a Luso Law Service Fee apresentada antes da confirmação.</p>
+        <div class="feature-stat">100% <span>intermediação</span></div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Confiança e Qualidade</h3>
+        <p>A plataforma mantém moderação ativa e validações para garantir segurança ao cliente.</p>
+        <div class="feature-stat">Suporte <span>contínuo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section">
+  <div class="container">
+    <span class="section-tag">O que dizem os clientes</span>
+    <h2 class="section-title fade-in">Histórias reais,<br>resultados reais</h2>
+    <div class="reviews-grid">
+      <div class="review-card fade-in">
+        <div class="review-header">
+          <div class="avatar">⚖️</div>
+          <div>
+            <div class="reviewer-name">Ana Silva</div>
+            <div class="reviewer-role">Cliente · Lisboa</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"Consegui enviar o meu pedido com clareza e acompanhar tudo até ao fecho com o advogado, sem confusão."</p>
+      </div>
+      <div class="review-card fade-in" style="transition-delay:0.1s;">
+        <div class="review-header">
+          <div class="avatar">🧾</div>
+          <div>
+            <div class="reviewer-name">Margarida Costa</div>
+            <div class="reviewer-role">Cliente · Porto</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"Consegui comparar serviços e escolher o advogado certo. O processo foi rápido e transparente."</p>
+      </div>
+      <div class="review-card fade-in" style="transition-delay:0.2s;">
+        <div class="review-header">
+          <div class="avatar">📬</div>
+          <div>
+            <div class="reviewer-name">João Mendes</div>
+            <div class="reviewer-role">Cliente · Braga</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+        <p class="review-text">"As atualizações de estado ajudaram-me a saber exatamente o que faltava em cada etapa do processo."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="faq-header">
+      <div>
+        <span class="section-tag">F.A.Q</span>
+        <h2 class="section-title fade-in" style="margin-bottom:0;">Tudo o que queres<br>saber antes de começar</h2>
+      </div>
+      <div>
+        <p style="color:var(--gray-600);font-size:16px;line-height:1.7;margin-bottom:24px;">Tens outra dúvida? A equipa responde rápido.</p>
+        <a href="#" class="btn-accent" data-open-auth="register">Começar agora</a>
+      </div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          A LusoLaw presta serviços jurídicos?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
-      `;
+        <div class="faq-answer">Não. A LusoLaw é uma plataforma tecnológica de intermediação. A prestação jurídica é feita exclusivamente por advogados.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          A plataforma dá aconselhamento jurídico?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Não. Não emitimos pareceres nem recomendações legais. Qualquer conselho jurídico vem do advogado escolhido pelo cliente.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Como funcionam os pagamentos e a Luso Law Service Fee?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Os pagamentos são processados com checkout seguro via Stripe. A LusoLaw aplica a Luso Law Service Fee (matching, platform & secure payment), apresentada em valor final antes de o cliente concluir o pagamento.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Como é feita a validação dos advogados?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Antes de aparecerem no marketplace, os perfis passam por validação documental e verificação de inscrição profissional.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          O que a plataforma faz durante o processo?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Disponibilizamos o marketplace, o envio do pedido e o acompanhamento de estados. A estratégia e atuação jurídica cabem ao advogado.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Tenho um caso urgente. A plataforma resolve?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-answer">Em situações urgentes, deves contactar diretamente um advogado e, quando aplicável, as autoridades competentes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="comecar">
+  <div class="cta-badge">Começa Hoje</div>
+  <h2>Encontra o advogado<br>certo agora!</h2>
+  <p>Cria a tua conta, escolhe o serviço adequado e acompanha cada etapa do teu pedido com total transparência.</p>
+  <div class="cta-btns">
+    <a href="#" data-open-auth="register" class="btn-accent" style="font-size:16px;padding:18px 40px;">Criar Conta Grátis</a>
+    <a href="#workspace" style="color:rgba(255,255,255,0.5);font-size:15px;text-decoration:none;padding:18px 24px;">Ver perfis de advogados →</a>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="#" class="footer-logo">LusoLaw<span style="width:7px;height:7px;border-radius:50%;background:var(--pink);display:inline-block;margin-left:2px;margin-bottom:3px;"></span></a>
+    <p class="footer-tagline">Plataforma de intermediação entre cliente e advogado para temas de imigração e residência. Não prestamos serviços jurídicos nem aconselhamento legal.</p>
+  </div>
+  <div class="footer-links">
+    <ul class="footer-nav">
+      <li><a href="#">Início</a></li>
+      <li><a href="#clientes">Para Clientes</a></li>
+      <li><a href="#workspace">Advogados</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="/admin">Admin</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 LusoLaw Marketplace. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<div class="modal" id="authModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Acesso ao Marketplace</h3>
+      <button class="btn-secondary" id="closeModalBtn" type="button">Fechar</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" id="loginTabBtn" type="button">Login</button>
+      <button class="tab" id="registerTabBtn" type="button">Registo</button>
+    </div>
+
+    <section class="auth-panel active" id="loginPanel">
+      <form class="modal-form" id="loginForm">
+        <div class="modal-field">
+          <label for="loginEmail">Email</label>
+          <input class="modal-input" id="loginEmail" type="email" required />
+        </div>
+        <div class="modal-field">
+          <label for="loginPassword">Senha</label>
+          <input class="modal-input" id="loginPassword" type="password" minlength="8" required />
+        </div>
+        <p class="form-feedback" id="loginFeedback" aria-live="polite"></p>
+        <button class="btn-accent" id="loginSubmitBtn" type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <section class="auth-panel" id="registerPanel">
+      <form class="modal-form" id="registerForm">
+        <div class="modal-inline">
+          <div class="modal-field">
+            <label for="registerName">Nome</label>
+            <input class="modal-input" id="registerName" required maxlength="100" />
+          </div>
+          <div class="modal-field">
+            <label for="registerRole">Perfil</label>
+            <select class="modal-select" id="registerRole" required>
+              <option value="CLIENT">Cliente</option>
+              <option value="LAWYER">Advogado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-field">
+          <label for="registerEmail">Email</label>
+          <input class="modal-input" id="registerEmail" type="email" required maxlength="180" />
+        </div>
+
+        <div class="modal-field">
+          <label for="registerPassword">Senha</label>
+          <input class="modal-input" id="registerPassword" type="password" minlength="8" maxlength="72" required />
+        </div>
+
+        <div class="modal-inline">
+          <div class="modal-field">
+            <label for="registerPhone">Telefone</label>
+            <input class="modal-input" id="registerPhone" maxlength="30" />
+          </div>
+          <div class="modal-field">
+            <label for="registerAddress">Morada</label>
+            <input class="modal-input" id="registerAddress" maxlength="180" />
+          </div>
+        </div>
+
+        <div class="modal-inline">
+          <div class="modal-field">
+            <label for="registerIdentificationNumber">N. documento identificação</label>
+            <input class="modal-input" id="registerIdentificationNumber" maxlength="80" required />
+          </div>
+          <div class="modal-field">
+            <label for="registerIdentificationDocument">Documento (PDF/JPG/PNG/WEBP)</label>
+            <input class="modal-file" id="registerIdentificationDocument" type="file" accept=".pdf,image/png,image/jpeg,image/webp" required />
+          </div>
+        </div>
+
+        <div class="modal-inline" id="lawyerFields">
+          <div class="modal-field">
+            <label for="registerSpecialization">Especialização</label>
+            <input class="modal-input" id="registerSpecialization" maxlength="120" />
+          </div>
+          <div class="modal-field">
+            <label for="registerPricePerHour">Preço base (EUR)</label>
+            <input class="modal-input" id="registerPricePerHour" type="number" min="1" step="0.01" />
+          </div>
+          <div class="modal-field">
+            <label for="registerLawyerNumber">Identificador profissional</label>
+            <input class="modal-input" id="registerLawyerNumber" maxlength="80" />
+          </div>
+          <div class="modal-field">
+            <label for="registerLawyerCredentialDocument">Comprovativo profissional</label>
+            <input class="modal-file" id="registerLawyerCredentialDocument" type="file" accept=".pdf,image/png,image/jpeg,image/webp" />
+          </div>
+        </div>
+
+        <button class="btn-accent" type="submit">Criar Conta</button>
+      </form>
+    </section>
+  </div>
+</div>
+
+<div class="modal" id="paymentModal" aria-hidden="true">
+  <div class="modal-card" style="max-width:560px;">
+    <div class="modal-head">
+      <h3>Finalizar Pagamento</h3>
+      <button class="btn-secondary" id="closePaymentModalBtn" type="button">Fechar</button>
+    </div>
+    <p class="muted" style="margin-bottom:14px;">Confirma os valores antes de concluir o pagamento.</p>
+    <div class="item-card">
+      <div class="item-meta" style="margin-top:0;">
+        <span>Honorários do advogado</span>
+        <strong id="paymentModalServiceAmount">€0,00</strong>
+      </div>
+      <div class="item-meta">
+        <span>Luso Law Service Fee (matching, platform & secure payment)</span>
+        <strong id="paymentModalFeeAmount">€0,00</strong>
+      </div>
+      <div class="item-meta">
+        <span>Total a pagar</span>
+        <strong id="paymentModalTotalAmount">€0,00</strong>
+      </div>
+    </div>
+    <input type="hidden" id="paymentBookingId" />
+    <div class="ws-actions" style="justify-content:flex-end;margin-top:14px;">
+      <button class="btn-secondary" id="cancelPaymentModalBtn" type="button">Cancelar</button>
+      <button class="btn-accent" id="confirmPaymentBtn" type="button">Concluir Pagamento</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const LUSO_LAW_SERVICE_FEE_RATE = 0.10;
+
+  const state = {
+    token: null,
+    user: null,
+    services: [],
+    bookings: []
+  };
+
+  const els = {
+    modal: document.getElementById("authModal"),
+    loginPanel: document.getElementById("loginPanel"),
+    registerPanel: document.getElementById("registerPanel"),
+    loginTabBtn: document.getElementById("loginTabBtn"),
+    registerTabBtn: document.getElementById("registerTabBtn"),
+    loginForm: document.getElementById("loginForm"),
+    loginSubmitBtn: document.getElementById("loginSubmitBtn"),
+    loginFeedback: document.getElementById("loginFeedback"),
+    registerForm: document.getElementById("registerForm"),
+    registerRole: document.getElementById("registerRole"),
+    lawyerFields: document.getElementById("lawyerFields"),
+
+    servicesList: document.getElementById("servicesList"),
+    bookingForm: document.getElementById("bookingForm"),
+    bookingsList: document.getElementById("bookingsList"),
+    serviceForm: document.getElementById("serviceForm"),
+
+    selectedServiceId: document.getElementById("selectedServiceId"),
+    bookingServiceHint: document.getElementById("bookingServiceHint"),
+
+    authSummary: document.getElementById("authSummary"),
+    authChip: document.getElementById("authChip"),
+    globalNotice: document.getElementById("globalNotice"),
+    adminPortalBtn: document.getElementById("adminPortalBtn"),
+
+    panelLoginBtn: document.getElementById("panelLoginBtn"),
+    panelRegisterBtn: document.getElementById("panelRegisterBtn"),
+    logoutBtn: document.getElementById("logoutBtn"),
+
+    paymentModal: document.getElementById("paymentModal"),
+    closePaymentModalBtn: document.getElementById("closePaymentModalBtn"),
+    cancelPaymentModalBtn: document.getElementById("cancelPaymentModalBtn"),
+    confirmPaymentBtn: document.getElementById("confirmPaymentBtn"),
+    paymentBookingId: document.getElementById("paymentBookingId"),
+    paymentModalServiceAmount: document.getElementById("paymentModalServiceAmount"),
+    paymentModalFeeAmount: document.getElementById("paymentModalFeeAmount"),
+    paymentModalTotalAmount: document.getElementById("paymentModalTotalAmount")
+  };
+
+  function escapeHtml(value) {
+    if (value === null || value === undefined) {
+      return "";
+    }
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function roleLabel(role) {
+    if (role === "LAWYER") return "ADVOGADO";
+    if (role === "CLIENT") return "CLIENTE";
+    return role || "-";
+  }
+
+  function setFormFeedback(element, message, type = "error") {
+    if (!element) return;
+    element.textContent = message || "";
+    element.className = `form-feedback ${message ? type : ""}`.trim();
+  }
+
+  function formatDateTime(value) {
+    if (!value) return "-";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat("pt-PT", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    }).format(date);
+  }
+
+  function roundMoney(value) {
+    return Math.round((Number(value || 0) + Number.EPSILON) * 100) / 100;
+  }
+
+  function formatMoneyEur(value) {
+    return new Intl.NumberFormat("pt-PT", {
+      style: "currency",
+      currency: "EUR"
+    }).format(roundMoney(value));
+  }
+
+  function calculateLusoLawServiceFee(serviceAmount) {
+    return roundMoney(Number(serviceAmount || 0) * LUSO_LAW_SERVICE_FEE_RATE);
+  }
+
+  function showNotice(message, type = "ok") {
+    if (!els.globalNotice) {
+      return;
+    }
+    els.globalNotice.textContent = message;
+    els.globalNotice.className = `notice show ${type === "error" ? "notice-error" : "notice-ok"}`;
+    setTimeout(() => {
+      els.globalNotice.className = "notice";
+    }, 4200);
+  }
+
+  function setAuthTab(mode) {
+    const login = mode === "login";
+    els.loginPanel.classList.toggle("active", login);
+    els.registerPanel.classList.toggle("active", !login);
+    els.loginTabBtn.classList.toggle("active", login);
+    els.registerTabBtn.classList.toggle("active", !login);
+    setFormFeedback(els.loginFeedback, "");
+  }
+
+  function openModal(mode = "login") {
+    if (!els.modal) {
+      return;
+    }
+    els.modal.classList.add("open");
+    els.modal.setAttribute("aria-hidden", "false");
+    setAuthTab(mode);
+  }
+
+  function closeModal() {
+    if (!els.modal) {
+      return;
+    }
+    els.modal.classList.remove("open");
+    els.modal.setAttribute("aria-hidden", "true");
+  }
+
+  function addListenerIfPresent(element, eventName, handler) {
+    if (element) {
+      element.addEventListener(eventName, handler);
+    }
+  }
+
+  function openPaymentModal(bookingId, serviceAmount) {
+    const fee = calculateLusoLawServiceFee(serviceAmount);
+    const total = roundMoney(Number(serviceAmount || 0) + fee);
+
+    els.paymentBookingId.value = String(bookingId);
+    els.paymentModalServiceAmount.textContent = formatMoneyEur(serviceAmount);
+    els.paymentModalFeeAmount.textContent = formatMoneyEur(fee);
+    els.paymentModalTotalAmount.textContent = formatMoneyEur(total);
+
+    els.paymentModal.classList.add("open");
+    els.paymentModal.setAttribute("aria-hidden", "false");
+  }
+
+  function closePaymentModal() {
+    els.paymentModal.classList.remove("open");
+    els.paymentModal.setAttribute("aria-hidden", "true");
+    els.paymentBookingId.value = "";
+  }
+
+  async function finalizePayment() {
+    const bookingId = els.paymentBookingId.value;
+    if (!bookingId) {
+      showNotice("Booking inválido para pagamento.", "error");
+      return;
     }
 
-    function getServiceLabel(value) {
-      const labels = {
-        residence: "Renovação de Residência",
-        family: "Reagrupamento Familiar",
-        manifestacao: "Manifestação de Interesse",
-        outra: "Outro Processo"
-      };
-      return labels[value] || "Processo de Imigração";
+    els.confirmPaymentBtn.disabled = true;
+    els.confirmPaymentBtn.textContent = "A concluir...";
+    try {
+      const data = await api(`/api/payments/create-intent/${bookingId}`, { method: "POST" }, true);
+      const serviceAmount = Number(data.serviceAmount || 0);
+      const lusoLawServiceFee = Number(data.lusoLawServiceFee ?? data.platformFee ?? 0);
+      const totalAmount = Number(data.totalAmount || (serviceAmount + lusoLawServiceFee));
+
+      closePaymentModal();
+      showNotice(
+        `Pagamento preparado. Honorários: ${formatMoneyEur(serviceAmount)} | Luso Law Service Fee (matching, platform & secure payment): ${formatMoneyEur(lusoLawServiceFee)} | Total: ${formatMoneyEur(totalAmount)}`
+      );
+      await loadBookings();
+    } catch (error) {
+      showNotice(error.message, "error");
+    } finally {
+      els.confirmPaymentBtn.disabled = false;
+      els.confirmPaymentBtn.textContent = "Concluir Pagamento";
+    }
+  }
+
+  function toggleLawyerFields() {
+    const isLawyer = els.registerRole.value === "LAWYER";
+    els.lawyerFields.classList.toggle("hidden", !isLawyer);
+    document.getElementById("registerSpecialization").required = isLawyer;
+    document.getElementById("registerPricePerHour").required = isLawyer;
+    document.getElementById("registerLawyerNumber").required = isLawyer;
+    document.getElementById("registerLawyerCredentialDocument").required = isLawyer;
+  }
+
+  function setSession(auth) {
+    state.token = auth.token;
+    state.user = auth.user;
+    sessionStorage.setItem("lusolaw_token", state.token);
+    sessionStorage.setItem("lusolaw_user", JSON.stringify(state.user));
+    refreshAuthUI();
+    if (state.user && state.user.role === "CLIENT") {
+      window.location.href = "/client-dashboard.html";
+      return true;
+    }
+    return false;
+  }
+
+  function clearSession() {
+    state.token = null;
+    state.user = null;
+    sessionStorage.removeItem("lusolaw_token");
+    sessionStorage.removeItem("lusolaw_user");
+    refreshAuthUI();
+  }
+
+  function refreshAuthUI() {
+    if (!state.user) {
+      els.authSummary.textContent = "Sem sessão ativa. Faz login para desbloquear operações privadas.";
+      els.authChip.textContent = "Offline";
+      els.authChip.className = "session-chip offline";
+      if (els.logoutBtn) els.logoutBtn.classList.add("hidden");
+      if (els.adminPortalBtn) els.adminPortalBtn.classList.add("hidden");
+      return;
     }
 
-    function wireActions() {
-      document.getElementById("openLoginBtn").addEventListener("click", () => openModal("login"));
-      document.getElementById("openRegisterBtn").addEventListener("click", () => openModal("register"));
-      document.getElementById("heroRegisterBtn").addEventListener("click", () => openModal("register"));
-      document.getElementById("panelLoginBtn").addEventListener("click", () => openModal("login"));
-      document.getElementById("panelRegisterBtn").addEventListener("click", () => openModal("register"));
-      document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-      document.getElementById("heroWorkspaceBtn").addEventListener("click", () => {
-        document.getElementById("workspace").scrollIntoView({ behavior: "smooth" });
-      });
+    els.authSummary.textContent = `Sessão ativa como ${state.user.name} (${roleLabel(state.user.role)}).`;
+    els.authChip.textContent = "Online";
+    els.authChip.className = "session-chip online";
+    if (els.logoutBtn) els.logoutBtn.classList.remove("hidden");
+    if (els.adminPortalBtn) els.adminPortalBtn.classList.toggle("hidden", state.user.role !== "ADMIN");
+  }
 
-      els.loginTabBtn.addEventListener("click", () => setAuthTab("login"));
-      els.registerTabBtn.addEventListener("click", () => setAuthTab("register"));
+  async function api(path, options = {}, requiresAuth = false) {
+    const headers = { ...(options.headers || {}) };
 
-      els.registerRole.addEventListener("change", toggleLawyerFields);
-      els.loginForm.addEventListener("submit", submitLogin);
-      els.registerForm.addEventListener("submit", submitRegister);
-      els.serviceForm.addEventListener("submit", submitService);
-      els.bookingForm.addEventListener("submit", submitBooking);
+    if (options.body && !(options.body instanceof FormData) && !headers["Content-Type"]) {
+      headers["Content-Type"] = "application/json";
+    }
 
-      els.logoutBtn.addEventListener("click", async () => {
+    if (requiresAuth) {
+      if (!state.token) {
+        throw new Error("Autenticacao obrigatoria");
+      }
+      headers["Authorization"] = `Bearer ${state.token}`;
+    }
+
+    const response = await fetch(path, { ...options, headers });
+    const text = await response.text();
+
+    let data = null;
+    if (text) {
+      try {
+        data = JSON.parse(text);
+      } catch {
+        data = text;
+      }
+    }
+
+    if (!response.ok) {
+      if (response.status === 401) {
         clearSession();
-        showNotice("Sessao terminada.");
-        await loadBookings();
+      }
+      const message = typeof data === "object" && data !== null
+        ? data.error || data.message || "Pedido falhou"
+        : (data || "Pedido falhou");
+      throw new Error(message);
+    }
+
+    return data;
+  }
+
+  function canBook() {
+    return state.user && state.user.role === "CLIENT";
+  }
+
+  function canPublish() {
+    return state.user && state.user.role === "LAWYER";
+  }
+
+  async function loadServices() {
+    state.services = await api("/api/services");
+    renderServices();
+  }
+
+  function renderServices() {
+    if (!state.services.length) {
+      els.servicesList.innerHTML = "<p class='muted'>Ainda não existem serviços publicados.</p>";
+      return;
+    }
+
+    els.servicesList.innerHTML = state.services.map((service) => {
+      const price = Number(service.price || 0).toFixed(2);
+      const specialist = service.lawyer
+        ? `${escapeHtml(service.lawyer.name)} · ${escapeHtml(service.lawyer.specialization || "Advogado")}`
+        : "Sem profissional";
+
+      const selectBtn = canBook()
+        ? `<button class='btn-accent select-service' type='button' data-id='${service.id}' style='padding:8px 14px;font-size:13px;'>Selecionar</button>`
+        : "";
+
+      return `
+        <article class="item-card">
+          <h4>${escapeHtml(service.name)}</h4>
+          <p class="muted">${escapeHtml(service.description)}</p>
+          <div class="item-meta">
+            <span>${specialist}</span>
+            <strong>${price} EUR</strong>
+          </div>
+          <div class="item-meta" style="margin-top:10px;">
+            <span>ID #${service.id}</span>
+            ${selectBtn}
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    document.querySelectorAll(".select-service").forEach((button) => {
+      button.addEventListener("click", () => {
+        const id = button.getAttribute("data-id");
+        els.selectedServiceId.value = id;
+        const found = state.services.find((item) => String(item.id) === String(id));
+        els.bookingServiceHint.textContent = found
+          ? `Serviço selecionado: ${found.name} (${Number(found.price).toFixed(2)} EUR)`
+          : "Serviço selecionado";
+        showNotice("Serviço selecionado com sucesso.");
       });
+    });
+  }
 
-      document.getElementById("assessBtn").addEventListener("click", calculateViability);
+  async function loadBookings() {
+    if (!state.user) {
+      state.bookings = [];
+      renderBookings();
+      return;
+    }
 
-      els.modal.addEventListener("click", (event) => {
-        if (event.target === els.modal) {
-          closeModal();
+    state.bookings = await api("/api/bookings/me", {}, true);
+    renderBookings();
+  }
+
+  function renderBookings() {
+    if (!state.bookings.length) {
+      els.bookingsList.innerHTML = "<p class='muted'>Sem bookings para mostrar.</p>";
+      return;
+    }
+
+    els.bookingsList.innerHTML = state.bookings.map((booking) => {
+      const status = escapeHtml(booking.status);
+      const serviceName = escapeHtml(booking.service?.name || "Serviço");
+      const specialistName = escapeHtml(booking.lawyer?.name || "Advogado");
+      const clientName = escapeHtml(booking.client?.name || "Cliente");
+      const serviceAmount = Number(booking.amount || 0);
+      const amount = serviceAmount.toFixed(2);
+
+      let actionHtml = "";
+      if (state.user.role === "LAWYER" && booking.status === "PENDING") {
+        actionHtml = `
+          <div class="ws-actions" style="margin-top:10px;">
+            <button class="btn-secondary decision-btn" type="button" data-id="${booking.id}" data-decision="ACCEPT">Aceitar</button>
+            <button class="btn-secondary decision-btn" type="button" data-id="${booking.id}" data-decision="REJECT">Rejeitar</button>
+          </div>
+        `;
+      }
+
+      if (state.user.role === "CLIENT" && booking.status === "ACCEPTED") {
+        actionHtml = `
+          <div class="ws-actions" style="margin-top:10px;">
+            <button class="btn-accent pay-btn" type="button" data-id="${booking.id}" style="padding:8px 14px;font-size:13px;">Finalizar Pagamento</button>
+          </div>
+        `;
+      }
+
+      return `
+        <article class="item-card">
+          <div class="item-meta" style="margin-top:0; margin-bottom:4px;">
+            <h4 style="margin:0;">${serviceName}</h4>
+            <span class="pill-status status-${status}">${status}</span>
+          </div>
+          <p class="muted">${escapeHtml(booking.situation || "")}</p>
+          <div class="item-meta">
+            <span>Cliente: ${clientName}</span>
+            <span>Advogado: ${specialistName}</span>
+          </div>
+          <div class="item-meta">
+            <strong>${amount} EUR</strong>
+            <span>Deadline: ${escapeHtml(formatDateTime(booking.deadline))}</span>
+          </div>
+          ${actionHtml}
+        </article>
+      `;
+    }).join("");
+
+    document.querySelectorAll(".decision-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const id = button.getAttribute("data-id");
+        const decision = button.getAttribute("data-decision");
+        try {
+          await api(`/api/bookings/${id}/respond`, {
+            method: "POST",
+            body: JSON.stringify({ decision })
+          }, true);
+          showNotice("Resposta enviada com sucesso.");
+          await loadBookings();
+        } catch (error) {
+          showNotice(error.message, "error");
         }
       });
+    });
+
+    document.querySelectorAll(".pay-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const id = button.getAttribute("data-id");
+        const booking = state.bookings.find((item) => String(item.id) === String(id));
+        if (!booking) {
+          showNotice("Booking não encontrado.", "error");
+          return;
+        }
+        openPaymentModal(booking.id, Number(booking.amount || 0));
+      });
+    });
+  }
+
+  async function submitLogin(event) {
+    event.preventDefault();
+    setFormFeedback(els.loginFeedback, "");
+
+    if (els.loginSubmitBtn) {
+      els.loginSubmitBtn.disabled = true;
+      els.loginSubmitBtn.textContent = "A entrar...";
     }
 
-    async function bootstrap() {
-      wireActions();
+    const payload = {
+      email: document.getElementById("loginEmail").value.trim(),
+      password: document.getElementById("loginPassword").value
+    };
+
+    try {
+      const auth = await api("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      const redirected = setSession(auth);
+      if (redirected) {
+        return;
+      }
+      closeModal();
+      showNotice("Login efetuado com sucesso.");
+      await Promise.all([loadServices(), loadBookings()]);
+    } catch (error) {
+      const rawMessage = (error && error.message ? String(error.message) : "Falha no login.");
+      const msg = rawMessage.includes("Credenciais invalidas")
+        ? "Email ou senha incorretos. Confirma os dados e tenta novamente."
+        : rawMessage.includes("pendente de aprovacao")
+          ? "A conta de advogado ainda está pendente de aprovação."
+          : rawMessage.includes("rejeitada")
+            ? "A conta foi rejeitada. Contacta o suporte."
+            : rawMessage;
+      setFormFeedback(els.loginFeedback, msg, "error");
+      showNotice(msg, "error");
+    } finally {
+      if (els.loginSubmitBtn) {
+        els.loginSubmitBtn.disabled = false;
+        els.loginSubmitBtn.textContent = "Entrar";
+      }
+    }
+  }
+
+  async function submitRegister(event) {
+    event.preventDefault();
+    const role = document.getElementById("registerRole").value;
+
+    const idDocument = document.getElementById("registerIdentificationDocument").files[0];
+    if (!idDocument) {
+      showNotice("Documento de identificação é obrigatório.", "error");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", document.getElementById("registerName").value);
+    formData.append("email", document.getElementById("registerEmail").value);
+    formData.append("password", document.getElementById("registerPassword").value);
+    formData.append("role", role);
+    formData.append("phone", document.getElementById("registerPhone").value || "");
+    formData.append("address", document.getElementById("registerAddress").value || "");
+    formData.append("identificationNumber", document.getElementById("registerIdentificationNumber").value || "");
+    formData.append("identificationDocument", idDocument);
+
+    if (role === "LAWYER") {
+      formData.append("specialization", document.getElementById("registerSpecialization").value || "");
+      formData.append("pricePerHour", document.getElementById("registerPricePerHour").value || "");
+      formData.append("lawyerRegistrationNumber", document.getElementById("registerLawyerNumber").value || "");
+
+      const credential = document.getElementById("registerLawyerCredentialDocument").files[0];
+      if (!credential) {
+        showNotice("Comprovativo profissional é obrigatório.", "error");
+        return;
+      }
+      formData.append("lawyerCredentialDocument", credential);
+    }
+
+    try {
+      const auth = await api("/api/auth/register", {
+        method: "POST",
+        body: formData
+      });
+
+      if (auth && auth.token) {
+        const redirected = setSession(auth);
+        if (redirected) {
+          return;
+        }
+        closeModal();
+        showNotice("Conta criada e sessão iniciada com sucesso.");
+        await Promise.all([loadServices(), loadBookings()]);
+        return;
+      }
+
+      closeModal();
+      event.target.reset();
       toggleLawyerFields();
-      await hydrateSession();
-      await loadServices();
-      await loadBookings();
+      showNotice(auth && auth.message ? auth.message : "Registo recebido. Aguarde validação do administrador.");
+    } catch (error) {
+      showNotice(error.message, "error");
+    }
+  }
+
+  async function submitService(event) {
+    event.preventDefault();
+    if (!canPublish()) {
+      showNotice("Apenas advogados autenticados podem publicar serviços.", "error");
+      return;
     }
 
-    bootstrap();
-  </script>
+    const payload = {
+      name: document.getElementById("serviceName").value,
+      description: document.getElementById("serviceDescription").value,
+      price: Number(document.getElementById("servicePrice").value)
+    };
+
+    try {
+      await api("/api/services", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      }, true);
+      showNotice("Serviço publicado com sucesso.");
+      event.target.reset();
+      await loadServices();
+    } catch (error) {
+      showNotice(error.message, "error");
+    }
+  }
+
+  async function submitBooking(event) {
+    event.preventDefault();
+    if (!canBook()) {
+      showNotice("Apenas clientes autenticados podem criar pedidos.", "error");
+      return;
+    }
+
+    const serviceId = Number(els.selectedServiceId.value);
+    if (!serviceId) {
+      showNotice("Seleciona um serviço antes de enviar pedido.", "error");
+      return;
+    }
+
+    const payload = {
+      serviceId,
+      situation: document.getElementById("bookingSituation").value,
+      details: document.getElementById("bookingDetails").value
+    };
+
+    try {
+      await api("/api/bookings", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      }, true);
+      showNotice("Pedido enviado com sucesso.");
+      event.target.reset();
+      els.selectedServiceId.value = "";
+      els.bookingServiceHint.textContent = "Seleciona um serviço no marketplace.";
+      await loadBookings();
+    } catch (error) {
+      showNotice(error.message, "error");
+    }
+  }
+
+  async function hydrateSession() {
+    const token = sessionStorage.getItem("lusolaw_token");
+    const userRaw = sessionStorage.getItem("lusolaw_user");
+    if (!token || !userRaw) {
+      refreshAuthUI();
+      return;
+    }
+
+    try {
+      state.token = token;
+      state.user = JSON.parse(userRaw);
+      const me = await api("/api/auth/me", {}, true);
+      state.user = me;
+      sessionStorage.setItem("lusolaw_user", JSON.stringify(me));
+      refreshAuthUI();
+      if (state.user && state.user.role === "CLIENT") {
+        window.location.href = "/client-dashboard.html";
+        return;
+      }
+    } catch {
+      clearSession();
+    }
+  }
+
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const chevron = btn.querySelector('.faq-chevron');
+    const isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-answer').forEach((a) => a.classList.remove('open'));
+    document.querySelectorAll('.faq-chevron').forEach((c) => c.classList.remove('open'));
+    if (!isOpen) {
+      answer.classList.add('open');
+      chevron.classList.add('open');
+    }
+  }
+
+  function wireActions() {
+    document.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-open-auth]");
+      if (!trigger) return;
+      event.preventDefault();
+      const mode = trigger.getAttribute("data-open-auth") || "login";
+      openModal(mode);
+    });
+
+    addListenerIfPresent(els.panelLoginBtn, "click", () => openModal("login"));
+    addListenerIfPresent(els.panelRegisterBtn, "click", () => openModal("register"));
+
+    addListenerIfPresent(document.getElementById("closeModalBtn"), "click", closeModal);
+    addListenerIfPresent(els.closePaymentModalBtn, "click", closePaymentModal);
+    addListenerIfPresent(els.cancelPaymentModalBtn, "click", closePaymentModal);
+    addListenerIfPresent(els.confirmPaymentBtn, "click", finalizePayment);
+    addListenerIfPresent(els.loginTabBtn, "click", () => setAuthTab("login"));
+    addListenerIfPresent(els.registerTabBtn, "click", () => setAuthTab("register"));
+
+    addListenerIfPresent(els.registerRole, "change", toggleLawyerFields);
+    addListenerIfPresent(els.loginForm, "submit", submitLogin);
+    addListenerIfPresent(els.registerForm, "submit", submitRegister);
+    addListenerIfPresent(els.serviceForm, "submit", submitService);
+    addListenerIfPresent(els.bookingForm, "submit", submitBooking);
+
+    addListenerIfPresent(els.logoutBtn, "click", async () => {
+      clearSession();
+      showNotice("Sessão terminada.");
+      await loadBookings();
+    });
+
+    addListenerIfPresent(els.modal, "click", (event) => {
+      if (event.target === els.modal) {
+        closeModal();
+      }
+    });
+
+    addListenerIfPresent(els.paymentModal, "click", (event) => {
+      if (event.target === els.paymentModal) {
+        closePaymentModal();
+      }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+  }
+
+  async function bootstrap() {
+    wireActions();
+    toggleLawyerFields();
+    await hydrateSession();
+    await loadServices();
+    await loadBookings();
+  }
+
+  bootstrap();
+</script>
 </body>
 </html>
