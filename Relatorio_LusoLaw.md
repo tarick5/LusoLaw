@@ -382,32 +382,7 @@ flowchart LR
     Docs --> VerOA[Ver comprovativo OA]
 ```
 
-### 8.4. Matriz de permissões
 
-```mermaid
-flowchart TB
-    Publico[Utilizador não autenticado]
-    Client[CLIENT]
-    Lawyer[LAWYER ativo]
-    Admin[ADMIN]
-
-    Publico --> VerServicos[GET /api/services]
-    Publico --> Login[POST /api/auth/login]
-    Publico --> Registo[POST /api/auth/register]
-
-    Client --> CriarBooking[POST /api/bookings]
-    Client --> MeBookings[GET /api/bookings/me]
-    Client --> CriarPagamento[POST /api/payments/create-intent/{bookingId}]
-
-    Lawyer --> CriarServico[POST /api/services]
-    Lawyer --> EditarServico[PUT /api/services/{id}]
-    Lawyer --> RemoverServico[DELETE /api/services/{id}]
-    Lawyer --> ResponderBooking[POST /api/bookings/{id}/respond]
-
-    Admin --> AdminDashboard[GET /api/admin/dashboard]
-    Admin --> ModerarLawyers[POST /api/admin/lawyers/{id}/approve ou reject]
-    Admin --> VerDocumentos[GET /api/admin/users/{id}/documents/...]
-```
 
 ## 9. Qualidade Técnica, Segurança e Testes
 
